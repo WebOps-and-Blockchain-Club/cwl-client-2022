@@ -1,0 +1,32 @@
+{
+  "volunteers": [
+    {
+      "id": 1,
+      "name": "SPARTACUS",
+      "phoneNumber": "1234567890",
+      "provisions": [
+        "Shelter",
+        "Sanitary Items"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Aditya",
+      "phoneNumber": "6543217890",
+      "provisions": [
+        "Shelter",
+        "Sanitary Items",
+        "Groceries"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Someone",
+      "phoneNumber": "123874560",
+      "provisions": [
+        "Food",
+        "Groceries"
+      ]
+    }
+  ]
+}
