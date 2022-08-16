@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Button } from '@mui/material'
 
 function VolunteerLogin() {
   const [volunteerName, setVolunteerName]: [string, React.Dispatch<React.SetStateAction<string>>] =
@@ -45,7 +46,7 @@ function VolunteerLogin() {
           }}
           required
         />
-        <button>Submit</button>
+        <Button variant='contained'>Submit</Button>
       </form>
     </div>
   )
