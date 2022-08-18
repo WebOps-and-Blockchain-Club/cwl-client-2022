@@ -1,16 +1,43 @@
 import React, { useState } from 'react'
-import { Button } from '@mui/material'
+import { Button, TextField } from '@mui/material'
+import Volunteer from '../../interfaces/VolunteerSide/Volunteer'
 
-function VolunteerLogin() {
-  const [volunteerName, setVolunteerName]: [string, React.Dispatch<React.SetStateAction<string>>] =
-    useState('')
+// eslint-disable-next-line
+function VolunteerLogin({ volunteerList, err }: { volunteerList: Volunteer[] | null; err: any }) {
   const [volunteerPhone, setVolunteerPhone]: [
     string,
     React.Dispatch<React.SetStateAction<string>>,
   ] = useState('')
+  const [volunteerPassword, setVolunteerPassword]: [
+    string,
+    React.Dispatch<React.SetStateAction<string>>,
+  ] = useState('')
+  const [error, setError]: [string, React.Dispatch<React.SetStateAction<string>>] = useState(err)
 
   const handleSubmit = (): void => {
-    console.log(volunteerName, volunteerPhone)
+    if (!volunteerList) {
+      return
+    }
+    try {
+      const res = volunteerList.some((volunteer: Volunteer): boolean => {
+        if (volunteer.phoneNumber === volunteerPhone) {
+          if (volunteer.password === volunteerPassword) {
+            localStorage.setItem('USER', JSON.stringify(volunteer))
+            console.log('Login successful')
+            return true
+          }
+          throw Error('Wrong password')
+        }
+        return false
+      })
+      if (!res) {
+        throw Error('This user does not exist')
+      }
+      // eslint-disable-next-line
+    } catch (error: any) {
+      setError(error.message)
+      console.error(error)
+    }
   }
 
   return (
@@ -22,32 +49,41 @@ function VolunteerLogin() {
           e.preventDefault()
         }}
       >
-        <input
-          type='text'
-          name='volunteer-name'
-          id='volunteer-name'
-          placeholder='Name...'
-          value={volunteerName}
-          onChange={(e) => {
-            setVolunteerName(e.target.value)
-            e.preventDefault()
-          }}
-          required
-        />
-        <input
-          type='text'
-          name='volunteer-phone'
+        <TextField
           id='volunteer-phone'
-          placeholder='Phone Number...'
+          label='Phone'
+          variant='outlined'
           value={volunteerPhone}
           onChange={(e) => {
             setVolunteerPhone(e.target.value)
             e.preventDefault()
           }}
+          error={volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)}
+          helperText={
+            volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)
+              ? 'Please enter a valid phone number'
+              : ''
+          }
           required
         />
-        <Button variant='contained'>Submit</Button>
+        <TextField
+          id='volunteer-password'
+          type='password'
+          label='Password'
+          variant='outlined'
+          value={volunteerPassword}
+          onChange={(e) => {
+            setVolunteerPassword(e.target.value)
+            e.preventDefault()
+          }}
+          autoComplete='current-password'
+          required
+        />
+        <Button type='submit' variant='contained' disabled={!(volunteerPassword && volunteerPhone)}>
+          Submit
+        </Button>
       </form>
+      <div style={{ color: 'red' }}>{error}</div>
     </div>
   )
 }

@@ -1,29 +1,38 @@
 import { useState } from 'react'
-import useFetch from '../../hooks/useFetch'
 // import { useNavigate } from "react-router-dom";
 import Provision from '../../interfaces/VolunteerSide/Provision'
 import Volunteer from '../../interfaces/VolunteerSide/Volunteer'
-// import DropDown from '../../components/DropDown'
-import { provisionOptions, ProvisionOption } from '../../utils/ProvisionData'
-import { MenuProps } from '../../utils/MenuProps'
+import DropDown from '../../components/DropDown'
+// import { provisionOptions, ProvisionOption } from '../../utils/ProvisionData'
+// import { MenuProps } from '../../utils/MenuProps'
 import {
-  Box,
+  // Box,
   Button,
-  Chip,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  SelectChangeEvent,
+  // Chip,
+  // MenuItem,
+  // OutlinedInput,
+  // Select,
+  // SelectChangeEvent,
+  // useTheme,
   TextField,
-  useTheme,
 } from '@mui/material'
 import '../../styles/VolunteerRegistrationForm.css'
-import { getStyles } from '../../utils/GetStyles'
+// import { getStyles } from '../../utils/GetStyles'
 
-function VolunteerRegistrationForm() {
+function VolunteerRegistrationForm({
+  volunteerList,
+  err,
+}: {
+  volunteerList: Volunteer[] | null
+  err: any // eslint-disable-line
+}) {
   const [volunteerName, setVolunteerName]: [string, React.Dispatch<React.SetStateAction<string>>] =
     useState('')
   const [volunteerPhone, setVolunteerPhone]: [
+    string,
+    React.Dispatch<React.SetStateAction<string>>,
+  ] = useState('')
+  const [volunteerPassword, setVolunteerPassword]: [
     string,
     React.Dispatch<React.SetStateAction<string>>,
   ] = useState('')
@@ -33,13 +42,9 @@ function VolunteerRegistrationForm() {
     React.Dispatch<React.SetStateAction<never[]>>,
   ] = useState([])
   const [error, setError] = useState('')
-  const theme = useTheme()
+  // const theme = useTheme()
   // const navigate: any = useNavigate();
   // const volunteerList = useRef([]);
-  const {
-    data: volunteerList,
-    error: err, //eslint-disable-line
-  } = useFetch('http://localhost:5000/volunteers/')
   if (err) setError(err)
 
   const handleSubmit = async (): Promise<void> => {
@@ -51,6 +56,7 @@ function VolunteerRegistrationForm() {
         id: volunteerList.length + 1,
         name: volunteerName,
         phoneNumber: volunteerPhone,
+        password: volunteerPassword,
         provisions: volunteerProvision.map((option: Provision) => option.value),
       }
 
@@ -67,6 +73,7 @@ function VolunteerRegistrationForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(volunteer),
       })
+      console.log('Data added')
       // eslint-disable-next-line
     } catch (error: any) {
       setError(error.message)
@@ -105,8 +112,14 @@ function VolunteerRegistrationForm() {
             setVolunteerName(e.target.value)
             e.preventDefault()
           }}
-          error={!/^[A-Z]?[a-z]*(\s[A-Z])?[a-z]*$/.test(volunteerName)}
-          helperText='Please enter a valid full name'
+          error={
+            volunteerName.length !== 0 && !/^[A-Z]?[a-z]*(\s[A-Z])?[a-z]*$/.test(volunteerName)
+          }
+          helperText={
+            volunteerName.length !== 0 && !/^[A-Z]?[a-z]*(\s[A-Z])?[a-z]*$/.test(volunteerName)
+              ? 'Please enter a valid name'
+              : ''
+          }
           required
         />
         <TextField
@@ -119,11 +132,28 @@ function VolunteerRegistrationForm() {
             e.preventDefault()
           }}
           error={volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)}
-          helperText='Please enter a valid phone number'
+          helperText={
+            volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)
+              ? 'Please enter a valid phone number'
+              : ''
+          }
           required
         />
-        {/* <DropDown props={{ volunteerProvision, setVolunteerProvision }} /> */}
-        <Select
+        <TextField
+          id='volunteer-password'
+          type='password'
+          label='Password'
+          variant='outlined'
+          value={volunteerPassword}
+          onChange={(e) => {
+            setVolunteerPassword(e.target.value)
+            e.preventDefault()
+          }}
+          autoComplete='current-password'
+          required
+        />
+        <DropDown props={{ volunteerProvision, setVolunteerProvision }} />
+        {/* <Select
           labelId='demo-multiple-chip-label'
           id='demo-multiple-chip'
           multiple
@@ -158,8 +188,9 @@ function VolunteerRegistrationForm() {
               {provisionOption.label}
             </MenuItem>
           ))}
-        </Select>
+        </Select> */}
         <Button
+          type='submit'
           variant='contained'
           disabled={!(volunteerName && volunteerPhone && volunteerProvision.length)}
         >
