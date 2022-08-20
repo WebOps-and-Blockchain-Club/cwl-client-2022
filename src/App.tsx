@@ -1,7 +1,9 @@
 import React, { useState, createContext } from 'react' // eslint-disable-line
-import { Router, Switch, Route } from 'wouter'
+// import { Router, Routes, Route, Redirect } from 'wouter'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import VolunteerRegistrationForm from './pages/VolunteerSide/VolunteerRegistrationForm'
 import VolunteerLogin from './pages/VolunteerSide/VolunteerLogin'
+import VolunteerDashboard from './pages/VolunteerSide/VolunteerDashboard'
 import useFetch from './hooks/useFetch'
 import Volunteer from './interfaces/VolunteerSide/Volunteer'
 
@@ -24,19 +26,26 @@ function App() {
   return (
     // <VolunteerListContext.Provider value={volunteerList}>
     <>
-      <Router base='/volunteer'>
-        <Switch>
-          <Route
-            // exact
-            path='/register'
-            component={() => <VolunteerRegistrationForm volunteerList={data} err={error} />}
-          />
-          <Route
-            // exact
-            path='/login'
-            component={() => <VolunteerLogin volunteerList={data} err={error} />}
-          />
-        </Switch>
+      <Router basename='/volunteer'>
+        <div className='content'>
+          <Routes>
+            <Route
+              // exact
+              path='/register'
+              element={<VolunteerRegistrationForm volunteerList={data} err={error} />}
+            />
+            <Route
+              // exact
+              path='/login'
+              element={<VolunteerLogin volunteerList={data} err={error} />}
+            />
+            <Route
+              // exact
+              path='/dashboard/:id'
+              element={localStorage.getItem('USER') ? <VolunteerDashboard /> : <Link to='/login' />}
+            />
+          </Routes>
+        </div>
       </Router>
     </>
     // </VolunteerListContext.Provider>
