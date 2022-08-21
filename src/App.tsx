@@ -4,23 +4,14 @@ import { useState } from 'react'
 import DataSubmission from './components/DataSubmission/DataSubmission'
 import Home from './pages/Home'
 const App = () => {
-  const [location, setLocation] = useState({ lat: 13.0827, lng: 80.2707 })
+  const [coord, setCoord] = useState({ lat: 13.0827, lng: 80.2707 })
   return (
     <>
-      <Data.Provider value={{ location, setLocation }}>
-        <Router base='/'>
-          <Switch>
-            <Route
-              component={() => (
-                <div>
-                  <Home />
-                  <DataSubmission />
-                </div>
-              )}
-            />
-            <Route />
-          </Switch>
-        </Router>
+      <Data.Provider value={{ coord, setCoord }}>
+        <Switch>
+          <Route path='/' component={Home} />
+          <Route path='/data' component={DataSubmission} />
+        </Switch>
       </Data.Provider>
     </>
   )
