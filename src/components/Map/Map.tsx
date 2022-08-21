@@ -18,16 +18,32 @@ export default function Map() {
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [lat, lng],
       zoom: zoom,
-    })
-
+    }
+    )
     if (!map.current) return // wait for map to initialize
     map.current.on('move', () => {
       setLng(map.current.getCenter().lng.toFixed(4))
       setLat(map.current.getCenter().lat.toFixed(4))
       setZoom(map.current.getZoom().toFixed(2))
     })
+    function getdata() {
+      fetch('http://localhost:4000/waterLevelData')
+        .then(response => response.json())
+        .then(data => {
+          JSON.stringify(data);
+          data.map((cord: any) =>
+            new mapboxgl.Marker().setLngLat([cord.lng, cord.lat]).setPopup(
+              new mapboxgl.Popup({ offset: 25 }) // add popups
+                .setHTML(
+                  `<h3>${cord.id}</h3><img src='${cord.image}' height='100px'>`
+                )
+            ).addTo(map.current)
+          );
+        }
+        )
+    }
+    getdata();
   }, [])
-
   return (
     <div>
       <div ref={mapContainer} className='map-container' />
