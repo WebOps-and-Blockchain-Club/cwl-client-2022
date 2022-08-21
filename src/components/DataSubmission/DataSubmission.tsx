@@ -1,20 +1,24 @@
 import { TextField, Typography, Button } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import Data from '../../utils/Context'
 const DataSubmission = (): JSX.Element => {
-  const [lat, setLat] = useState(13.0827)
-  const [lng, setLng] = useState(80.2707)
+  const { location, setLocation } = useContext(Data)
   const [file, setFile] = useState()
+  const [imageURL, setImageURL] = useState('')
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(function (position) {
-        setLat(position.coords.latitude)
-        setLng(position.coords.longitude)
+        setLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        })
       })
     }
   }, [])
   const handleImageUpload = (e: any) => {
-    console.log(e.target.files[0])
     setFile(e.target.files[0])
+    setImageURL(URL.createObjectURL(e.target.files[0]))
+    console.log(URL.createObjectURL(e.target.files[0]))
   }
   const handleSubmit = (e: any) => {
     e.preventDefault()
@@ -26,7 +30,7 @@ const DataSubmission = (): JSX.Element => {
       </div>
       <div>
         <div></div>
-        <div >
+        <div>
           <TextField color='success' label='Water Level' variant='outlined' />
           <input type='file' accept='image/*' onChange={handleImageUpload} required name='image' />
         </div>
