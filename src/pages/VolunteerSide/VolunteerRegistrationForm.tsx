@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Provision from '../../interfaces/VolunteerSide/Provision'
 import Volunteer from '../../interfaces/VolunteerSide/Volunteer'
 import DropDown from '../../components/DropDown'
+import { makeStyles } from '@mui/styles'
 // import { provisionOptions, ProvisionOption } from '../../utils/ProvisionData'
 // import { MenuProps } from '../../utils/MenuProps'
 import {
@@ -14,11 +15,27 @@ import {
   // Select,
   // SelectChangeEvent,
   // useTheme,
+  Typography,
   TextField,
 } from '@mui/material'
 import '../../styles/VolunteerRegistrationForm.css'
 // import { getStyles } from '../../utils/GetStyles'
 
+const useStyles: any = makeStyles({
+  main: {
+    // background: '#90EE90',
+    // border: 0,
+    // borderRadius: 3,
+    // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    // color: 'white',
+    // height:  ,
+    textAlign: 'center',
+    margin: 'auto',
+    padding: '0 100px',
+    // alignItems: 'center',
+  },
+  content: {},
+})
 function VolunteerRegistrationForm({
   volunteerList,
   err,
@@ -42,6 +59,7 @@ function VolunteerRegistrationForm({
     React.Dispatch<React.SetStateAction<never[]>>,
   ] = useState([])
   const [error, setError] = useState('')
+  const classes = useStyles()
   // const theme = useTheme()
   // const navigate: any = useNavigate();
   // const volunteerList = useRef([]);
@@ -83,18 +101,31 @@ function VolunteerRegistrationForm({
 
   return (
     <div className='App'>
-      <div
-        className='title'
-        style={{
-          textAlign: 'center',
-          fontSize: '40px',
-        }}
+      <Typography
+        variant='h4'
+        style={{ textAlign: 'center', paddingBottom: '35px', padding: '20px' }}
       >
         Volunteer Registration Form
+      </Typography>
+      <Typography
+        variant='h6'
+        style={{ textAlign: 'center', padding: '5px', paddingBottom: '10px' }}
+      >
+        Fill the form to be a part of the mission
+      </Typography>
+      <div>
+        <Typography
+          style={{
+            color: 'purple',
+            fontSize: 'medium',
+            textAlign: 'right',
+            paddingRight: '50px',
+            textDecorationLine: 'underline',
+          }}
+        >
+          Already Registered?
+        </Typography>
       </div>
-      <div className='subtitle'>Fill the form to be a part of the mission</div>
-      <br />
-
       <form
         action='post'
         onSubmit={(e) => {
@@ -103,57 +134,71 @@ function VolunteerRegistrationForm({
           e.preventDefault()
         }}
       >
-        <TextField
-          id='volunteer-name'
-          label='Name'
-          variant='outlined'
-          value={volunteerName}
-          onChange={(e) => {
-            setVolunteerName(e.target.value)
-            e.preventDefault()
-          }}
-          error={
-            volunteerName.length !== 0 && !/^[A-Z]?[a-z]*(\s[A-Z])?[a-z]*$/.test(volunteerName)
-          }
-          helperText={
-            volunteerName.length !== 0 && !/^[A-Z]?[a-z]*(\s[A-Z])?[a-z]*$/.test(volunteerName)
-              ? 'Please enter a valid name'
-              : ''
-          }
-          required
-        />
-        <TextField
-          id='volunteer-phone'
-          label='Phone'
-          variant='outlined'
-          value={volunteerPhone}
-          onChange={(e) => {
-            setVolunteerPhone(e.target.value)
-            e.preventDefault()
-          }}
-          error={volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)}
-          helperText={
-            volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)
-              ? 'Please enter a valid phone number'
-              : ''
-          }
-          required
-        />
-        <TextField
-          id='volunteer-password'
-          type='password'
-          label='Password'
-          variant='outlined'
-          value={volunteerPassword}
-          onChange={(e) => {
-            setVolunteerPassword(e.target.value)
-            e.preventDefault()
-          }}
-          autoComplete='current-password'
-          required
-        />
-        <DropDown props={{ volunteerProvision, setVolunteerProvision }} />
-        {/* <Select
+        <div className={classes.main}>
+          <div>
+            <TextField
+              style={{ paddingBottom: '20px' }}
+              id='volunteer-name'
+              label='Name'
+              variant='outlined'
+              value={volunteerName}
+              onChange={(e) => {
+                setVolunteerName(e.target.value)
+                e.preventDefault()
+              }}
+              error={
+                volunteerName.length !== 0 && !/^[A-Z]?[a-z]*(\s[A-Z])?[a-z]*$/.test(volunteerName)
+              }
+              helperText={
+                volunteerName.length !== 0 && !/^[A-Z]?[a-z]*(\s[A-Z])?[a-z]*$/.test(volunteerName)
+                  ? 'Please enter a valid name'
+                  : ''
+              }
+              required
+              color='success'
+            />
+          </div>
+          <div>
+            <TextField
+              style={{ paddingBottom: '20px' }}
+              id='volunteer-phone'
+              label='Phone'
+              variant='outlined'
+              value={volunteerPhone}
+              onChange={(e) => {
+                setVolunteerPhone(e.target.value)
+                e.preventDefault()
+              }}
+              error={volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)}
+              helperText={
+                volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)
+                  ? 'Please enter a valid phone number'
+                  : ''
+              }
+              required
+              color='success'
+            />
+          </div>
+          <div>
+            <TextField
+              style={{ paddingBottom: '20px' }}
+              id='volunteer-password'
+              type='password'
+              label='Password'
+              variant='outlined'
+              value={volunteerPassword}
+              onChange={(e) => {
+                setVolunteerPassword(e.target.value)
+                e.preventDefault()
+              }}
+              autoComplete='current-password'
+              required
+              color='success'
+            />
+          </div>
+          <div>
+            <DropDown props={{ volunteerProvision, setVolunteerProvision }} />
+            {/* <Select
           labelId='demo-multiple-chip-label'
           id='demo-multiple-chip'
           multiple
@@ -189,14 +234,18 @@ function VolunteerRegistrationForm({
             </MenuItem>
           ))}
         </Select> */}
-        <Button
-          type='submit'
-          variant='contained'
-          disabled={!(volunteerName && volunteerPhone && volunteerProvision.length)}
-        >
-          Submit
-        </Button>
-        {error}
+          </div>
+          <Button
+            type='submit'
+            variant='contained'
+            color='success'
+            disabled={!(volunteerName && volunteerPhone)}
+            // && volunteerProvision.length
+          >
+            Submit
+          </Button>
+          {error}
+        </div>
       </form>
     </div>
   )

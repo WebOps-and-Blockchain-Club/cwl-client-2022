@@ -6,6 +6,7 @@
 		"@emotion/react": "^11.10.0",
 		"@emotion/styled": "^11.10.0",
 		"@mui/material": "^5.10.0",
+		"@mui/styles": "^5.9.3",
 		"@testing-library/jest-dom": "^5.14.1",
 		"@testing-library/react": "^13.0.0",
 		"@testing-library/user-event": "^13.2.1",
@@ -13,23 +14,24 @@
 		"@types/node": "^16.7.13",
 		"@types/react": "^18.0.0",
 		"@types/react-dom": "^18.0.0",
+		"axios": "^0.27.2",
 		"json-server": "^0.17.0",
+		"mapbox-gl": "^2.9.2",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-router-dom": "^6.3.0",
 		"react-scripts": "5.0.1",
-		"react-select": "^5.4.0",
+		"ts-dotenv": "^0.8.3",
 		"typescript": "^4.4.2",
 		"web-vitals": "^2.1.0",
 		"wouter": "^2.8.0-alpha.2"
 	},
 	"scripts": {
 		"start": "react-scripts start",
-		"server": "npx json-server --watch ./src/data/db.json --port 5000",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"lint": "eslint . --ext ts --ext tsx --ext js"
+		"lint": "eslint . --ext ts --ext tsx --ext js",
+		"server": "json-server --watch ./src/shared/db.json --port 4000"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -37,6 +39,7 @@
 			"react-app/jest"
 		]
 	},
+	"proxy": "http://localhost:4000",
 	"browserslist": {
 		"production": [
 			">0.2%",
@@ -50,6 +53,7 @@
 		]
 	},
 	"devDependencies": {
+		"@types/mapbox-gl": "^2.7.5",
 		"@typescript-eslint/eslint-plugin": "^5.33.0",
 		"@typescript-eslint/parser": "^5.33.0",
 		"eslint": "^8.22.0",

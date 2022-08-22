@@ -1,0 +1,94 @@
+{
+    "waterLevelData": [
+      {
+        "lng": 80,
+        "lat": 13.0678,
+        "depth": 5,
+        "image": "https://i.kym-cdn.com/photos/images/original/000/369/488/61d.jpeg",
+        "id": 1
+      },
+      {
+        "lng": 80,
+        "lat": 14.0678,
+        "depth": 4,
+        "image": "https://i.kym-cdn.com/photos/images/original/000/369/488/61d.jpeg",
+        "id": 2
+      },
+      {
+        "lng": 80,
+        "lat": 13.0678,
+        "depth": 3,
+        "image": "https://i.kym-cdn.com/photos/images/original/000/369/488/61d.jpeg",
+        "id": 3
+      },
+      {
+        "lng": 83,
+        "lat": 13.0678,
+        "depth": 6,
+        "image": "https://i.kym-cdn.com/photos/images/original/000/369/488/61d.jpeg",
+        "id": 4
+      },
+      {
+        "lng": 84,
+        "lat": 13.0678,
+        "depth": 1,
+        "image": "https://i.kym-cdn.com/photos/images/original/000/369/488/61d.jpeg",
+        "id": 5
+      },
+      {
+        "lng": 85,
+        "lat": 13.0678,
+        "depth": 2.2,
+        "image": "https://i.kym-cdn.com/photos/images/original/000/369/488/61d.jpeg",
+        "id": 6
+      },
+      {
+        "lng": 86,
+        "lat": 13.0678,
+        "depth": 4.5,
+        "image": "https://i.kym-cdn.com/photos/images/original/000/369/488/61d.jpeg",
+        "id": 7
+      },
+      {
+        "lng": 87,
+        "lat": 13.0678,
+        "depth": 3.5,
+        "image": "https://i.kym-cdn.com/photos/images/original/000/369/488/61d.jpeg",
+        "id": 8
+      },
+      {
+        "lng": 88,
+        "lat": 13.0678,
+        "depth": 2.5,
+        "image": "https://i.kym-cdn.com/photos/images/original/000/369/488/61d.jpeg",
+        "id": 9
+      },
+      {
+        "lng": 89,
+        "lat": 13.0678,
+        "depth": 3.6,
+        "image": "https://i.kym-cdn.com/photos/images/original/000/369/488/61d.jpeg",
+        "id": 10
+      }
+    ],
+    "volunteers": [
+      {
+        "id": 1,
+        "name": "SPARTACUS",
+        "phoneNumber": "1234567890",
+        "provisions": ["Shelter", "Sanitary Items"]
+      },
+      {
+        "id": 2,
+        "name": "Aditya",
+        "phoneNumber": "6543217890",
+        "provisions": ["Shelter", "Sanitary Items", "Groceries"]
+      },
+      {
+        "id": 3,
+        "name": "Someone",
+        "phoneNumber": "123874560",
+        "provisions": ["Food", "Groceries"]
+      }
+    ]
+  }

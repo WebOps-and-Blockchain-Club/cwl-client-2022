@@ -1,6 +1,6 @@
 import React, { useState, createContext } from 'react' // eslint-disable-line
 // import { Router, Routes, Route, Redirect } from 'wouter'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import {  Router, Switch, Route, Link } from 'wouter'
 import VolunteerRegistrationForm from './pages/VolunteerSide/VolunteerRegistrationForm'
 import VolunteerLogin from './pages/VolunteerSide/VolunteerLogin'
 import VolunteerDashboard from './pages/VolunteerSide/VolunteerDashboard'
@@ -26,25 +26,25 @@ function App() {
   return (
     // <VolunteerListContext.Provider value={volunteerList}>
     <>
-      <Router basename='/volunteer'>
+      <Router base='/volunteer'>
         <div className='content'>
-          <Routes>
+          <Switch>
             <Route
               // exact
               path='/register'
-              element={<VolunteerRegistrationForm volunteerList={data} err={error} />}
+              component={()=><VolunteerRegistrationForm volunteerList={data} err={error} />}
             />
             <Route
               // exact
               path='/login'
-              element={<VolunteerLogin volunteerList={data} err={error} />}
+              component={()=><VolunteerLogin volunteerList={data} err={error} />}
             />
             <Route
               // exact
               path='/dashboard/:id'
-              element={localStorage.getItem('USER') ? <VolunteerDashboard /> : <Link to='/login' />}
+             component={()=>localStorage.getItem('USER') ? <VolunteerDashboard /> : <Link to='/login' />}
             />
-          </Routes>
+          </Switch>
         </div>
       </Router>
     </>
