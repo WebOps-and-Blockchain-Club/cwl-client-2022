@@ -6,8 +6,8 @@ import { provisionOptions } from '../utils/ProvisionData'
 const animatedComponents = makeAnimated()
 
 interface State {
-  volunteerProvision: Provision[]
-  setVolunteerProvision: React.Dispatch<React.SetStateAction<never[]>>
+  volunteerProvisions: Provision[]
+  setVolunteerProvisions: React.Dispatch<React.SetStateAction<never[]>>
 }
 
 interface Prop {
@@ -15,18 +15,18 @@ interface Prop {
 }
 
 function DropDown(props: Prop) {
-  const { volunteerProvision, setVolunteerProvision }: State = props.props
+  const { volunteerProvisions, setVolunteerProvisions }: State = props.props
   return (
     <div>
       <Select
         closeMenuOnSelect={false}
         components={animatedComponents}
-        value={volunteerProvision}
+        value={volunteerProvisions}
         isMulti={true}
         options={provisionOptions}
         // eslint-disable-next-line
         onChange={(options: any): void => {
-          setVolunteerProvision(options)
+          setVolunteerProvisions(options)
         }}
       />
     </div>
