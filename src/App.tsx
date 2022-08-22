@@ -1,18 +1,15 @@
 import React, { useState, createContext } from 'react' // eslint-disable-line
-// import { Router, Routes, Route, Redirect } from 'wouter'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { Router, Switch, Route, Redirect } from 'wouter'
+// import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import VolunteerRegistrationForm from './pages/VolunteerSide/VolunteerRegistrationForm'
 import VolunteerLogin from './pages/VolunteerSide/VolunteerLogin'
 import VolunteerDashboard from './pages/VolunteerSide/VolunteerDashboard'
 import useFetch from './hooks/useFetch'
+import useCheckUser from './hooks/useCheckUser'
 import Volunteer from './interfaces/VolunteerSide/Volunteer'
-
-// const VolunteerListContext = createContext([]);
+import User from './interfaces/User'
 
 function App() {
-  // const [volunteerList, setVolunteerList]: [Volunteer[], any] = useState([]);
-  // const { data } = useFetch("http://localhost:5000/volunteers/");
-  // setVolunteerList(data);
   const {
     data,
     isPending, // eslint-disable-line
@@ -22,33 +19,45 @@ function App() {
     isPending: boolean
     error: string
   } = useFetch('http://localhost:5000/volunteers/')
+  const user: User | null = useCheckUser()
 
   return (
-    // <VolunteerListContext.Provider value={volunteerList}>
     <>
-      <Router basename='/volunteer'>
+      <Router base='/volunteer'>
         <div className='content'>
-          <Routes>
+          <Switch>
             <Route
               // exact
               path='/register'
-              element={<VolunteerRegistrationForm volunteerList={data} err={error} />}
+              component={() =>
+                user ? (
+                  <Redirect to='/dashboard' />
+                ) : (
+                  <VolunteerRegistrationForm volunteerList={data} err={error} />
+                )
+              }
             />
             <Route
               // exact
               path='/login'
-              element={<VolunteerLogin volunteerList={data} err={error} />}
+              component={() =>
+                user ? (
+                  <Redirect to='/dashboard' />
+                ) : (
+                  <VolunteerLogin volunteerList={data} err={error} />
+                )
+              }
             />
             <Route
               // exact
-              path='/dashboard/:id'
-              element={localStorage.getItem('USER') ? <VolunteerDashboard /> : <Link to='/login' />}
+              path='/dashboard'
+              component={() => (user ? <VolunteerDashboard /> : <Redirect to='/login' />)}
             />
-          </Routes>
+            <Route path='/:rest*' component={() => <Redirect to='/login' />} />
+          </Switch>
         </div>
       </Router>
     </>
-    // </VolunteerListContext.Provider>
   )
 }
 

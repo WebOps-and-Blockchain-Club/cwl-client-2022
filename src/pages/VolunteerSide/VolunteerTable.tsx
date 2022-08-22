@@ -8,10 +8,7 @@ import {
   TableRow,
   Paper,
 } from '@mui/material'
-
-function createData(username: string, contact: number, location: string, helpRequired: string) {
-  return { username, location, contact, helpRequired }
-}
+import createData from '../../utils/createData'
 
 const rows = [
   createData('Someone', 1234567890, 'somewhere', 'food'),
@@ -20,17 +17,22 @@ const rows = [
   createData('Sometime', 1234567779, 'any somewhere', 'food, shelter, groceries'),
 ]
 
-export default function BasicTable() {
+export default function VolunteerTable() {
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+      <Table sx={{ minWidth: 650 }} aria-label='simple table' style={{ border: '1px solid black' }}>
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align='right'>contact</TableCell>
-            <TableCell align='right'>Fat&nbsp;(g)</TableCell>
-            <TableCell align='right'>Carbs&nbsp;(g)</TableCell>
-            <TableCell align='right'>Protein&nbsp;(g)</TableCell>
+            <TableCell style={{ fontWeight: 'bold' }}>Name</TableCell>
+            <TableCell style={{ fontWeight: 'bold' }} align='center'>
+              Location
+            </TableCell>
+            <TableCell style={{ fontWeight: 'bold' }} align='center'>
+              Contact
+            </TableCell>
+            <TableCell style={{ fontWeight: 'bold' }} align='center'>
+              Help Required
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -39,9 +41,9 @@ export default function BasicTable() {
               <TableCell component='th' scope='row'>
                 {row.username}
               </TableCell>
-              <TableCell align='right'>{row.location}</TableCell>
-              <TableCell align='right'>{row.contact}</TableCell>
-              <TableCell align='right'>{row.helpRequired}</TableCell>
+              <TableCell align='center'>{row.location}</TableCell>
+              <TableCell align='center'>{row.contact}</TableCell>
+              <TableCell align='center'>{row.helpRequired}</TableCell>
             </TableRow>
           ))}
         </TableBody>

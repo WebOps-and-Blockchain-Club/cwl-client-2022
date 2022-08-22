@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { Button, TextField } from '@mui/material'
 import Volunteer from '../../interfaces/VolunteerSide/Volunteer'
+import { useLocation } from 'wouter'
 
 // eslint-disable-next-line
 function VolunteerLogin({ volunteerList, err }: { volunteerList: Volunteer[] | null; err: any }) {
+  const [location, setLocation] = useLocation() // eslint-disable-line
   const [volunteerPhone, setVolunteerPhone]: [
     string,
     React.Dispatch<React.SetStateAction<string>>,
@@ -24,6 +26,8 @@ function VolunteerLogin({ volunteerList, err }: { volunteerList: Volunteer[] | n
           if (volunteer.password === volunteerPassword) {
             localStorage.setItem('USER', JSON.stringify(volunteer))
             console.log('Login successful')
+            window.location.reload()
+            console.log('Post redirect')
             return true
           }
           throw Error('Wrong password')
