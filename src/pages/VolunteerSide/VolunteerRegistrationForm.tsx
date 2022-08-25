@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { SetStateAction, useState } from 'react' // eslint-disable-line
 // import { useNavigate } from "react-router-dom";
 import Provision from '../../interfaces/VolunteerSide/Provision'
 import Volunteer from '../../interfaces/VolunteerSide/Volunteer'
@@ -54,7 +54,7 @@ function VolunteerRegistrationForm({
     React.Dispatch<React.SetStateAction<string>>,
   ] = useState('')
   // eslint-disable-next-line
-  const [volunteerProvision, setVolunteerProvision]: [
+  const [volunteerProvisions, setVolunteerProvisions]: [
     Provision[],
     React.Dispatch<React.SetStateAction<never[]>>,
   ] = useState([])
@@ -75,7 +75,7 @@ function VolunteerRegistrationForm({
         name: volunteerName,
         phoneNumber: volunteerPhone,
         password: volunteerPassword,
-        provisions: volunteerProvision.map((option: Provision) => option.value),
+        provisions: volunteerProvisions.map((option: Provision) => option.value),
       }
 
       volunteerList.forEach((e) => {
@@ -197,20 +197,21 @@ function VolunteerRegistrationForm({
             />
           </div>
           <div>
-            <DropDown props={{ volunteerProvision, setVolunteerProvision }} />
+            {/* <DropDown props={{ volunteerProvision, setVolunteerProvision }} /> */}
             {/* <Select
           labelId='demo-multiple-chip-label'
           id='demo-multiple-chip'
           multiple
-          value={volunteerProvision}
+          value={volunteerProvisions}
           onChange={(e: SelectChangeEvent<Provision[]>) => {
-            // let provision: Provision = { // eslint-disable-line
+            // const provision: Provision = {
             //   value: e.target.value[0],
-            //   label: e.target.value[0]
+            //   label: e.target.value[0],
             // }
-            // let tempArr = volunteerProvision; // eslint-disable-line
-            // tempArr.push(provision);
-            // setVolunteerProvision(tempArr);
+            setVolunteerProvisions([...volunteerProvisions, {
+              value: e.target.value[0],
+              label: e.target.value[0]
+            }])
             console.log(e.target.value)
             e.preventDefault()
           }}

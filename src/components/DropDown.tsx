@@ -1,8 +1,8 @@
 import Provision from '../interfaces/VolunteerSide/Provision'
 import { provisionOptions } from '../utils/ProvisionData'
 interface State {
-  volunteerProvision: Provision[]
-  setVolunteerProvision: React.Dispatch<React.SetStateAction<never[]>>
+  volunteerProvisions: Provision[]
+  setVolunteerProvisions: React.Dispatch<React.SetStateAction<never[]>>
 }
 
 interface Prop {
@@ -10,8 +10,22 @@ interface Prop {
 }
 
 function DropDown(props: Prop) {
-  const { volunteerProvision, setVolunteerProvision }: State = props.props
-  return <div>Hi</div>
+  const { volunteerProvisions, setVolunteerProvisions }: State = props.props
+  return (
+    <div>
+      <Select
+        closeMenuOnSelect={false}
+        components={animatedComponents}
+        value={volunteerProvisions}
+        isMulti={true}
+        options={provisionOptions}
+        // eslint-disable-next-line
+        onChange={(options: any): void => {
+          setVolunteerProvisions(options)
+        }}
+      />
+    </div>
+  )
 }
 
 export default DropDown
