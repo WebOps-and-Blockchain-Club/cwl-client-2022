@@ -13,7 +13,7 @@ function DropDown(props: Prop) {
   const { volunteerProvisions, setVolunteerProvisions }: State = props.props
   return (
     <div>
-      <Select
+      {/* <Select
         closeMenuOnSelect={false}
         components={animatedComponents}
         value={volunteerProvisions}
@@ -23,7 +23,8 @@ function DropDown(props: Prop) {
         onChange={(options: any): void => {
           setVolunteerProvisions(options)
         }}
-      />
+      /> */}
+      Hi
     </div>
   )
 }

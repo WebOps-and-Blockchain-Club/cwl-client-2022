@@ -21,7 +21,7 @@ function App() {
     data: Volunteer[] | null
     isPending: boolean
     error: string
-  } = useFetch('http://localhost:5000/volunteers/')
+  } = useFetch('http://localhost:4000/volunteers/')
   const user: User | null = useCheckUser()
 
   return (
