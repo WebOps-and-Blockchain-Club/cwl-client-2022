@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TextField, Grid,  } from '@mui/material'
+import { TextField, Grid, withStyles, Button } from '@mui/material'
 import '../../styles/cp_style.css'
 
 const PersonDetails = () => {
@@ -19,47 +19,32 @@ const PersonDetails = () => {
 
   return (
     <Grid container className='page'>
-      <Grid container direction='row' alignItems='center' alignContent='center'>
-        <Grid item xs={2}>
-          <h3>Name: </h3>
-        </Grid>
-        <Grid item xs={10}>
-          <TextField
-            name='name'
-            id='name'
-            value={name}
-            fullWidth
-            margin='normal'
-            label='Enter your name'
-            variant='filled'
-            onChange={handleNameChange}
-            // disabled={formSubmitted}
-          />
-        </Grid>
+      <Grid item xs={10} sm={10} md={10}>
+        <TextField
+          name='name'
+          id='name'
+          value={name}
+          fullWidth
+          margin='normal'
+          label='Enter your name'
+          variant='filled'
+          onChange={handleNameChange}
+        />
       </Grid>{' '}
-      <Grid container direction='row' alignItems='center'>
-        <Grid item xs={2}>
-          <h3>Phone Number: </h3>
-        </Grid>
-        <Grid item xs={10}>
-          <TextField
-            name='phone'
-            id='phone'
-            value={phone}
-            fullWidth
-            margin='normal'
-            label='Enter your phone number '
-            variant='filled'
-            onChange={handlePhoneChange}
-            // disabled={formSubmitted}
-          />
-        </Grid>
+      <Grid item xs={10} sm={10} md={10}>
+        <TextField
+          name='phone'
+          id='phone'
+          value={phone}
+          fullWidth
+          margin='normal'
+          label='Enter your phone number '
+          variant='filled'
+          onChange={handlePhoneChange}
+        />
       </Grid>{' '}
-      <Grid container direction='row' alignItems='center'>
-        <Grid item xs={2}>
-          <h3>OTP: </h3>
-        </Grid>
-        <Grid item xs={10}>
+      <Grid container direction='row' alignItems='center' justifyContent='center'>
+        <Grid item xs={6} sm={7} md={7}>
           <TextField
             name='otp'
             id='otp'
@@ -69,8 +54,10 @@ const PersonDetails = () => {
             label='Enter your OTP '
             variant='filled'
             onChange={handleOtpChange}
-            // disabled={formSubmitted}
           />
+        </Grid>
+        <Grid item xs={4} sm={3} md={3}>
+          <Button variant='contained'>Get OTP</Button>
         </Grid>
       </Grid>
     </Grid>

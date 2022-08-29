@@ -1,69 +1,48 @@
-import React, { useState } from 'react';
-// import PropTypes from 'prop-types';
-import { withStyles, FormControlLabel, Grid, Switch } from '@mui/material';
+// import { useState } from 'react'
+import { Grid, Button, Typography } from '@mui/material'
 import '../../styles/cp_style.css'
 
+const complaint = [
+  { id: 1, name: 'Street Light', state: false },
+  { id: 2, name: 'Water Logging', state: true },
+  { id: 3, name: 'Electricity', state: false },
+  { id: 4, name: 'Food', state: false },
+  { id: 5, name: 'Drains', state: false },
+  { id: 6, name: 'Shelter', state: false },
+  { id: 7, name: 'General', state: false },
+  { id: 8, name: 'Road and Footpath', state: false },
+]
 
 const ComplaintType = () => {
-   
- const complaint=[{'asd', 'asdac', 'asdc']
-const ComplaintType = (complaint) => {
-   const [serviceSelected, setServiceSelected] = useState(getInitialState())};
-  const handleChange = (name) => (e) => {
-    const selected = { ...serviceSelected, [name]: e.target.checked };
-    setServiceSelected(selected);
-  };
+  //   const [state, setState] = useState({ complaint })
 
-//   const textSelected = Object.keys(serviceSelected)
-//     .filter((key) => serviceSelected[key])
-//     .join(', ');
+  //   const handleChange = (id: number) => (e: { preventdefault: () => void }) => {
+  //     e.preventdefault()
+  //     setState((state) => ({
+  //       ...state,
+  //       state: !state,
+  //     }))
+  //   }
 
-  return ( 
-    <Grid
-      container
-      className='complaintType'
-      justify='center'
-      alignItems='center'
-      spacing={0}
-    >
-      
-        <Grid
-          item
-          // key={complaint[]}
-          container
-          justify='space-between'
-          alignItems='center'
-          className='row'
-        >
-          <p>option1</p>
-          <FormControlLabel
-            control={
-              <Switch
-                onChange={handleChange(complaint[])}
-                value={complaint[]}
-                color='primary'
-              />
-            }
-            label={complaint[]}
-            checked={serviceSelected[complaint[]]}
-            labelPlacement='start'
-          />
+  return (
+    <Grid container alignItems='center' justifyContent='center'>
+      <Grid item display='flex' xs={12} sm={10} md={10}>
+        <Typography variant='h6'>Select your complaint type:</Typography>
+      </Grid>
+      {complaint.map((complaint) => (
+        <Grid item key={complaint.id} display='flex' xs={7} sm={5} md={5}>
+          <Button
+            sx={{ width: 200, padding: 0.5, margin: 0.5 }}
+            key={complaint.id}
+            // onClick={handleChange(complaint.id)}
+            variant={complaint.state ? 'contained' : 'outlined'}
+          >
+            {complaint.name}
+          </Button>
         </Grid>
-      
-      <input
-        type='text'
-        value={textSelected}
-        name='selected services'
-        id='selected-services'
-        style={{ width: 1, height: 1, opacity: 0.1 }}
-        readOnly
-      />
+      ))}
     </Grid>
-  );
-};
+  )
+}
 
-// SelectService.propTypes = {
-//   classes: PropTypes.object
-// };
-// export default withStyles(style)(ComplaintType);
-export default ComplaintType;
+export default ComplaintType

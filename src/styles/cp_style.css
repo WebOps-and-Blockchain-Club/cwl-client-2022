@@ -1,71 +1,62 @@
 .App {
-    position: relative;
-    font-family: sans-serif;
-    text-align: center;
-    width: 100vw;
-    min-height: 100vh;
-    background-image: url("https://images.unsplash.com/photo-1554303867-f61340bb2cf5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80");
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
-    z-index: 1;
-  }
-.App::before {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: #000000;
-    opacity: 0.2;
-    z-index: -1;
-  }
-/* .wizard {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 0;
-    z-index: 2;
-    pointer-events: all;
-  } */
-  
-.content {
-    border: 8px solid white;
-    margin: 16;
-    padding: "36px 0 0";
-    background: rgba(255,255,255,0.9);
-    box-shadow: 0px 16px 26px -10px rebeccapurple;
+  position: relative;
+  font-family: sans-serif;
+  text-align: center;
+  width: 100vw;
+  min-height: 100vh;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    162deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 9, 121, 1) 33%,
+    rgba(0, 212, 255, 1) 100%
+  ); /* background-image: url('https://images.unsplash.com/photo-1554303867-f61340bb2cf5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80');
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  z-index: 1; */
 }
-.navigation {
-    width: 110;
-    font-size: 12;
-/*       
-      [theme.breakpoints.down("xs")]: {
-        fontSize: 10,
-        width: 90
-      } */
+.App::before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #000000;
+  opacity: 0.2;
+  z-index: -1;
 }
 
-.prevBtn{
+.content {
+  border: 8px solid white;
+  background: rgba(125, 125, 125, 0.9);
+  box-shadow: rebeccapurple;
+  display: inline-block;
+}
+.navigation {
+  width: 110;
+  font-size: 12;
+}
+
+.prevBtn {
   width: 110;
   font-size: 12;
   color: grey;
   background: white;
   box-shadow: 5rem;
 }
-  
-.page{
+
+.page {
   padding: 3;
   align-items: center;
-  justify-content: center ;
-  height: "100%";
+  justify-content: center;
+  height: '100%';
   max-width: 450;
-  margin: "0 auto";
-  /* "& input:disabled": { opacity: 0.5 } */
+  margin: '0 auto';
+}
+
+.navButtons {
+  padding-top: 2rem;
 }

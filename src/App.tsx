@@ -1,5 +1,4 @@
-import Content from './components/cp_components/content'
-import ComplaintPortal from './pages/ComplaintPortal/formPage'
+import ComplaintPortal from './pages/ComplaintPortal/complaintPortal'
 
 const App = () => {
   return (
