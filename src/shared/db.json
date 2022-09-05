@@ -69,6 +69,13 @@
       "depth": 3.6,
       "image": "https://i.kym-cdn.com/photos/images/original/000/369/488/61d.jpeg",
       "id": 10
+    },
+    {
+      "lng": 80.23412800518427,
+      "lat": 12.991351869415878,
+      "depth": 5,
+      "image": "blob:http://localhost:3000/221c0087-d47c-452d-9514-eb14d1ef719c",
+      "id": 11
     }
   ],
   "volunteers": [
@@ -76,19 +83,29 @@
       "id": 1,
       "name": "SPARTACUS",
       "phoneNumber": "1234567890",
-      "provisions": ["Shelter", "Sanitary Items"]
+      "provisions": [
+        "Shelter",
+        "Sanitary Items"
+      ]
     },
     {
       "id": 2,
       "name": "Aditya",
       "phoneNumber": "6543217890",
-      "provisions": ["Shelter", "Sanitary Items", "Groceries"]
+      "provisions": [
+        "Shelter",
+        "Sanitary Items",
+        "Groceries"
+      ]
     },
     {
       "id": 3,
       "name": "Someone",
       "phoneNumber": "123874560",
-      "provisions": ["Food", "Groceries"]
+      "provisions": [
+        "Food",
+        "Groceries"
+      ]
     }
   ]
 }
