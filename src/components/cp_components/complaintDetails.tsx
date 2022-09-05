@@ -21,6 +21,7 @@ const ComplaintDetails = () => {
           name='complaint'
           id='complaint'
           value={complaint}
+          required
           fullWidth
           margin='normal'
           label='Complaint'
@@ -43,7 +44,12 @@ const ComplaintDetails = () => {
         />
       </Grid>
       <Grid item xs={10} sm={10} md={10}>
-        <Button sx={{ borderRadius: 1, margin: 2 }} variant='contained' startIcon={<PhotoCamera />}>
+        <Button
+          sx={{ borderRadius: 1, margin: 2 }}
+          variant='contained'
+          startIcon={<PhotoCamera />}
+          color='success'
+        >
           Upload
         </Button>
       </Grid>

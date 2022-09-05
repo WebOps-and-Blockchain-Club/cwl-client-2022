@@ -17,17 +17,24 @@ const ComplaintPortal = () => {
     setActiveStep(activeStep - 1)
   }
 
+  const [submitted, setSubmitted] = useState(false)
+  const handleSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault()
+    setSubmitted(true)
+  }
+
   const tabs = ['PersonDetail', 'Address', 'ComplaintType', 'ComplaintDetails']
 
   const pageDisplay = () => {
-    if (activeStep === 0) {
-      return <PersonDetails />
-    } else if (activeStep === 1) {
-      return <Address />
-    } else if (activeStep === 2) {
-      return <ComplaintType />
-    } else if (activeStep === 3) {
-      return <ComplaintDetails />
+    switch (activeStep) {
+      case 0:
+        return <PersonDetails />
+      case 1:
+        return <Address />
+      case 2:
+        return <ComplaintType />
+      case 3:
+        return <ComplaintDetails />
     }
   }
 
@@ -39,15 +46,26 @@ const ComplaintPortal = () => {
     >
       <div>{pageDisplay()}</div>
       <div className='navButtons'>
-        <Button disabled={activeStep === 0} onClick={handlePrev} className='prevBtn'>
+        <Button
+          disabled={activeStep === 0}
+          onClick={handlePrev}
+          className='prevBtn'
+          color='success'
+        >
           Back
         </Button>
         {activeStep < tabs.length - 1 ? (
-          <Button color='primary' className='navigation' variant='contained' onClick={handleNext}>
+          <Button color='success' className='navigation' variant='contained' onClick={handleNext}>
             Next
           </Button>
         ) : (
-          <Button type='submit' color='primary' className='navigation' variant='contained'>
+          <Button
+            type='submit'
+            color='success'
+            className='navigation'
+            variant='contained'
+            onSubmit={handleSubmit}
+          >
             Submit
           </Button>
         )}

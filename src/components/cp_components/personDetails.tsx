@@ -1,21 +1,23 @@
 import React, { useState } from 'react'
-import { TextField, Grid, withStyles, Button } from '@mui/material'
+import { TextField, Grid, Button } from '@mui/material'
 import '../../styles/cp_style.css'
 
 const PersonDetails = () => {
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [otp, setOtp] = useState('')
+  const [name, setName] = useState({ name: '' })
+  const [phone, setPhone] = useState({ phone: '', state: 'false' })
+  const [otp, setOtp] = useState({ otp: '', state: 'false' })
 
-  const handleNameChange = (e: { target: { value: React.SetStateAction<string> } }) => {
+  const [error, setError] = useState(false)
+
+  const handleNameChange = (e: { target: { value: React.SetStateAction<{ name: string }> } }) => {
     setName(e.target.value)
   }
-  const handlePhoneChange = (e: { target: { value: React.SetStateAction<string> } }) => {
-    setPhone(e.target.value)
-  }
-  const handleOtpChange = (e: { target: { value: React.SetStateAction<string> } }) => {
-    setOtp(e.target.value)
-  }
+  // const handlePhoneChange = (e: { target: { value: React.SetStateAction<string> } }) => {
+  //   setPhone(e.target.value)
+  // }
+  // const handleOtpChange = (e: { target: { value: React.SetStateAction<string> } }) => {
+  //   setOtp(e.target.value)
+  // }
 
   return (
     <Grid container className='page'>
@@ -26,9 +28,11 @@ const PersonDetails = () => {
           value={name}
           fullWidth
           margin='normal'
-          label='Enter your name'
+          label='Name'
           variant='filled'
-          onChange={handleNameChange}
+          // onChange={handleNameChange}
+          error={error === true}
+          helperText={error ? 'Please enter your name' : ''}
         />
       </Grid>{' '}
       <Grid item xs={10} sm={10} md={10}>
@@ -40,7 +44,7 @@ const PersonDetails = () => {
           margin='normal'
           label='Enter your phone number '
           variant='filled'
-          onChange={handlePhoneChange}
+          // onChange={handlePhoneChange}
         />
       </Grid>{' '}
       <Grid container direction='row' alignItems='center' justifyContent='center'>
@@ -53,11 +57,13 @@ const PersonDetails = () => {
             margin='normal'
             label='Enter your OTP '
             variant='filled'
-            onChange={handleOtpChange}
+            // onChange={handleOtpChange}
           />
         </Grid>
         <Grid item xs={4} sm={3} md={3}>
-          <Button variant='contained'>Get OTP</Button>
+          <Button variant='contained' color='success'>
+            Get OTP
+          </Button>
         </Grid>
       </Grid>
     </Grid>
