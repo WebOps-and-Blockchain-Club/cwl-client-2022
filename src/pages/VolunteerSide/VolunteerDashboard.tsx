@@ -1,30 +1,38 @@
 import React from 'react'
 import { useLocation } from 'wouter'
-import { Button } from '@mui/material'
+import { Button, Paper, Typography } from '@mui/material'
 import VolunteerTable from './VolunteerTable'
-
+import Box from '@mui/material/Box'
 function VolunteerDashboard() {
-  const [location, setLocation] = useLocation() // eslint-disable-line
+  // eslint-disable-line
 
   return (
     <>
-      <div style={{ display: 'flex', marginBottom: '10px' }}>
-        <div style={{ fontSize: '40px', textAlign: 'center' }}>Dashboard</div>
-        <div style={{ width: '80%' }}></div>
-        <div style={{ textAlign: 'right' }}>
-          <Button
-            variant='contained'
-            style={{ fontSize: '20px' }}
-            onClick={() => {
-              localStorage.removeItem('USER')
-              window.location.reload()
-            }}
-          >
-            Logout
-          </Button>
-        </div>
-      </div>
-      <VolunteerTable />
+      <Typography
+        component='h1'
+        variant='h3'
+        align='center'
+        style={{ fontFamily: '"Times New Roman", Times, serif', textAlign: 'center' }}
+      >
+        Volunteer Dashboard
+      </Typography>
+      {/* <div style={{ display: 'flex', marginBottom: '10px' }}> */}
+      <Box textAlign='right' style={{ paddingRight: '40px',paddingBottom:'20px' }}>
+        <Button
+          variant='contained'
+          size='large'
+          onClick={() => {
+            localStorage.removeItem('USER')
+            window.location.reload()
+          }}
+        >
+          Logout
+        </Button>
+      </Box>
+      {/* </div> */}
+    
+        <VolunteerTable/>
+     
       <div>
         <div style={{ border: '1px solid black' }}></div>
       </div>

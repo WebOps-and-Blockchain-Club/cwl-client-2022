@@ -89,8 +89,8 @@
       {
         "id": 3,
         "name": "Someone",
-        "phoneNumber": "123874560",
-        "password":"something1234",
+        "phoneNumber": "1111111111",
+        "password":"1234",
         "provisions": ["Food", "Groceries"]
       }
     ]
