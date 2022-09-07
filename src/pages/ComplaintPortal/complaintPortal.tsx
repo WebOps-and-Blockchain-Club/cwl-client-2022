@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Paper } from '@mui/material'
+import { Button, Paper, Typography } from '@mui/material'
 import '../../styles/cp_style.css'
 import PersonDetails from '../../components/cp_components/personDetails'
 import Address from '../../components/cp_components/address'
@@ -8,6 +8,32 @@ import ComplaintType from '../../components/cp_components/complaintType'
 
 const ComplaintPortal = () => {
   const [activeStep, setActiveStep] = useState(0)
+  // const [name, setName] = useState({ name: '' })
+  // const [phone, setPhone] = useState({ phone: '', state: 'false' })
+  // const [otp, setOtp] = useState({ otp: '', state: 'false' })
+
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    otp: '',
+  })
+
+  const handleInputData = (input) => (e) => {
+    const { value } = e.target
+    setFormData((prevState) => ({
+      ...prevState,
+      [input]: value,
+    }))
+  }
+  // const handleNameChange = (e) => {
+  //   setName(e.target.value)
+  // }
+  // const handlePhoneChange = (e) => {
+  //   setPhone(e.target.value)
+  // }
+  // const handleOtpChange = (e) => {
+  //   setOtp(e.target.value)
+  // }
 
   const handleNext = () => {
     setActiveStep(activeStep + 1)
@@ -28,22 +54,51 @@ const ComplaintPortal = () => {
   const pageDisplay = () => {
     switch (activeStep) {
       case 0:
-        return <PersonDetails />
+        return (
+          <div>
+            <Typography variant='h5' className='title'>
+              My Details
+            </Typography>
+            <PersonDetails values={formData} handleFormData={handleInputData} />
+          </div>
+        )
       case 1:
-        return <Address />
+        return (
+          <div>
+            <Typography variant='h5' className='title'>
+              My Address
+            </Typography>
+            <Address />
+          </div>
+        )
       case 2:
-        return <ComplaintType />
+        return (
+          <div>
+            <Typography variant='h5' className='title'>
+              Complaint Type
+            </Typography>
+            <ComplaintType />
+          </div>
+        )
       case 3:
-        return <ComplaintDetails />
+        return (
+          <div>
+            <Typography variant='h4' className='title'>
+              Complaint Details
+            </Typography>
+            <ComplaintDetails />
+          </div>
+        )
     }
   }
+  const paperStyle = { padding: '50px' }
 
   return (
-    <Paper
-      elevation={10}
-      className='content'
-      sx={{ margin: 2, verticalAlign: 'middle', maxWidth: 500 }}
-    >
+    <Paper elevation={10} className='content' style={paperStyle}>
+      <Typography variant='h4' className='heading'>
+        {' '}
+        Complaint Portal
+      </Typography>
       <div>{pageDisplay()}</div>
       <div className='navButtons'>
         <Button

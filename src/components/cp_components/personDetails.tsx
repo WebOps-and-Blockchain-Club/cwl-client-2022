@@ -2,22 +2,8 @@ import React, { useState } from 'react'
 import { TextField, Grid, Button } from '@mui/material'
 import '../../styles/cp_style.css'
 
-const PersonDetails = () => {
-  const [name, setName] = useState({ name: '' })
-  const [phone, setPhone] = useState({ phone: '', state: 'false' })
-  const [otp, setOtp] = useState({ otp: '', state: 'false' })
-
+const PersonDetails = ({ values, handleFormData }) => {
   const [error, setError] = useState(false)
-
-  const handleNameChange = (e: { target: { value: React.SetStateAction<{ name: string }> } }) => {
-    setName(e.target.value)
-  }
-  // const handlePhoneChange = (e: { target: { value: React.SetStateAction<string> } }) => {
-  //   setPhone(e.target.value)
-  // }
-  // const handleOtpChange = (e: { target: { value: React.SetStateAction<string> } }) => {
-  //   setOtp(e.target.value)
-  // }
 
   return (
     <Grid container className='page'>
