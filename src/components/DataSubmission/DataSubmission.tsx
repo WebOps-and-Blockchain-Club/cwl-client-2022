@@ -1,8 +1,16 @@
-import { TextField, Typography, Button } from '@mui/material'
+import { TextField, Typography, Button, Paper } from '@mui/material'
+import { shadows } from '@mui/system'
+import InputAdornment from '@mui/material/InputAdornment'
+
 import { useEffect, useState, useContext } from 'react'
 import Data from '../../utils/Context'
 import axios from 'axios'
 import { useLocation } from 'wouter'
+import NavBar from '../NavBar/NavBar'
+import { AddAPhoto } from '@mui/icons-material'
+import '../../styles/DataSubmission/DataSubmission.css'
+import { blueGrey } from '@mui/material/colors'
+
 const DataSubmission = (): JSX.Element => {
   const { coord, setCoord } = useContext(Data)
   const [depth, setDepth] = useState(0)
@@ -19,11 +27,13 @@ const DataSubmission = (): JSX.Element => {
       })
     }
   }, [])
+
   const handleImageUpload = (e: { target: { files: any } }) => {
     setFile(e.target.files[0])
     setImageURL(URL.createObjectURL(e.target.files[0]))
     console.log(URL.createObjectURL(e.target.files[0]))
   }
+
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault()
     axios
@@ -39,23 +49,64 @@ const DataSubmission = (): JSX.Element => {
       })
       .catch((err) => console.log(err))
   }
+  const paperStyle = {
+    padding: '15px 20px 50px',
+    width: 500,
+    margin: '10vh auto',
+    backgroundColor: '#b3e5fc',
+  }
   return (
-    <div>
-      <div className='mx-auto'>
-        <Typography variant='h5'>Submit Your Area Water Level Data </Typography>
-      </div>
-      <div>
-        <div></div>
-        <div>
+    <div className='data-page'>
+      <NavBar />
+      <Paper className='paper' elevation={20} style={paperStyle}>
+        <div className='title'>
+          <Typography variant='h3' sx={{ fontWeight: 'bold', justifyContent: 'center' }}>
+            Water in My Area
+          </Typography>
+        </div>
+        <div className='input'>
           <TextField
-            color='success'
-            label='Water Level'
+            color='primary'
+            placeholder='ft'
+            // label='in feet'
             variant='outlined'
             onChange={(e) => setDepth(parseFloat(e.target.value))}
+            sx={{ boxShadow: 15, borderRadius: 5, outline: 'none' }}
+            InputProps={{
+              endAdornment: <InputAdornment position='end'>ft</InputAdornment>,
+              style: {
+                fontSize: 50,
+                width: '25rem',
+                textAlign: 'center',
+                color: '#4fc3f7',
+                backgroundColor: '#ffffff',
+                borderRadius: 10,
+              },
+            }}
+            inputProps={{
+              style: {
+                fontSize: 50,
+                width: '25rem',
+                textAlign: 'center',
+                color: '#4fc3f7',
+                backgroundColor: '#ffffff',
+                borderRadius: 10,
+              },
+              '&:focus': {
+                outline: 'none',
+              },
+            }}
           />
-          <div>
-            <Button variant='contained' component='label' color='success'>
-              Upload Image
+        </div>
+        <div className='button'>
+          <div className='upload'>
+            <Button
+              variant='contained'
+              component='label'
+              color='primary'
+              sx={{ fontSize: 17, height: 50 }}
+            >
+              <AddAPhoto fontSize='large' /> upload
               <input
                 type='file'
                 accept='image/*'
@@ -71,13 +122,19 @@ const DataSubmission = (): JSX.Element => {
               </div>
             )}
           </div>
+
+          <div className='submit'>
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={handleSubmit}
+              sx={{ fontSize: 18, height: 50, width: 140 }}
+            >
+              Submit
+            </Button>
+          </div>
         </div>
-      </div>
-      <div>
-        <Button variant='contained' color='success' onClick={handleSubmit}>
-          Submit
-        </Button>
-      </div>
+      </Paper>
     </div>
   )
 }

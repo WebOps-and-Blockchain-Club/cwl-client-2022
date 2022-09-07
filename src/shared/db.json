@@ -76,6 +76,34 @@
       "depth": 5,
       "image": "blob:http://localhost:3000/221c0087-d47c-452d-9514-eb14d1ef719c",
       "id": 11
+    },
+    {
+      "lng": 80.23401738352514,
+      "lat": 12.991318797492537,
+      "depth": 5,
+      "image": "",
+      "id": 12
+    },
+    {
+      "lng": 80.2707,
+      "lat": 13.0827,
+      "depth": 25,
+      "image": "",
+      "id": 13
+    },
+    {
+      "lng": 80.2707,
+      "lat": 13.0827,
+      "depth": 5,
+      "image": "blob:http://localhost:3000/c774859a-81f4-4196-835a-1f181385afec",
+      "id": 14
+    },
+    {
+      "lng": 80.2707,
+      "lat": 13.0827,
+      "depth": 0,
+      "image": "blob:http://localhost:3000/42d91ef9-42a3-45c5-9cc0-f414cbd72c3b",
+      "id": 15
     }
   ],
   "volunteers": [

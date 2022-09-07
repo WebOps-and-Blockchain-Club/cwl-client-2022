@@ -1,13 +1,30 @@
 import React from 'react'
-import Map from '../components/Map/Map'
-import '../styles/Maps/MapDisplay.css';
+import MapNav from '../components/Map/Map_Nav'
+import '../styles/Maps/MapDisplay.css'
 import '../styles/Maps/Marker.css'
-const Home = () => {
-    return (
-        <div>
-            <Map />
-        </div>
-    )
-}
+import DataSubmission from '../components/DataSubmission/DataSubmission'
+import { Switch, Route } from 'wouter'
+import NavBar from '../components/NavBar/NavBar'
+import Map from '../components/Map/Map'
+const Home = () => (
+  <div>
+    <MapNav />
+    {/* <Switch>
+      <Route path='/' component={DataSubmission} />
+      <Route
+        path='/map'
+        component={() => (
+          <div>
+            Hi
+            <NavBar />
+            <div>
+                          <Map /> 
+            </div>
+          </div>
+        )}
+      />
+    </Switch>*/}
+  </div>
+)
 
 export default Home
