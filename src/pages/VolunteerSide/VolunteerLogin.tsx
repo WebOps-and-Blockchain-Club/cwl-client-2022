@@ -6,31 +6,30 @@ import {
   Paper,
   Grid,
   Link,
-  Avatar,
   CssBaseline,
-  FormControlLabel,
-  Checkbox,
   Box,
   Container,
+  Avatar,
+  FormControl,
+  InputLabel,
+  InputAdornment,
+  IconButton,
+  OutlinedInput,
 } from '@mui/material'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { makeStyles } from '@mui/styles'
 import Volunteer from '../../interfaces/VolunteerSide/Volunteer'
 import { useLocation } from 'wouter'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
 const theme = createTheme()
 const useStyles: any = makeStyles({
   main: {
-    // background: '#90EE90',
-    // border: 0,
-    // borderRadius: 3,
-    // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    // color: 'white',
-    // height:  ,
     textAlign: 'center',
     margin: 'auto',
     padding: '0 100px',
-    // alignItems: 'center',
   },
   content: {},
 })
@@ -55,6 +54,11 @@ function VolunteerLogin({ volunteerList, err }: { volunteerList: Volunteer[] | n
   ] = useState('')
   const [error, setError]: [string, React.Dispatch<React.SetStateAction<string>>] = useState(err)
   const classes = useStyles()
+  const [showPassword, setShowPassword] = useState(false)
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword)
+  }
+
   const handleSubmit = (): void => {
     if (!volunteerList) {
       return
@@ -165,97 +169,103 @@ function VolunteerLogin({ volunteerList, err }: { volunteerList: Volunteer[] | n
     //   </form>
     // <div style={{ color: 'red' }}>{error}</div>
     // </div>
-    <div style={{ background: 'linear-gradient(white,#0073e6,white)' }}>
-      <ThemeProvider theme={theme}>
-        <Paper elevation={20} style={paperStyles}>
-          <Container component='main' maxWidth='xs'>
-            <CssBaseline />
-            <Box
-              sx={{
-                marginTop: 6,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
+    // <div style={{ background: 'linear-gradient(white,#0073e6,white)' }}>
+    <ThemeProvider theme={theme}>
+      <Paper elevation={20} style={paperStyles}>
+        <Container component='main' maxWidth='xs'>
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 6,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography
+              component='h1'
+              variant='h4'
+              align='center'
+              style={{ fontFamily: '"Times New Roman", Times, serif', textAlign: 'center' }}
             >
-              <Typography
-                component='h1'
-                variant='h4'
-                align='center'
-                style={{ fontFamily: '"Times New Roman", Times, serif', textAlign: 'center' }}
-              >
-                Volunteer Sign-In
-              </Typography>
-              <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
-                <TextField
-                  margin='normal'
-                  fullWidth
-                  autoFocus
-                  id='volunteer-phone'
-                  label='Phone'
-                  variant='outlined'
-                  value={volunteerPhone}
-                  onChange={(e) => {
-                    setVolunteerPhone(e.target.value)
-                    e.preventDefault()
-                  }}
-                  error={volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)}
-                  helperText={
-                    volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)
-                      ? 'Please enter a valid phone number'
-                      : ''
-                  }
-                  required
-                />
-
-                <TextField
-                  margin='normal'
-                  fullWidth
+              Sign-In
+            </Typography>
+            <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+              <TextField
+                margin='normal'
+                fullWidth
+                autoFocus
+                id='volunteer-phone'
+                label='Phone'
+                variant='outlined'
+                value={volunteerPhone}
+                onChange={(e) => {
+                  setVolunteerPhone(e.target.value)
+                  e.preventDefault()
+                }}
+                error={volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)}
+                helperText={
+                  volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)
+                    ? 'Please enter a valid phone number'
+                    : ''
+                }
+                required
+              />
+              <FormControl fullWidth required variant='outlined'>
+                <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
+                <OutlinedInput
                   id='volunteer-password'
-                  type='password'
-                  label='Password'
-                  variant='outlined'
+                  type={showPassword ? 'text' : 'password'}
                   value={volunteerPassword}
+                  label='Password'
                   onChange={(e) => {
                     setVolunteerPassword(e.target.value)
                     e.preventDefault()
                   }}
-                  autoComplete='current-password'
-                  required
+                  endAdornment={
+                    <InputAdornment position='end'>
+                      <IconButton
+                        aria-label='toggle password visibility'
+                        onClick={handleClickShowPassword}
+                        edge='end'
+                      >
+                        {!showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                 required
                 />
+              </FormControl>
 
-                <Grid container>
-                  <Grid
-                    item
-                    style={{ paddingTop: '15px', fontFamily: '"Times New Roman", Times, serif' }}
-                  >
-                    <Link href='/volunteer/register' variant='body2'>
-                      Don &apos;t have an account? Sign Up
-                    </Link>
-                  </Grid>
+              <Grid container>
+                <Grid
+                  item
+                  style={{ paddingTop: '15px', fontFamily: '"Times New Roman", Times, serif' }}
+                >
+                  <Link href='/volunteer/register' variant='body2'>
+                    Don &apos;t have an account? Sign Up
+                  </Link>
                 </Grid>
-
-                {/* <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-              Sign In
-            </Button> */}
-                <Box style={{ paddingTop: '20px', paddingBottom: '50px' }}>
-                  <Button
-                    type='submit'
-                    fullWidth
-                    variant='contained'
-                    disabled={!(volunteerPassword && volunteerPhone)}
-                    // sx={{ mt: 3, mb: 2 }}
-                  >
-                    Submit
-                  </Button>
-                </Box>
+              </Grid>
+              <Box style={{ paddingTop: '20px', paddingBottom: '50px' }}>
+                <Button
+                  type='submit'
+                  fullWidth
+                  variant='contained'
+                  disabled={!(volunteerPassword && volunteerPhone)}
+                >
+                  Submit
+                </Button>
               </Box>
             </Box>
-          </Container>
-        </Paper>
-        <div style={{ color: 'red' }}>{error}</div>
-      </ThemeProvider>
-    </div>
+          </Box>
+        </Container>
+      </Paper>
+      <div style={{ color: 'red' }}>{error}</div>
+    </ThemeProvider>
   )
 }
 

@@ -71,8 +71,8 @@ export default function VolunteerTable() {
     //     </TableBody>
     //   </Table>
     // </TableContainer>
-
-<TableContainer component={Paper} style={{padding:'20px 30px'}} >
+<div >
+<TableContainer  >
 <Table sx={{ minWidth:500, maxWidth:1300,borderRadius: '10px' }}aria-label="customized table">
   <TableHead>
     <TableRow>
@@ -80,6 +80,7 @@ export default function VolunteerTable() {
       <StyledTableCell align="center">Location</StyledTableCell>
       <StyledTableCell align="center">Contact No.</StyledTableCell>
       <StyledTableCell align="center">Help Required</StyledTableCell>
+      
     </TableRow>
   </TableHead>
   <TableBody>
@@ -96,5 +97,6 @@ export default function VolunteerTable() {
   </TableBody>
 </Table>
 </TableContainer>
+</div>
   )
 }

@@ -7,7 +7,7 @@ function VolunteerDashboard() {
   // eslint-disable-line
 
   return (
-    <>
+    <div>
       <Typography
         component='h1'
         variant='h3'
@@ -17,7 +17,7 @@ function VolunteerDashboard() {
         Volunteer Dashboard
       </Typography>
       {/* <div style={{ display: 'flex', marginBottom: '10px' }}> */}
-      <Box textAlign='right' style={{ paddingRight: '40px',paddingBottom:'20px' }}>
+      <Box textAlign='right' style={{ paddingRight: '30px', paddingBottom: '20px' }}>
         <Button
           variant='contained'
           size='large'
@@ -30,13 +30,23 @@ function VolunteerDashboard() {
         </Button>
       </Box>
       {/* </div> */}
-    
-        <VolunteerTable/>
-     
-      <div>
-        <div style={{ border: '1px solid black' }}></div>
+
+      <div
+        style={{
+          display: 'flexColumn',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100vw',
+          paddingLeft:'20px',
+          borderRadius:'10px'
+        }}
+      >
+        <VolunteerTable />
       </div>
-    </>
+      {/* <div>
+        <div style={{ border: '1px solid black' }}></div>
+      </div> */}
+    </div>
   )
 }
 
