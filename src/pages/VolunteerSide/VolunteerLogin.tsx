@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+// import { ApolloProvider } from 'react-apollo'
+import { useQuery } from '@apollo/client'
+import { TestQueryDocument } from '../../generated'
 import { Button, TextField } from '@mui/material'
 import Volunteer from '../../interfaces/VolunteerSide/Volunteer'
 import { useLocation } from 'wouter'
@@ -16,29 +19,33 @@ function VolunteerLogin({ volunteerList, err }: { volunteerList: Volunteer[] | n
   ] = useState('')
   const [error, setError]: [string, React.Dispatch<React.SetStateAction<string>>] = useState(err)
 
+  const { data } = useQuery(TestQueryDocument)
+  console.log(data)
   const handleSubmit = (): void => {
-    if (!volunteerList) {
-      return
-    }
+    // if (!volunteerList) {
+    //   return
+    // }
     try {
-      console.log(volunteerList)
-      const res = volunteerList.some((volunteer: Volunteer): boolean => {
-       console.log(volunteer)
-        if (volunteer.phoneNumber === volunteerPhone) {
-          if (volunteer.password === volunteerPassword) {
-            localStorage.setItem('USER', JSON.stringify(volunteer))
-            console.log('Login successful')
-            window.location.reload()
-            console.log('Post redirect')
-            return true
-          }
-          throw Error('Wrong password')
-        }
-        return false
-      })
-      if (!res) {
-        throw Error('This user does not exist')
-      }
+      console.log('Reaching')
+      return
+      // console.log(volunteerList)
+      // const res = volunteerList.some((volunteer: Volunteer): boolean => {
+      //   console.log(volunteer)
+      //   if (volunteer.phoneNumber === volunteerPhone) {
+      //     if (volunteer.password === volunteerPassword) {
+      //       localStorage.setItem('USER', JSON.stringify(volunteer))
+      //       console.log('Login successful')
+      //       window.location.reload()
+      //       console.log('Post redirect')
+      //       return true
+      //     }
+      //     throw Error('Wrong password')
+      //   }
+      //   return false
+      // })
+      // if (!res) {
+      //   throw Error('This user does not exist')
+      // }
       // eslint-disable-next-line
     } catch (error: any) {
       setError(error.message)

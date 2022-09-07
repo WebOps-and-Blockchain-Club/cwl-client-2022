@@ -21,6 +21,8 @@ import {
 import '../../styles/VolunteerRegistrationForm.css'
 // import { getStyles } from '../../utils/GetStyles'
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || ''
+
 const useStyles: any = makeStyles({
   main: {
     // background: '#90EE90',
@@ -86,7 +88,7 @@ function VolunteerRegistrationForm({
           throw Error('Phone number already registered')
         }
       })
-      await fetch('http://localhost:5000/volunteers', {
+      await fetch(BACKEND_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(volunteer),

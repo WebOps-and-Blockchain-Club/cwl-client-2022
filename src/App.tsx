@@ -1,5 +1,6 @@
 import React, { useState, createContext } from 'react' // eslint-disable-line
 import { Router, Switch, Route, Redirect } from 'wouter'
+import { InMemoryCache, ApolloProvider, ApolloClient } from '@apollo/client'
 // import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import VolunteerRegistrationForm from './pages/VolunteerSide/VolunteerRegistrationForm'
 import VolunteerLogin from './pages/VolunteerSide/VolunteerLogin'
@@ -8,6 +9,13 @@ import useFetch from './hooks/useFetch'
 import useCheckUser from './hooks/useCheckUser'
 import Volunteer from './interfaces/VolunteerSide/Volunteer'
 import User from './interfaces/User'
+
+const BACKEND_URL: string = process.env.REACT_APP_BACKEND_URL || ''
+
+const client = new ApolloClient({
+  uri: BACKEND_URL,
+  cache: new InMemoryCache(),
+})
 
 function App() {
   // const [volunteerList, setVolunteerList]: [Volunteer[], any] = useState([]);
@@ -21,12 +29,12 @@ function App() {
     data: Volunteer[] | null
     isPending: boolean
     error: string
-  } = useFetch('http://localhost:4000/volunteers/')
+  } = useFetch(BACKEND_URL)
   const user: User | null = useCheckUser()
 
   return (
     // <VolunteerListContext.Provider value={volunteerList}>
-    <>
+    <ApolloProvider client={client}>
       <Router base='/volunteer'>
         <div className='content'>
           <Switch>
@@ -61,7 +69,7 @@ function App() {
           </Switch>
         </div>
       </Router>
-    </>
+    </ApolloProvider>
   )
 }
 
