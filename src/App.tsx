@@ -1,4 +1,4 @@
-import { Router, Switch, Route } from 'wouter'
+import { Switch, Route } from 'wouter'
 import Data from './utils/Context'
 import { useState } from 'react'
 import DataSubmission from './components/DataSubmission/DataSubmission'
@@ -9,8 +9,8 @@ const App = () => {
     <>
       <Data.Provider value={{ coord, setCoord }}>
         <Switch>
-          <Route path='/' component={Home} />
-          <Route path='/data' component={DataSubmission} />
+          <Route path='/map' component={Home} />
+          <Route path='/' component={DataSubmission} />
         </Switch>
       </Data.Provider>
     </>

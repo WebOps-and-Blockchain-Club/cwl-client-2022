@@ -63,9 +63,9 @@ const NavBar = () => {
       <AppBar position='static'>
         <Toolbar>
           <IconButton size='small' edge='start' color='inherit' aria-label='icon' sx={{ mr: 2 }}>
-            <img src='IIT_Madras_Logo.png' alt='IITM' width='50px' height='auto' />
+            <img src={'../../images/IIT_Madras_Logo.png'} alt='IITM' width='50px' height='auto' />
           </IconButton>
-          <Link to='/Data'>
+          <Link to='/'>
             <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
               Chennai Waterlogging Platform
             </Typography>

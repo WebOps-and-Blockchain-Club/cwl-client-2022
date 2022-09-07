@@ -32,12 +32,14 @@ export default function Map() {
         .then((response) => response.json())
         .then((data) => {
           JSON.stringify(data)
-          data.map((cord: { lng: number; lat: number; id: string; image: string }) =>
+          data.map((cord: { lng: number; lat: number; depth: string; image: string }) =>
             new mapboxgl.Marker()
               .setLngLat([cord.lng, cord.lat])
               .setPopup(
                 new mapboxgl.Popup({ offset: 25 }) // add popups
-                  .setHTML(`<h3>${cord.id}</h3><img src='${cord.image}' height='100px'>`),
+                  .setHTML(
+                    `<h4>Water Level:${cord.depth}</h4><img src='${cord.image}' height='120px'>`,
+                  ),
               )
               .addTo(map.current),
           )

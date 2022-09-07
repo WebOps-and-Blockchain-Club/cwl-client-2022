@@ -67,26 +67,30 @@ const DataSubmission = (): JSX.Element => {
         <div className='input'>
           <TextField
             color='primary'
-            placeholder='ft'
+            placeholder='cm'
             // label='in feet'
             variant='outlined'
             onChange={(e) => setDepth(parseFloat(e.target.value))}
             sx={{ boxShadow: 15, borderRadius: 5, outline: 'none' }}
-            InputProps={{
-              endAdornment: <InputAdornment position='end'>ft</InputAdornment>,
-              style: {
-                fontSize: 50,
-                width: '25rem',
-                textAlign: 'center',
-                color: '#4fc3f7',
-                backgroundColor: '#ffffff',
-                borderRadius: 10,
-              },
-            }}
+            // InputProps={{
+            //   endAdornment: (
+            //     <InputAdornment position='end' >
+            //       cm
+            //     </InputAdornment>
+            //   ),
+            //   style: {
+            //     fontSize: 50,
+            //     width: '25rem',
+            //     textAlign: 'center',
+            //     color: '#4fc3f7',
+            //     backgroundColor: '#ffffff',
+            //     borderRadius: 10,
+            //   },
+            // }}
             inputProps={{
               style: {
                 fontSize: 50,
-                width: '25rem',
+                width: '20rem',
                 textAlign: 'center',
                 color: '#4fc3f7',
                 backgroundColor: '#ffffff',
@@ -98,41 +102,40 @@ const DataSubmission = (): JSX.Element => {
             }}
           />
         </div>
-        <div className='button'>
-          <div className='upload'>
-            <Button
-              variant='contained'
-              component='label'
-              color='primary'
-              sx={{ fontSize: 17, height: 50 }}
-            >
-              <AddAPhoto fontSize='large' /> upload
-              <input
-                type='file'
-                accept='image/*'
-                onChange={handleImageUpload}
-                required
-                name='image'
-                hidden
-              />
-            </Button>
-            {imageURL && (
-              <div>
-                <img src={imageURL} alt='image' />
-              </div>
-            )}
-          </div>
 
-          <div className='submit'>
-            <Button
-              variant='contained'
-              color='primary'
-              onClick={handleSubmit}
-              sx={{ fontSize: 18, height: 50, width: 140 }}
-            >
-              Submit
-            </Button>
-          </div>
+        <div className='upload button'>
+          <Button
+            variant='contained'
+            component='label'
+            color='primary'
+            sx={{ fontSize: 17, height: 50 }}
+          >
+            <AddAPhoto fontSize='large' /> upload
+            <input
+              type='file'
+              accept='image/*'
+              onChange={handleImageUpload}
+              required
+              name='image'
+              hidden
+            />
+          </Button>
+          {imageURL && (
+            <div className='image'>
+              <img src={imageURL} alt='image' width={'100px'} height={'100px'} />
+            </div>
+          )}
+        </div>
+
+        <div className='submit button'>
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={handleSubmit}
+            sx={{ fontSize: 18, height: 50, width: 140 }}
+          >
+            Submit
+          </Button>
         </div>
       </Paper>
     </div>
