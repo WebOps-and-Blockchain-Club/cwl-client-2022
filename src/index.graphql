@@ -1,0 +1,57 @@
+query getWaterData {
+  getWaterData {
+    date
+    location
+    depth
+  }
+}
+
+query getIssues {
+  getIssues {
+    location
+    phoneNumber
+    tags
+    username
+  }
+}
+
+query login($loginInput: LoginInput!) {
+  login(LoginInput: $loginInput) {
+    success
+    username
+    tags
+  }
+}
+
+mutation signUp($volunteerInput: VolunteerInput!) {
+  signUp(VolunteerInput: $volunteerInput) {
+    id
+    tags
+    phoneNumber
+    username
+  }
+}
+
+mutation postIssue($complaintInput: ComplaintInput!) {
+  postIssue(ComplaintInput: $complaintInput) {
+    desc
+    phoneNumber
+    tags
+    location
+  }
+}
+
+mutation updateIssue($id: String!) {
+  updateIssue(ID: $id) {
+    status
+  }
+}
+
+mutation postWaterData($waterDataInput: WaterDataInput!) {
+  postWaterData(WaterDataInput: $waterDataInput) {
+    image
+    location
+    depth
+    date
+  }
+}
