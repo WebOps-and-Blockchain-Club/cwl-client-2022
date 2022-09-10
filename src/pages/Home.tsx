@@ -1,9 +1,9 @@
-import MapNav from '../components/Map/Map_Nav'
+import Map from '../components/Map'
 import '../styles/Maps/MapDisplay.css'
 import '../styles/Maps/Marker.css'
 const Home = () => (
   <div>
-    <MapNav />
+    <Map />
   </div>
 )
 

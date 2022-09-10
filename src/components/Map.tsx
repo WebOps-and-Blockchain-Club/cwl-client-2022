@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import NavBar from '../NavBar/NavBar'
 
 export default function Map() {
   const mapContainer = useRef(null)

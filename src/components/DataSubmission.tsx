@@ -1,22 +1,18 @@
 import { TextField, Typography, Button, Paper } from '@mui/material'
-import { shadows } from '@mui/system'
-import InputAdornment from '@mui/material/InputAdornment'
 
 import { useEffect, useState, useContext } from 'react'
-import Data from '../../utils/Context'
+import Data from '../utils/Context'
 import axios from 'axios'
 import { useLocation } from 'wouter'
-import NavBar from '../NavBar/NavBar'
 import { AddAPhoto } from '@mui/icons-material'
-import '../../styles/DataSubmission/DataSubmission.css'
-import { blueGrey } from '@mui/material/colors'
+import '../styles/DataSubmission/DataSubmission.css'
 
 const DataSubmission = (): JSX.Element => {
   const { coord, setCoord } = useContext(Data)
   const [depth, setDepth] = useState(0)
   const [, setFile] = useState('')
   const [imageURL, setImageURL] = useState('')
-  const [location, setLocation] = useLocation()
+  const [, setLocation] = useLocation()
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(function (position) {
@@ -57,7 +53,6 @@ const DataSubmission = (): JSX.Element => {
   }
   return (
     <div className='data-page'>
-      <NavBar />
       <Paper className='paper' elevation={20} style={paperStyle}>
         <div className='title'>
           <Typography variant='h3' sx={{ fontWeight: 'bold', justifyContent: 'center' }}>

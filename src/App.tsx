@@ -6,8 +6,9 @@ import VolunteerLogin from './pages/VolunteerSide/VolunteerLogin'
 import VolunteerDashboard from './pages/VolunteerSide/VolunteerDashboard'
 import useCheckUser from './hooks/useCheckUser'
 import User from './interfaces/User'
-import DataSubmission from './components/DataSubmission/DataSubmission'
-import Home from './pages/Home'
+import DataSubmission from './components/DataSubmission'
+import Map from './components/Map'
+import NavBar from '../src/components/NavBar'
 import Data from './utils/Context'
 
 const BACKEND_URL: string = process.env.REACT_APP_BACKEND_URL || ''
@@ -24,7 +25,8 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Data.Provider value={{ coord, setCoord }}>
-      <Router base='/volunteer'>
+        <NavBar />
+        <Router base='/volunteer'>
           <Switch>
             <Route
               // exact
@@ -45,13 +47,13 @@ function App() {
             />
             <Route path='/:rest*' component={() => <Redirect to='/login' />} />
           </Switch>
-      </Router>
-      <Router>
-        <Switch>
-          <Route path='/map' component={Home} />
-          <Route path='/' component={DataSubmission} />
-        </Switch>
-      </Router>
+        </Router>
+        <Router>
+          <Switch>
+            <Route path='/map' component={Map} />
+            <Route path='/' component={DataSubmission} />
+          </Switch>
+        </Router>
       </Data.Provider>
     </ApolloProvider>
   )
