@@ -1,58 +1,152 @@
 import React, { useState } from 'react'
-import { TextField, Grid, Button } from '@mui/material'
-import '../../styles/cp_style.css'
+import { TextField, Button } from '@mui/material'
+import '../../styles/ComplaintPortal/cp_style.css'
+import { useForm, SubmitHandler, Controller } from 'react-hook-form'
+import NavButtons from './navButtons'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 
-const PersonDetails = ({ values, handleFormData }) => {
-  const [error, setError] = useState(false)
+interface FormValues {
+  name: string
+  phone: number
+  otp: string
+}
+
+const schema = yup.object().shape({
+  name: yup.string().required(),
+  phone: yup.string(),
+  otp: yup.string(), // need validation over here
+})
+
+const PersonDetails = ({
+  name,
+  phone,
+  otp,
+  handleNameChange,
+  handlePhoneChange,
+  handleOtpChange,
+
+  activeStep,
+  setActiveStep,
+  tabs,
+}: {
+  name: any
+  phone: any
+  otp: any
+  handleNameChange: any
+  handlePhoneChange: any
+  handleOtpChange: any
+
+  activeStep: any
+  setActiveStep: any
+  tabs: any
+}) => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FormValues>({ resolver: yupResolver(schema) })
+
+  const formSubmitHandler: SubmitHandler<FormValues> = (data: FormValues) => {
+    console.log(data)
+  }
+  const handleNext = () => {
+    console.log(errors)
+    if (errors) console.log('error')
+    else setActiveStep(1)
+  }
 
   return (
-    <Grid container className='page'>
-      <Grid item xs={10} sm={10} md={10}>
-        <TextField
+    <form className='page' onSubmit={handleSubmit(formSubmitHandler)}>
+      <div className='text'>
+        <Controller
           name='name'
-          id='name'
-          value={name}
-          fullWidth
-          margin='normal'
-          label='Name'
-          variant='filled'
-          // onChange={handleNameChange}
-          error={error === true}
-          helperText={error ? 'Please enter your name' : ''}
+          // defaultValue=''
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              value={name}
+              label='name'
+              type='text'
+              fullWidth
+              margin='normal'
+              variant='outlined'
+              onChange={handleNameChange}
+              error={!!errors.name}
+              helperText={errors.name ? errors.name?.message : ''}
+            />
+          )}
         />
-      </Grid>{' '}
-      <Grid item xs={10} sm={10} md={10}>
-        <TextField
+      </div>
+
+      <div className='text'>
+        <Controller
           name='phone'
-          id='phone'
-          value={phone}
-          fullWidth
-          margin='normal'
-          label='Enter your phone number '
-          variant='filled'
-          // onChange={handlePhoneChange}
+          // defaultValue=''
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              id='phone'
+              value={phone}
+              fullWidth
+              margin='normal'
+              type='number'
+              label='phone'
+              variant='outlined'
+              onChange={handlePhoneChange}
+              error={!!errors.phone}
+              helperText={errors.phone ? errors.phone?.message : ''}
+            />
+          )}
         />
-      </Grid>{' '}
-      <Grid container direction='row' alignItems='center' justifyContent='center'>
-        <Grid item xs={6} sm={7} md={7}>
-          <TextField
+      </div>
+      <div className='otp'>
+        <div className='otp-text'>
+          <Controller
             name='otp'
-            id='otp'
-            value={otp}
-            fullWidth
-            margin='normal'
-            label='Enter your OTP '
-            variant='filled'
-            // onChange={handleOtpChange}
+            // defaultValue=''
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                id='otp'
+                value={otp}
+                fullWidth
+                margin='normal'
+                label='Enter your OTP '
+                variant='outlined'
+                onChange={handleOtpChange}
+                error={!!errors.otp}
+                helperText={errors.otp ? errors.otp?.message : ''}
+              />
+            )}
           />
-        </Grid>
-        <Grid item xs={4} sm={3} md={3}>
-          <Button variant='contained' color='success'>
+        </div>
+        <div className='otp-button'>
+          <Button variant='contained' color='primary'>
             Get OTP
           </Button>
-        </Grid>
-      </Grid>
-    </Grid>
+        </div>
+      </div>
+      <input type='submit' />
+      <div className='navButtons'>
+        <Button
+          color='primary'
+          type='submit'
+          className='navigation'
+          variant='contained'
+          onClick={handleNext}
+          fullWidth
+          sx={{ height: 45 }}
+        >
+          {/* <input type='submit' /> */}
+          Next
+        </Button>
+      </div>
+    </form>
   )
 }
 

@@ -1,29 +1,29 @@
 import React, { useState } from 'react'
-import { TextField, Grid } from '@mui/material'
-import '../../styles/cp_style.css'
+import { TextField } from '@mui/material'
+import '../../styles/ComplaintPortal/cp_style.css'
 
-const Address = () => {
-  const [area, setArea] = useState('your area')
-  const [locality, setLocality] = useState('your locality')
-  const [street, setStreet] = useState('your street')
-  const [address, setAddress] = useState('')
-
-  const handleAreaChange = (e: { target: { value: React.SetStateAction<string> } }) => {
-    setArea(e.target.value)
-  }
-  const handleLocalityChange = (e: { target: { value: React.SetStateAction<string> } }) => {
-    setLocality(e.target.value)
-  }
-  const handleStreetChange = (e: { target: { value: React.SetStateAction<string> } }) => {
-    setStreet(e.target.value)
-  }
-  const handleAddressChange = (e: { target: { value: React.SetStateAction<string> } }) => {
-    setAddress(e.target.value)
-  }
-
+const Address = ({
+  area,
+  locality,
+  street,
+  address,
+  handleAreaChange,
+  handleLocalityChange,
+  handleStreetChange,
+  handleAddressChange,
+}: {
+  area: any
+  locality: any
+  street: any
+  address: any
+  handleAreaChange: any
+  handleLocalityChange: any
+  handleStreetChange: any
+  handleAddressChange: any
+}) => {
   return (
-    <Grid container className='page'>
-      <Grid item xs={10} sm={10} md={10}>
+    <div className='page'>
+      <div className='text'>
         <TextField
           name='area'
           id='area'
@@ -31,12 +31,12 @@ const Address = () => {
           fullWidth
           margin='normal'
           label='Area'
-          variant='filled'
+          variant='outlined'
           onChange={handleAreaChange}
           disabled={true}
         />
-      </Grid>{' '}
-      <Grid item xs={10} sm={10} md={10}>
+      </div>
+      <div className='text'>
         <TextField
           name='locality'
           id='locality'
@@ -44,12 +44,12 @@ const Address = () => {
           fullWidth
           margin='normal'
           label='Locality'
-          variant='filled'
+          variant='outlined'
           onChange={handleLocalityChange}
           disabled={true}
         />
-      </Grid>{' '}
-      <Grid item xs={10} sm={10} md={10}>
+      </div>
+      <div className='text'>
         <TextField
           name='street'
           id='street'
@@ -57,12 +57,12 @@ const Address = () => {
           fullWidth
           margin='normal'
           label='Street '
-          variant='filled'
+          variant='outlined'
           onChange={handleStreetChange}
           disabled={true}
         />
-      </Grid>{' '}
-      <Grid item xs={10} sm={10} md={10}>
+      </div>
+      <div className='text'>
         <TextField
           multiline
           name='address'
@@ -71,11 +71,11 @@ const Address = () => {
           fullWidth
           margin='normal'
           label='Your detailed location '
-          variant='filled'
+          variant='outlined'
           onChange={handleAddressChange}
         />
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   )
 }
 

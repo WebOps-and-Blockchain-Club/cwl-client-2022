@@ -1,36 +1,39 @@
 import React, { useState } from 'react'
-import { TextField, Grid, Button } from '@mui/material'
+import { TextField, Button } from '@mui/material'
 import { PhotoCamera } from '@mui/icons-material'
-import '../../styles/cp_style.css'
+import '../../styles/ComplaintPortal/cp_style.css'
 
-const ComplaintDetails = () => {
-  const [complaint, setComplaint] = useState('')
-  const [complaintDetails, setComplaintDetails] = useState('')
-
-  const handleComplaintChange = (e: { target: { value: React.SetStateAction<string> } }) => {
-    setComplaint(e.target.value)
-  }
-  const handleComplaintDetailsChange = (e: { target: { value: React.SetStateAction<string> } }) => {
-    setComplaintDetails(e.target.value)
-  }
-
+const ComplaintDetails = ({
+  complaint,
+  complaintDetails,
+  handleComplaintChange,
+  handleComplaintDetailsChange,
+  imageURL,
+  handleImageUpload,
+}: {
+  complaint: any
+  complaintDetails: any
+  handleComplaintChange: any
+  handleComplaintDetailsChange: any
+  imageURL: any
+  handleImageUpload: any
+}) => {
   return (
-    <Grid container className='page'>
-      <Grid item xs={10} sm={10} md={10}>
+    <div className='page'>
+      <div className='text'>
         <TextField
           name='complaint'
           id='complaint'
           value={complaint}
-          required
           fullWidth
           margin='normal'
           label='Complaint'
-          variant='filled'
+          variant='outlined'
           onChange={handleComplaintChange}
           //   disabled={true}
         />
-      </Grid>{' '}
-      <Grid item xs={10} sm={10} md={10}>
+      </div>
+      <div className='text'>
         <TextField
           multiline
           name='complaintDetails'
@@ -39,21 +42,22 @@ const ComplaintDetails = () => {
           fullWidth
           margin='normal'
           label='Complaint Details (max 400 words)'
-          variant='filled'
+          variant='outlined'
           onChange={handleComplaintDetailsChange}
         />
-      </Grid>
-      <Grid item xs={10} sm={10} md={10}>
-        <Button
-          sx={{ borderRadius: 1, margin: 2 }}
-          variant='contained'
-          startIcon={<PhotoCamera />}
-          color='success'
-        >
-          Upload
+      </div>
+      <div className='upload button'>
+        <Button variant='contained' component='label' color='primary' sx={{ fontSize: 17 }}>
+          <PhotoCamera fontSize='large' /> upload
+          <input type='file' accept='image/*' onChange={handleImageUpload} name='image' hidden />
         </Button>
-      </Grid>
-    </Grid>
+        {imageURL && (
+          <div className='image'>
+            <img src={imageURL} alt='image' width={'auto'} height={'100px'} />
+          </div>
+        )}
+      </div>
+    </div>
   )
 }
 
