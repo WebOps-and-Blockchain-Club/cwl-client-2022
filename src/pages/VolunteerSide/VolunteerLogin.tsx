@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 // import { ApolloProvider } from 'react-apollo'
 import { useQuery } from '@apollo/client'
-import { TestQueryDocument } from '../../generated'
+import { LoginDocument } from '../../generated'
 import { Button, TextField } from '@mui/material'
 import Volunteer from '../../interfaces/VolunteerSide/Volunteer'
 import { useLocation } from 'wouter'
 
 // eslint-disable-next-line
-function VolunteerLogin({ volunteerList, err }: { volunteerList: Volunteer[] | null; err: any }) {
+function VolunteerLogin({ err }: { err: any }) {
   const [location, setLocation] = useLocation() // eslint-disable-line
   const [volunteerPhone, setVolunteerPhone]: [
     string,
@@ -18,34 +18,33 @@ function VolunteerLogin({ volunteerList, err }: { volunteerList: Volunteer[] | n
     React.Dispatch<React.SetStateAction<string>>,
   ] = useState('')
   const [error, setError]: [string, React.Dispatch<React.SetStateAction<string>>] = useState(err)
+  const { data } = useQuery(LoginDocument, {
+    variables: {
+      loginInput: {
+        phoneNumber: volunteerPhone,
+        password: volunteerPassword,
+      },
+    },
+  })
 
-  const { data } = useQuery(TestQueryDocument)
   console.log(data)
+
   const handleSubmit = (): void => {
-    // if (!volunteerList) {
-    //   return
-    // }
     try {
+      if (data?.login.success) {
+        const volunteer: Volunteer = {
+          phoneNumber: volunteerPhone,
+          username: data?.login.username,
+          // tags: JSON.parse(data?.login.tags),
+          tags: ['Food', 'Shelter'],
+        }
+        localStorage.setItem('USER', JSON.stringify(volunteer))
+        console.log('Login successful')
+      }
       console.log('Reaching')
-      return
-      // console.log(volunteerList)
-      // const res = volunteerList.some((volunteer: Volunteer): boolean => {
-      //   console.log(volunteer)
-      //   if (volunteer.phoneNumber === volunteerPhone) {
-      //     if (volunteer.password === volunteerPassword) {
-      //       localStorage.setItem('USER', JSON.stringify(volunteer))
-      //       console.log('Login successful')
-      //       window.location.reload()
-      //       console.log('Post redirect')
-      //       return true
-      //     }
-      //     throw Error('Wrong password')
-      //   }
-      //   return false
-      // })
-      // if (!res) {
-      //   throw Error('This user does not exist')
-      // }
+      console.log(data)
+      window.location.reload()
+
       // eslint-disable-next-line
     } catch (error: any) {
       setError(error.message)

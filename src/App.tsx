@@ -1,11 +1,11 @@
 import React, { useState, createContext } from 'react' // eslint-disable-line
 import { Router, Switch, Route, Redirect } from 'wouter'
-import { InMemoryCache, ApolloProvider, ApolloClient } from '@apollo/client'
+import { InMemoryCache, ApolloProvider, ApolloClient, useQuery } from '@apollo/client'
 // import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import VolunteerRegistrationForm from './pages/VolunteerSide/VolunteerRegistrationForm'
 import VolunteerLogin from './pages/VolunteerSide/VolunteerLogin'
 import VolunteerDashboard from './pages/VolunteerSide/VolunteerDashboard'
-import useFetch from './hooks/useFetch'
+// import useFetch from './hooks/useFetch'
 import useCheckUser from './hooks/useCheckUser'
 import Volunteer from './interfaces/VolunteerSide/Volunteer'
 import User from './interfaces/User'
@@ -18,18 +18,16 @@ const client = new ApolloClient({
 })
 
 function App() {
-  // const [volunteerList, setVolunteerList]: [Volunteer[], any] = useState([]);
-  // const { data } = useFetch("http://localhost:5000/volunteers/");
-  // setVolunteerList(data);
-  const {
-    data,
-    isPending, // eslint-disable-line
-    error, //eslint-disable-line
-  }: {
-    data: Volunteer[] | null
-    isPending: boolean
-    error: string
-  } = useFetch(BACKEND_URL)
+  // const { data } = useQuery()
+  // const {
+  //   data,
+  //   isPending, // eslint-disable-line
+  //   error, //eslint-disable-line
+  // }: {
+  //   data: Volunteer[] | null
+  //   isPending: boolean
+  //   error: string
+  // } = useFetch(BACKEND_URL)
   const user: User | null = useCheckUser()
 
   return (
@@ -42,22 +40,14 @@ function App() {
               // exact
               path='/register'
               component={() =>
-                user ? (
-                  <Redirect to='/dashboard' />
-                ) : (
-                  <VolunteerRegistrationForm volunteerList={data} err={error} />
-                )
+                user ? <Redirect to='/dashboard' /> : <VolunteerRegistrationForm err={'Foo'} />
               }
             />
             <Route
               // exact
               path='/login'
               component={() =>
-                user ? (
-                  <Redirect to='/dashboard' />
-                ) : (
-                  <VolunteerLogin volunteerList={data} err={error} />
-                )
+                user ? <Redirect to='/dashboard' /> : <VolunteerLogin err={'Foo'} />
               }
             />
             <Route

@@ -1,7 +1,5 @@
 export default interface Volunteer {
-  id: number
-  name: string
+  username: string
   phoneNumber: string
-  password: string
-  provisions: string[]
+  tags: string[]
 }
