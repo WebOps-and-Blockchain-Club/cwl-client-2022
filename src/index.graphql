@@ -19,7 +19,7 @@ query login($loginInput: LoginInput!) {
 }
 
 mutation signUp($volunteerInput: VolunteerInput!) {
-  signIn(VolunteerInput: $volunteerInput) {
+  signUp(VolunteerInput: $volunteerInput) {
     id
     tags
     phoneNumber

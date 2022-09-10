@@ -48,7 +48,7 @@ export type Mutation = {
   __typename?: 'Mutation'
   complaintInput: Issue
   postWaterData: WaterData
-  signIn: Volunteer
+  signUp: Volunteer
   updateInput: Issue
 }
 
@@ -60,7 +60,7 @@ export type MutationPostWaterDataArgs = {
   WaterDataInput: WaterDataInput
 }
 
-export type MutationSignInArgs = {
+export type MutationSignUpArgs = {
   VolunteerInput: VolunteerInput
 }
 
@@ -135,7 +135,7 @@ export type SignUpMutationVariables = Exact<{
 
 export type SignUpMutation = {
   __typename?: 'Mutation'
-  signIn: {
+  signUp: {
     __typename?: 'Volunteer'
     id: string
     tags: string
@@ -290,7 +290,7 @@ export const SignUpDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'signIn' },
+            name: { kind: 'Name', value: 'signUp' },
             arguments: [
               {
                 kind: 'Argument',

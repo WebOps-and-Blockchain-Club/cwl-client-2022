@@ -1,11 +1,8 @@
 import React from 'react'
-import { useLocation } from 'wouter'
-import { Button, Paper, Typography } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import VolunteerTable from './VolunteerTable'
 import Box from '@mui/material/Box'
 function VolunteerDashboard() {
-  // eslint-disable-line
-
   return (
     <div>
       <Typography
@@ -37,15 +34,12 @@ function VolunteerDashboard() {
           alignItems: 'center',
           justifyContent: 'center',
           width: '100vw',
-          paddingLeft:'20px',
-          borderRadius:'10px'
+          paddingLeft: '20px',
+          borderRadius: '10px',
         }}
       >
         <VolunteerTable />
       </div>
-      {/* <div>
-        <div style={{ border: '1px solid black' }}></div>
-      </div> */}
     </div>
   )
 }

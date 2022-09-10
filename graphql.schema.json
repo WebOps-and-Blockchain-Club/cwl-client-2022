@@ -410,7 +410,7 @@
             "deprecationReason": null
           },
           {
-            "name": "signIn",
+            "name": "signUp",
             "description": null,
             "args": [
               {

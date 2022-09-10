@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from 'react'
-// import { ApolloProvider } from 'react-apollo'
+import React, { useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { LoginDocument } from '../../generated'
-import { Button, TextField } from '@mui/material'
-=======
-import React, { useState } from 'react'
 import {
   Button,
   TextField,
@@ -25,22 +20,12 @@ import {
 } from '@mui/material'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { makeStyles } from '@mui/styles'
->>>>>>> 659c561f0dbf71c7f13b0ada7305285cefd0665f
 import Volunteer from '../../interfaces/VolunteerSide/Volunteer'
 import { useLocation } from 'wouter'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
 const theme = createTheme()
-const useStyles: any = makeStyles({
-  main: {
-    textAlign: 'center',
-    margin: 'auto',
-    padding: '0 100px',
-  },
-  content: {},
-})
 const paperStyles = {
   padding: '25px 20px',
   width: 450,
@@ -61,7 +46,6 @@ function VolunteerLogin({ err }: { err: any }) {
     React.Dispatch<React.SetStateAction<string>>,
   ] = useState('')
   const [error, setError]: [string, React.Dispatch<React.SetStateAction<string>>] = useState(err)
-<<<<<<< HEAD
   const { data } = useQuery(LoginDocument, {
     variables: {
       loginInput: {
@@ -71,46 +55,25 @@ function VolunteerLogin({ err }: { err: any }) {
     },
   })
 
-  console.log(data)
-=======
-  const classes = useStyles()
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword)
   }
->>>>>>> 659c561f0dbf71c7f13b0ada7305285cefd0665f
 
   const handleSubmit = (): void => {
     try {
-<<<<<<< HEAD
       if (data?.login.success) {
         const volunteer: Volunteer = {
           phoneNumber: volunteerPhone,
           username: data?.login.username,
           // tags: JSON.parse(data?.login.tags),
           tags: ['Food', 'Shelter'],
-=======
-      console.log(volunteerList)
-      const res = volunteerList.some((volunteer: Volunteer): boolean => {
-        console.log(volunteer)
-        if (volunteer.phoneNumber === volunteerPhone) {
-          if (volunteer.password === volunteerPassword) {
-            localStorage.setItem('USER', JSON.stringify(volunteer))
-            console.log('Login successful')
-            window.location.reload()
-            console.log('Post redirect')
-            return true
-          }
-          throw Error('Wrong password')
->>>>>>> 659c561f0dbf71c7f13b0ada7305285cefd0665f
         }
         localStorage.setItem('USER', JSON.stringify(volunteer))
-        console.log('Login successful')
+        window.location.reload()
+      } else {
+        throw Error('Invalid credentials')
       }
-      console.log('Reaching')
-      console.log(data)
-      window.location.reload()
-
       // eslint-disable-next-line
     } catch (error: any) {
       setError(error.message)
@@ -119,86 +82,6 @@ function VolunteerLogin({ err }: { err: any }) {
   }
 
   return (
-    // <div>
-    //   <form
-    //     action='post'
-    //     onSubmit={(e) => {
-    //       handleSubmit()
-    //       e.preventDefault()
-    //     }}
-    //   >
-    //     <Typography
-    //       variant='h4'
-    //       style={{ color: 'grey', textAlign: 'center', paddingBottom: '40px', padding: '20px' }}
-    //     >
-    //       Volunteer Sign-In
-    //     </Typography>
-    //     <Paper elevation={4}
-    //     sx={{
-    //       alignItems:'center'
-    //     }}>
-    //       <div style={{ textAlign: 'center' }}>
-    //         <div style={{ paddingTop: '20px' }}>
-    // <TextField
-    //   style={{ paddingBottom: '20px' }}
-    //   id='volunteer-phone'
-    //   label='Phone'
-    //   variant='outlined'
-    //   color='success'
-    //   value={volunteerPhone}
-    //   onChange={(e) => {
-    //     setVolunteerPhone(e.target.value)
-    //     e.preventDefault()
-    //   }}
-    //   error={volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)}
-    //   helperText={
-    //     volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)
-    //       ? 'Please enter a valid phone number'
-    //       : ''
-    //   }
-    //   required
-    // />
-    //         </div>
-    //         <div>
-    // <TextField
-    //   style={{ paddingBottom: '20px' }}
-    //   id='volunteer-password'
-    //   type='password'
-    //   label='Password'
-    //   variant='outlined'
-    //   color='success'
-    //   value={volunteerPassword}
-    //   onChange={(e) => {
-    //     setVolunteerPassword(e.target.value)
-    //     e.preventDefault()
-    //   }}
-    //   autoComplete='current-password'
-    //   required
-    // />
-    //         </div>
-    //         <Grid container>
-    //           <Grid item>
-    //             <Link href="#" variant="body2">
-    //               {"Don't have an account? Sign Up"}
-    //             </Link>
-    //           </Grid>
-    //         </Grid>
-    //         <div style={{ paddingBottom: '20px' }}>
-    //           <Button
-    //             type='submit'
-    //             variant='contained'
-    //             color='success'
-    //             disabled={!(volunteerPassword && volunteerPhone)}
-    //           >
-    // //             Submit
-    // //           </Button>
-    //         </div>
-    //       </div>
-    //     </Paper>
-    //   </form>
-    // <div style={{ color: 'red' }}>{error}</div>
-    // </div>
-    // <div style={{ background: 'linear-gradient(white,#0073e6,white)' }}>
     <ThemeProvider theme={theme}>
       <Paper elevation={20} style={paperStyles}>
         <Container component='main' maxWidth='xs'>
@@ -222,7 +105,16 @@ function VolunteerLogin({ err }: { err: any }) {
             >
               Sign-In
             </Typography>
-            <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+            <Box
+              component='form'
+              // eslint-disable-next-line
+              onSubmit={(e: any) => {
+                e.preventDefault()
+                handleSubmit()
+              }}
+              noValidate
+              sx={{ mt: 3 }}
+            >
               <TextField
                 margin='normal'
                 fullWidth
@@ -265,7 +157,7 @@ function VolunteerLogin({ err }: { err: any }) {
                       </IconButton>
                     </InputAdornment>
                   }
-                 required
+                  required
                 />
               </FormControl>
 
@@ -288,12 +180,12 @@ function VolunteerLogin({ err }: { err: any }) {
                 >
                   Submit
                 </Button>
+                <div style={{ color: 'red', textAlign: 'center' }}>{error}</div>
               </Box>
             </Box>
           </Box>
         </Container>
       </Paper>
-      <div style={{ color: 'red' }}>{error}</div>
     </ThemeProvider>
   )
 }
