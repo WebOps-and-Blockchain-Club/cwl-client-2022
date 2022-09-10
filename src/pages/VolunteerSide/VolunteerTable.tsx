@@ -1,4 +1,5 @@
 import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
 import {
   Table,
   TableBody,
@@ -6,24 +7,44 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  tableCellClasses,
-} from '@mui/material'
-import { styled } from '@mui/material/styles'
+  Avatar,
+  Paper,
+  Checkbox,
+} from '@material-ui/core'
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
+
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } }
 
 import createData from '../../utils/createData'
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+const useStyles = makeStyles((theme) => ({
+  table: {
+    minWidth: 700,
+    align: 'center',
   },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 15,
+  tableContainer: {
+    borderRadius: 15,
+    margin: '10px 10px',
+    maxWidth: 1000,
   },
-}))
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
+  tableHeaderCell: {
+    fontWeight: 'bold',
+    backgroundColor: theme.palette.primary.dark,
+    fontSize: 'medium',
+    color: theme.palette.getContrastText(theme.palette.primary.dark),
+  },
+  avatar: {
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.getContrastText(theme.palette.primary.light),
+  },
+  name: {
+    fontWeight: 'bold',
+    color: theme.palette.secondary.dark,
+    textTransform: 'capitalize',
+    fontSize: '16px',
+  },
+  name1: {
+    textTransform: 'capitalize',
+    fontSize: '15px',
   },
 }))
 
@@ -35,31 +56,57 @@ const rows = [
 ]
 
 export default function VolunteerTable() {
+  const classes = useStyles()
   return (
-    <div>
-      <TableContainer>
-        <Table
-          sx={{ minWidth: 500, maxWidth: 1300, borderRadius: '10px' }}
-          aria-label='customized table'
-        >
+    <div style={{ display: 'flex', width: '90%', marginLeft: 'auto', marginRight: 'auto' }}>
+      <TableContainer elevation={24} component={Paper} className={classes.tableContainer}>
+        <Table className={classes.table} style={{ margin: 'auto' }} aria-label='simple table'>
           <TableHead>
             <TableRow>
-              <StyledTableCell>Name</StyledTableCell>
-              <StyledTableCell align='center'>Location</StyledTableCell>
-              <StyledTableCell align='center'>Contact No.</StyledTableCell>
-              <StyledTableCell align='center'>Help Required</StyledTableCell>
+              <TableCell className={classes.tableHeaderCell}></TableCell>
+              <TableCell className={classes.tableHeaderCell}>Name</TableCell>
+              <TableCell className={classes.tableHeaderCell} align='center'>
+                Location
+              </TableCell>
+              <TableCell className={classes.tableHeaderCell} align='center'>
+                Contact No.
+              </TableCell>
+              <TableCell className={classes.tableHeaderCell} align='center'>
+                Help Required
+              </TableCell>
+              <TableCell className={classes.tableHeaderCell} align='center'>
+                Status
+              </TableCell>
+              <TableCell className={classes.tableHeaderCell}></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <StyledTableRow key={row.username}>
-                <StyledTableCell component='th' scope='row'>
+              <TableRow key={row.username}>
+                <TableCell>
+                  {' '}
+                  <Avatar alt={row.username} src='.' className={classes.avatar} />
+                </TableCell>
+                <TableCell className={classes.name} component='th' scope='row'>
                   {row.username}
-                </StyledTableCell>
-                <StyledTableCell align='center'>{row.location}</StyledTableCell>
-                <StyledTableCell align='center'>{row.contact}</StyledTableCell>
-                <StyledTableCell align='center'>{row.helpRequired}</StyledTableCell>
-              </StyledTableRow>
+                </TableCell>
+                <TableCell className={classes.name1} align='center'>
+                  {row.location}
+                </TableCell>
+                <TableCell className={classes.name1} align='center'>
+                  {row.contact}
+                </TableCell>
+                <TableCell className={classes.name1} align='center'>
+                  {row.helpRequired}
+                </TableCell>
+                <TableCell align='center'>
+                  <Checkbox {...label} />
+                </TableCell>
+                <TableCell>
+                  {' '}
+                  <DeleteOutlinedIcon />{' '}
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>

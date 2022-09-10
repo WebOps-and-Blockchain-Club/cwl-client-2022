@@ -7,7 +7,12 @@ query getWaterData {
 }
 
 query getIssues {
-  issues
+  getIssues {
+    location
+    phoneNumber
+    tags
+    username
+  }
 }
 
 query login($loginInput: LoginInput!) {
@@ -28,7 +33,7 @@ mutation signUp($volunteerInput: VolunteerInput!) {
 }
 
 mutation postIssue($complaintInput: ComplaintInput!) {
-  complaintInput(ComplaintInput: $complaintInput) {
+  postIssue(ComplaintInput: $complaintInput) {
     desc
     phoneNumber
     tags
@@ -37,7 +42,7 @@ mutation postIssue($complaintInput: ComplaintInput!) {
 }
 
 mutation updateIssue($id: String!) {
-  updateInput(ID: $id) {
+  updateIssue(ID: $id) {
     status
   }
 }

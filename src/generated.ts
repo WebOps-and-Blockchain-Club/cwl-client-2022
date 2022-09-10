@@ -20,6 +20,7 @@ export type ComplaintInput = {
   phoneNumber: Scalars['String']
   status: Scalars['String']
   tags: Scalars['String']
+  username: Scalars['String']
 }
 
 export type Issue = {
@@ -29,6 +30,7 @@ export type Issue = {
   phoneNumber: Scalars['String']
   status: Scalars['String']
   tags: Scalars['String']
+  username: Scalars['String']
   volunteer: Volunteer
 }
 
@@ -46,13 +48,13 @@ export type LoginResponse = {
 
 export type Mutation = {
   __typename?: 'Mutation'
-  complaintInput: Issue
+  postIssue: Issue
   postWaterData: WaterData
   signUp: Volunteer
-  updateInput: Issue
+  updateIssue: Issue
 }
 
-export type MutationComplaintInputArgs = {
+export type MutationPostIssueArgs = {
   ComplaintInput: ComplaintInput
 }
 
@@ -64,14 +66,14 @@ export type MutationSignUpArgs = {
   VolunteerInput: VolunteerInput
 }
 
-export type MutationUpdateInputArgs = {
+export type MutationUpdateIssueArgs = {
   ID: Scalars['String']
 }
 
 export type Query = {
   __typename?: 'Query'
+  getIssues: Array<Issue>
   getWaterData: Array<WaterData>
-  issues: Scalars['String']
   login: LoginResponse
 }
 
@@ -118,7 +120,16 @@ export type GetWaterDataQuery = {
 
 export type GetIssuesQueryVariables = Exact<{ [key: string]: never }>
 
-export type GetIssuesQuery = { __typename?: 'Query'; issues: string }
+export type GetIssuesQuery = {
+  __typename?: 'Query'
+  getIssues: Array<{
+    __typename?: 'Issue'
+    location: string
+    phoneNumber: string
+    tags: string
+    username: string
+  }>
+}
 
 export type LoginQueryVariables = Exact<{
   loginInput: LoginInput
@@ -150,7 +161,7 @@ export type PostIssueMutationVariables = Exact<{
 
 export type PostIssueMutation = {
   __typename?: 'Mutation'
-  complaintInput: {
+  postIssue: {
     __typename?: 'Issue'
     desc: string
     phoneNumber: string
@@ -165,7 +176,7 @@ export type UpdateIssueMutationVariables = Exact<{
 
 export type UpdateIssueMutation = {
   __typename?: 'Mutation'
-  updateInput: { __typename?: 'Issue'; status: string }
+  updateIssue: { __typename?: 'Issue'; status: string }
 }
 
 export type PostWaterDataMutationVariables = Exact<{
@@ -219,7 +230,21 @@ export const GetIssuesDocument = {
       name: { kind: 'Name', value: 'getIssues' },
       selectionSet: {
         kind: 'SelectionSet',
-        selections: [{ kind: 'Field', name: { kind: 'Name', value: 'issues' } }],
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'getIssues' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'location' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'phoneNumber' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'tags' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+              ],
+            },
+          },
+        ],
       },
     },
   ],
@@ -335,7 +360,7 @@ export const PostIssueDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'complaintInput' },
+            name: { kind: 'Name', value: 'postIssue' },
             arguments: [
               {
                 kind: 'Argument',
@@ -380,7 +405,7 @@ export const UpdateIssueDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'updateInput' },
+            name: { kind: 'Name', value: 'updateIssue' },
             arguments: [
               {
                 kind: 'Argument',

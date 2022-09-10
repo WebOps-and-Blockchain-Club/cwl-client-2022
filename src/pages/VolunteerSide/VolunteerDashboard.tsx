@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Typography } from '@mui/material'
 import VolunteerTable from './VolunteerTable'
 import Box from '@mui/material/Box'
+import { useQuery } from '@apollo/client'
+import { GetIssuesDocument } from '../../generated'
+
 function VolunteerDashboard() {
+  const { data } = useQuery(GetIssuesDocument)
+
   return (
     <div>
       <Typography
@@ -26,7 +31,6 @@ function VolunteerDashboard() {
           Logout
         </Button>
       </Box>
-      {/* </div> */}
 
       <div
         style={{

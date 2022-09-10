@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Provision from '../../interfaces/VolunteerSide/Provision'
-
+import DropDown from '../../components/DropDown'
 import {
   Button,
   TextField,
@@ -74,6 +74,10 @@ function VolunteerRegistrationForm({
   })
 
   const handleSubmit = async (): Promise<void> => {
+    if (volunteerProvisions.length === 0) {
+      setError('Please tell us how you can help')
+      return
+    }
     try {
       const { data } = await signUp({
         variables: {
@@ -89,8 +93,7 @@ function VolunteerRegistrationForm({
       const volunteer: Volunteer = {
         phoneNumber: volunteerPhone,
         username: data?.signUp.username || '',
-        // tags: JSON.parse(data?.signUp.tags),
-        tags: ['Food', 'Shelter'],
+        tags: JSON.parse(data?.signUp.tags || ''),
       }
       localStorage.setItem('USER', JSON.stringify(volunteer))
       window.location.reload()
@@ -230,56 +233,7 @@ function VolunteerRegistrationForm({
                   />
                 </FormControl>
               </Box>
-              {/* <DropDown props={{ volunteerProvision, setVolunteerProvision }} />  */}
-              <Box style={{ paddingTop: '15px' }}>
-                <FormControl fullWidth>
-                  <InputLabel id='input label'>Select Help</InputLabel>
-                  <Select
-                    labelId='demo-multiple-chip-label'
-                    id='demo-multiple-chip'
-                    multiple
-                    autoFocus
-                    fullWidth
-                    label='Select Help'
-                    value={volunteerProvisions}
-                    // required
-                    // onChange={(e: SelectChangeEvent<Provision[]>) => {
-                    //   // const provision: Provision = {
-                    //   //   value: e.target.value[0],
-                    //   //   label: e.target.value[0],
-                    //   // }
-                    //   setVolunteerProvisions([
-                    //     ...volunteerProvisions,
-                    //     {
-                    //       value: e.target.value[0],
-                    //       label: e.target.value[0],
-                    //     },
-                    //   ])
-                    //   console.log(e.target.value)
-                    //   e.preventDefault()
-                    // }}
-                    // input={<OutlinedInput id='select-multiple-chip' label='Chip' />}
-                    // renderValue={(selected) => (
-                    //   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    //     {selected.map((provision: Provision) => (
-                    //       <Chip key={provision.value} label={provision.label} />
-                    //     ))}
-                    //   </Box>
-                    // )}
-                    // MenuProps={MenuProps}
-                  >
-                    {/* {provisionOptions.map((provisionOption: ProvisionOption) => (
-                  <MenuItem
-                    key={provisionOption.value}
-                    value={provisionOption.value}
-                    style={getStyles(provisionOption, provisionOptions, theme)}
-                  >
-                    {provisionOption.label}
-                  </MenuItem>
-                ))} */}
-                  </Select>
-                </FormControl>
-              </Box>
+              <DropDown props={{ volunteerProvisions, setVolunteerProvisions }} />
               <Box textAlign='center' style={{ paddingTop: '30px', paddingBottom: '50px' }}>
                 <Button
                   type='submit'
