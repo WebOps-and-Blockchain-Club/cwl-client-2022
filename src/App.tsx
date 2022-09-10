@@ -7,9 +7,9 @@ import VolunteerDashboard from './pages/VolunteerSide/VolunteerDashboard'
 import useCheckUser from './hooks/useCheckUser'
 import User from './interfaces/User'
 import DataSubmission from './components/DataSubmission'
-import Map from './components/Map'
 import NavBar from '../src/components/NavBar'
 import Data from './utils/Context'
+import Home from './pages/Home'
 
 const BACKEND_URL: string = process.env.REACT_APP_BACKEND_URL || ''
 
@@ -50,7 +50,7 @@ function App() {
         </Router>
         <Router>
           <Switch>
-            <Route path='/map' component={Map} />
+            <Route path='/map' component={Home} />
             <Route path='/' component={DataSubmission} />
           </Switch>
         </Router>

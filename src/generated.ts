@@ -73,6 +73,7 @@ export type MutationUpdateIssueArgs = {
 export type Query = {
   __typename?: 'Query'
   getIssues: Array<Issue>
+  getS3URL: Scalars['String']
   getWaterData: Array<WaterData>
   login: LoginResponse
 }
@@ -139,6 +140,10 @@ export type LoginQuery = {
   __typename?: 'Query'
   login: { __typename?: 'LoginResponse'; success: boolean; username: string; tags: string }
 }
+
+export type GetS3UrlQueryVariables = Exact<{ [key: string]: never }>
+
+export type GetS3UrlQuery = { __typename?: 'Query'; getS3URL: string }
 
 export type SignUpMutationVariables = Exact<{
   volunteerInput: VolunteerInput
@@ -293,6 +298,20 @@ export const LoginDocument = {
     },
   ],
 } as unknown as DocumentNode<LoginQuery, LoginQueryVariables>
+export const GetS3UrlDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getS3URL' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [{ kind: 'Field', name: { kind: 'Name', value: 'getS3URL' } }],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetS3UrlQuery, GetS3UrlQueryVariables>
 export const SignUpDocument = {
   kind: 'Document',
   definitions: [

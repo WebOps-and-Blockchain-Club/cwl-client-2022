@@ -1,18 +1,29 @@
 import { TextField, Typography, Button, Paper } from '@mui/material'
-
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext, SetStateAction, Dispatch } from 'react'
 import Data from '../utils/Context'
-import axios from 'axios'
 import { useLocation } from 'wouter'
 import { AddAPhoto } from '@mui/icons-material'
 import '../styles/DataSubmission/DataSubmission.css'
+import { useMutation, useQuery } from '@apollo/client'
+import { GetS3UrlDocument, PostWaterDataDocument } from '../generated'
 
 const DataSubmission = (): JSX.Element => {
   const { coord, setCoord } = useContext(Data)
   const [depth, setDepth] = useState(0)
-  const [, setFile] = useState('')
   const [imageURL, setImageURL] = useState('')
   const [, setLocation] = useLocation()
+  const { data } = useQuery(GetS3UrlDocument)
+
+  const [postWaterData, { data: result }] = useMutation(PostWaterDataDocument, {
+    variables: {
+      waterDataInput: {
+        location: JSON.stringify(coord),
+        image: imageURL,
+        depth,
+      },
+    },
+  })
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(function (position) {
@@ -24,33 +35,47 @@ const DataSubmission = (): JSX.Element => {
     }
   }, [])
 
-  const handleImageUpload = (e: { target: { files: any } }) => {
-    setFile(e.target.files[0])
-    setImageURL(URL.createObjectURL(e.target.files[0]))
-    console.log(URL.createObjectURL(e.target.files[0]))
+  // eslint-disable-next-line
+  const handleImageUpload = async (file: any) => {
+    const s3URL = data?.getS3URL
+    await fetch(s3URL || '', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      body: file,
+    })
+      .then((res) => res.json())
+      .then((res) => console.log(res))
+      .catch((e) => console.log(e))
+    setImageURL((s3URL || '').split('?')[0])
   }
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
-    e.preventDefault()
-    axios
-      .post('http://localhost:4000/waterLevelData', {
-        lng: coord.lng,
-        lat: coord.lat,
-        depth,
-        image: imageURL,
+  // eslint-disable-next-line
+  const handleSubmit = async (e: any) => {
+    try {
+      const { data } = await postWaterData({
+        variables: {
+          waterDataInput: {
+            location: JSON.stringify(coord),
+            image: imageURL,
+            depth,
+          },
+        },
       })
-      .then((data) => {
-        console.log(data.data)
-        setLocation('/')
-      })
-      .catch((err) => console.log(err))
+      setLocation('/map')
+    } catch (error) {
+      console.error(error)
+    }
   }
+
   const paperStyle = {
     padding: '15px 20px 50px',
     width: 500,
     margin: '10vh auto',
     backgroundColor: '#b3e5fc',
   }
+
   return (
     <div className='data-page'>
       <Paper className='paper' elevation={20} style={paperStyle}>
@@ -63,25 +88,9 @@ const DataSubmission = (): JSX.Element => {
           <TextField
             color='primary'
             placeholder='cm'
-            // label='in feet'
             variant='outlined'
             onChange={(e) => setDepth(parseFloat(e.target.value))}
             sx={{ boxShadow: 15, borderRadius: 5, outline: 'none' }}
-            // InputProps={{
-            //   endAdornment: (
-            //     <InputAdornment position='end' >
-            //       cm
-            //     </InputAdornment>
-            //   ),
-            //   style: {
-            //     fontSize: 50,
-            //     width: '25rem',
-            //     textAlign: 'center',
-            //     color: '#4fc3f7',
-            //     backgroundColor: '#ffffff',
-            //     borderRadius: 10,
-            //   },
-            // }}
             inputProps={{
               style: {
                 fontSize: 50,
@@ -109,7 +118,12 @@ const DataSubmission = (): JSX.Element => {
             <input
               type='file'
               accept='image/*'
-              onChange={handleImageUpload}
+              // eslint-disable-next-line
+              onChange={(e: { preventDefault: () => void; target: { files: any } }) => {
+                e.preventDefault()
+                const fileObject: File | null = e.target.files[0]
+                handleImageUpload(fileObject)
+              }}
               required
               name='image'
               hidden
@@ -126,7 +140,10 @@ const DataSubmission = (): JSX.Element => {
           <Button
             variant='contained'
             color='primary'
-            onClick={handleSubmit}
+            onClick={(e) => {
+              e.preventDefault()
+              handleSubmit(e)
+            }}
             sx={{ fontSize: 18, height: 50, width: 140 }}
           >
             Submit

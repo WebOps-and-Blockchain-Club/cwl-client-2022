@@ -23,6 +23,10 @@ query login($loginInput: LoginInput!) {
   }
 }
 
+query getS3URL {
+  getS3URL
+}
+
 mutation signUp($volunteerInput: VolunteerInput!) {
   signUp(VolunteerInput: $volunteerInput) {
     id
