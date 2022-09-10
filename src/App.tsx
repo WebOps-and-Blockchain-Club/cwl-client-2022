@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react' // eslint-disable-line
+import React, { useState } from 'react'
 import { Router, Switch, Route, Redirect } from 'wouter'
 import { InMemoryCache, ApolloProvider, ApolloClient } from '@apollo/client'
 import VolunteerRegistrationForm from './pages/VolunteerSide/VolunteerRegistrationForm'

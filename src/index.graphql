@@ -1,11 +1,3 @@
-query getWaterData {
-  getWaterData {
-    date
-    location
-    depth
-  }
-}
-
 query getIssues {
   getIssues {
     location
@@ -25,6 +17,15 @@ query login($loginInput: LoginInput!) {
 
 query getS3URL {
   getS3URL
+}
+
+query getWaterData {
+  getWaterData {
+    depth
+    location
+    image
+    date
+  }
 }
 
 mutation signUp($volunteerInput: VolunteerInput!) {

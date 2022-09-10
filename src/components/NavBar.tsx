@@ -9,6 +9,9 @@ import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
 import { Button } from '@mui/material'
 import { Link } from 'wouter'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const logo = require('../images/IIT_Madras_Logo.png')
+
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -25,7 +28,7 @@ const NavBar = () => {
       <AppBar position='static'>
         <Toolbar>
           <IconButton size='small' edge='start' color='inherit' aria-label='icon' sx={{ mr: 2 }}>
-            <img src={'../../images/IIT_Madras_Logo.png'} alt='IITM' width='50px' height='auto' />
+            <img src={logo} alt='IITM' width='50px' height='auto' />
           </IconButton>
           <Link to='/'>
             <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>

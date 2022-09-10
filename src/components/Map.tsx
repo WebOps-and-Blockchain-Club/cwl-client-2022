@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
+import { useQuery } from '@apollo/client'
+import { GetWaterDataDocument } from '../generated'
 
 export default function Map() {
   const mapContainer = useRef(null)
@@ -8,9 +10,11 @@ export default function Map() {
   const [lng, setLng] = useState(13.0827)
   const [lat, setLat] = useState(80.2707)
   const [zoom, setZoom] = useState(9)
+  const [isWaterData, setIsWaterData] = useState(false)
+  const { data: waterData } = useQuery(GetWaterDataDocument)
+  setIsWaterData(true)
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_MAPBOX_SECRET_KEY)
     mapboxgl.accessToken =
       'pk.eyJ1IjoiaXNodTExNDQwNyIsImEiOiJjbDRsMnNhZW8waTk0M2JxcGx0N2liYTNqIn0.SQAlOr75DZykR8FMj57FlA'
     if (map.current) return // initialize map only once
@@ -27,25 +31,22 @@ export default function Map() {
       setZoom(map.current.getZoom().toFixed(2))
     })
     function getdata() {
-      fetch('http://localhost:4000/waterLevelData')
-        .then((response) => response.json())
-        .then((data) => {
-          JSON.stringify(data)
-          data.map((cord: { lng: number; lat: number; depth: string; image: string }) =>
-            new mapboxgl.Marker()
-              .setLngLat([cord.lng, cord.lat])
-              .setPopup(
-                new mapboxgl.Popup({ offset: 25 }) // add popups
-                  .setHTML(
-                    `<h4>Water Level:${cord.depth}</h4><img src='${cord.image}' height='120px'>`,
-                  ),
-              )
-              .addTo(map.current),
+      console.log(waterData)
+      // eslint-disable-next-line
+      waterData?.getWaterData.map((e: any) => {
+        const coord = JSON.parse(e.location)
+        console.log(coord)
+        return new mapboxgl.Marker()
+          .setLngLat([coord.lng, coord.lat])
+          .setPopup(
+            new mapboxgl.Popup({ offset: 25 }) // add popups
+              .setHTML(`<h4>Water Level:${e.depth}</h4><img src='${e.image}' height='120px'>`),
           )
-        })
+          .addTo(map.current)
+      })
     }
     getdata()
-  }, [])
+  }, [isWaterData])
   return (
     <div>
       <div ref={mapContainer} className='map-container' />
