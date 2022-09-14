@@ -10,6 +10,9 @@ const ComplaintDetails = ({
   handleComplaintDetailsChange,
   imageURL,
   handleImageUpload,
+  activeStep,
+  setActiveStep,
+  handleSubmit,
 }: {
   complaint: any
   complaintDetails: any
@@ -17,7 +20,21 @@ const ComplaintDetails = ({
   handleComplaintDetailsChange: any
   imageURL: any
   handleImageUpload: any
+  activeStep: any
+
+  setActiveStep: any
+  handleSubmit: any
 }) => {
+  const handlePrev = () => {
+    setActiveStep(activeStep - 1)
+  }
+
+  const handleFormSubmit = (e: any) => {
+    if (complaint.trim().length !== 0) {
+      handleSubmit()
+    }
+  }
+
   return (
     <div className='page'>
       <div className='text'>
@@ -30,7 +47,9 @@ const ComplaintDetails = ({
           label='Complaint'
           variant='outlined'
           onChange={handleComplaintChange}
-          //   disabled={true}
+          error={complaint.trim().length === 0}
+          helperText={complaint.trim().length === 0 ? 'Please enter a complaint' : ''}
+          required
         />
       </div>
       <div className='text'>
@@ -56,6 +75,30 @@ const ComplaintDetails = ({
             <img src={imageURL} alt='image' width={'auto'} height={'100px'} />
           </div>
         )}
+      </div>{' '}
+      <div className='navButtons'>
+        <Button
+          disabled={activeStep === 0}
+          onClick={handlePrev}
+          className='prevBtn'
+          color='primary'
+          fullWidth
+          sx={{ height: 45 }}
+        >
+          Back
+        </Button>{' '}
+        <Button
+          type='submit'
+          color='primary'
+          className='navigation'
+          variant='contained'
+          onSubmit={handleFormSubmit}
+          fullWidth
+          sx={{ height: 45 }}
+          disabled={complaint.trim().length === 0 ? true : false}
+        >
+          Submit
+        </Button>
       </div>
     </div>
   )

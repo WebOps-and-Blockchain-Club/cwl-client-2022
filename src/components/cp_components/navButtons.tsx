@@ -1,22 +1,24 @@
 import { TextField, Button } from '@mui/material'
 import '../../styles/ComplaintPortal/cp_style.css'
-import { useFormik } from 'formik'
 
 const NavButtons = ({
   activeStep,
   setActiveStep,
   handleSubmit,
-  tabs,
-  handlePrev,
-  handleNext,
 }: {
   activeStep: any
   setActiveStep: any
   handleSubmit: any
-  tabs: any
-  handlePrev: any
-  handleNext: any
 }) => {
+  const tabs = ['PersonDetail', 'Address', 'ComplaintType', 'ComplaintDetails']
+
+  const handleNext = () => {
+    setActiveStep(activeStep + 1)
+  }
+  const handlePrev = () => {
+    setActiveStep(activeStep - 1)
+  }
+
   return (
     <div className='navButtons'>
       <Button

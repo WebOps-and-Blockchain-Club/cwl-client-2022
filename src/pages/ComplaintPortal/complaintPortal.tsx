@@ -7,9 +7,8 @@ import ComplaintDetails from '../../components/cp_components/complaintDetails'
 import ComplaintType from '../../components/cp_components/complaintType'
 // import axios from 'axios'
 import NavButtons from '../../components/cp_components/navButtons'
-import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
-import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
+
+import NavBar from '../../components/NavBar'
 
 const complaints = [
   { id: 1, name: 'General', state: false },
@@ -26,52 +25,7 @@ function problemReducer(state: any, complaint: any) {
   return [...state, complaint]
 }
 
-interface FormValues {
-  area: string
-  locality: string
-  street: string
-  address: string
-  complaintDetails: string
-}
-
-const schema = yup.object().shape({
-  area: yup.string(),
-  locality: yup.string(),
-  street: yup.string(),
-  address: yup.string().required(),
-  complaintDetails: yup.string().max(400),
-})
-
 const ComplaintPortal = () => {
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<FormValues>({ resolver: yupResolver(schema) })
-
-  const formSubmitHandler: SubmitHandler<FormValues> = (data: FormValues) => {
-    //   axios
-    //     .post('http://localhost:4000/waterLevelData', {
-    //       name,
-    //       phone,
-    //       otp,
-    //       area,
-    //       locality,
-    //       street,
-    //       address,
-    //       problem,
-    //       complaint,
-    //       complaintDetails,
-    //       image: imageURL,
-    //     })
-    //     .then((data) => {
-    //       console.log(data.data)
-    //     })
-    //     .catch((err) => console.log(err))
-    console.log(data)
-  }
-
   const [activeStep, setActiveStep] = useState(0)
   // All data entriy states
   const [name, setName] = useState('')
@@ -125,17 +79,31 @@ const ComplaintPortal = () => {
     console.log(URL.createObjectURL(e.target.files[0]))
   }
 
-  const [submitted, setSubmitted] = useState(false)
+  const handleSubmit = () => {
+    console.log('submitted')
+
+    // e.preventDefault()
+    // axios
+    //   .post('http://localhost:4000/waterLevelData', {
+    //     name,
+    //     phone,
+    //     otp,
+    //     area,
+    //     locality,
+    //     street,
+    //     address,
+    //     problem,
+    //     complaint,
+    //     complaintDetails,
+    //     image: imageURL,
+    //   })
+    //   .then((data) => {
+    //     console.log(data.data)
+    //   })
+    //   .catch((err) => console.log(err))
+  }
 
   const tabs = ['PersonDetail', 'Address', 'ComplaintType', 'ComplaintDetails']
-
-  const handleNext = (errors: any) => {
-    console.log({ errors })
-    if (!errors) setActiveStep(activeStep + 1)
-  }
-  const handlePrev = () => {
-    setActiveStep(activeStep - 1)
-  }
 
   const pageDisplay = () => {
     switch (activeStep) {
@@ -158,7 +126,6 @@ const ComplaintPortal = () => {
               handleOtpChange={handleOtpChange}
               activeStep={activeStep}
               setActiveStep={setActiveStep}
-              tabs={tabs}
             />
           </div>
         )
@@ -181,6 +148,8 @@ const ComplaintPortal = () => {
               handleLocalityChange={handleLocalityChange}
               handleStreetChange={handleStreetChange}
               handleAddressChange={handleAddressChange}
+              activeStep={activeStep}
+              setActiveStep={setActiveStep}
             />
           </div>
         )
@@ -198,6 +167,8 @@ const ComplaintPortal = () => {
               problem={problem}
               complaints={complaints}
               handleComplaintTypeChange={handleComplaintTypeChange}
+              activeStep={activeStep}
+              setActiveStep={setActiveStep}
             />
           </div>
         )
@@ -218,6 +189,9 @@ const ComplaintPortal = () => {
               handleComplaintDetailsChange={handleComplaintDetailsChange}
               imageURL={imageURL}
               handleImageUpload={handleImageUpload}
+              activeStep={activeStep}
+              setActiveStep={setActiveStep}
+              handleSubmit={handleSubmit}
             />
           </div>
         )
@@ -232,7 +206,9 @@ const ComplaintPortal = () => {
 
   return (
     <div className='complaint-portal'>
-      <div>NavBar</div>
+      <div>
+        <NavBar />
+      </div>
       <Typography
         variant='h3'
         sx={{ fontWeight: 'bold', justifyContent: 'center' }}
@@ -243,14 +219,12 @@ const ComplaintPortal = () => {
       <Paper elevation={1} className='content' style={paperStyle}>
         <div>{pageDisplay()}</div>
         <div>
-          <NavButtons
+          {/* <NavButtons
             activeStep={activeStep}
             setActiveStep={setActiveStep}
-            handleSubmit={handleSubmit}
-            tabs={tabs}
-            handlePrev={handlePrev}
-            handleNext={handleNext}
-          />
+            handleSubmit={handleSubmit} */}
+
+          {/* /> */}
         </div>
       </Paper>
     </div>

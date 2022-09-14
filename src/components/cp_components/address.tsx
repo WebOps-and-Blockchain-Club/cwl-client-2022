@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TextField } from '@mui/material'
+import { TextField, Button } from '@mui/material'
 import '../../styles/ComplaintPortal/cp_style.css'
 
 const Address = ({
@@ -11,6 +11,8 @@ const Address = ({
   handleLocalityChange,
   handleStreetChange,
   handleAddressChange,
+  activeStep,
+  setActiveStep,
 }: {
   area: any
   locality: any
@@ -20,7 +22,24 @@ const Address = ({
   handleLocalityChange: any
   handleStreetChange: any
   handleAddressChange: any
+
+  activeStep: any
+  setActiveStep: any
 }) => {
+  const handlePrev = () => {
+    setActiveStep(activeStep - 1)
+  }
+
+  const handleNext = () => {
+    if (area.trim().length !== 0) {
+      if (locality.trim().length !== 0) {
+        if (street.trim().length !== 0) {
+          setActiveStep(activeStep + 1)
+        }
+      }
+    }
+  }
+
   return (
     <div className='page'>
       <div className='text'>
@@ -33,7 +52,10 @@ const Address = ({
           label='Area'
           variant='outlined'
           onChange={handleAreaChange}
-          disabled={true}
+          type='text'
+          error={area.trim().length === 0}
+          helperText={area.trim().length === 0 ? 'Please enter a valid area' : ''}
+          required
         />
       </div>
       <div className='text'>
@@ -46,7 +68,9 @@ const Address = ({
           label='Locality'
           variant='outlined'
           onChange={handleLocalityChange}
-          disabled={true}
+          error={locality.trim().length === 0}
+          helperText={locality.trim().length === 0 ? 'Please enter a valid locality' : ''}
+          required
         />
       </div>
       <div className='text'>
@@ -59,7 +83,9 @@ const Address = ({
           label='Street '
           variant='outlined'
           onChange={handleStreetChange}
-          disabled={true}
+          error={street.trim().length === 0}
+          helperText={street.trim().length === 0 ? 'Please enter a valid street' : ''}
+          required
         />
       </div>
       <div className='text'>
@@ -74,6 +100,29 @@ const Address = ({
           variant='outlined'
           onChange={handleAddressChange}
         />
+      </div>
+      <div className='navButtons'>
+        <Button
+          disabled={activeStep === 0}
+          onClick={handlePrev}
+          className='prevBtn'
+          color='primary'
+          fullWidth
+          sx={{ height: 45 }}
+        >
+          Back
+        </Button>
+
+        <Button
+          color='primary'
+          className='navigation'
+          variant='contained'
+          onClick={handleNext}
+          fullWidth
+          sx={{ height: 45 }}
+        >
+          Next
+        </Button>
       </div>
     </div>
   )
