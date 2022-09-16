@@ -10,6 +10,7 @@ import DataSubmission from './components/DataSubmission'
 import NavBar from '../src/components/NavBar'
 import Data from './utils/Context'
 import Home from './pages/Home'
+import ComplaintPortal from './pages/ComplaintPortal/complaintPortal'
 
 const BACKEND_URL: string = process.env.REACT_APP_BACKEND_URL || ''
 
@@ -50,8 +51,9 @@ function App() {
         </Router>
         <Router>
           <Switch>
-            <Route path='/map' component={Home} />
             <Route path='/' component={DataSubmission} />
+            <Route path='/map' component={Home} />
+            <Route path='/complaint' component={ComplaintPortal} />
           </Switch>
         </Router>
       </Data.Provider>

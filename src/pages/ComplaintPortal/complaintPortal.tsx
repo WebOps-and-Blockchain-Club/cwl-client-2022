@@ -8,8 +8,6 @@ import ComplaintType from '../../components/cp_components/complaintType'
 // import axios from 'axios'
 import NavButtons from '../../components/cp_components/navButtons'
 
-import NavBar from '../../components/NavBar'
-
 const complaints = [
   { id: 1, name: 'General', state: false },
   { id: 2, name: 'Water Logging', state: false },
@@ -206,9 +204,6 @@ const ComplaintPortal = () => {
 
   return (
     <div className='complaint-portal'>
-      <div>
-        <NavBar />
-      </div>
       <Typography
         variant='h3'
         sx={{ fontWeight: 'bold', justifyContent: 'center' }}

@@ -72,7 +72,7 @@ const NavBar = () => {
               <MenuItem
                 onClick={() => {
                   setAnchorEl(null)
-                  setLocation('/compliant')
+                  setLocation('/complaint')
                 }}
               >
                 Complaint !
