@@ -1,4 +1,11 @@
-import { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal } from 'react'
+import {
+  JSXElementConstructor,
+  Key,
+  ReactElement,
+  ReactFragment,
+  ReactPortal,
+  useState,
+} from 'react'
 import { Grid, Button, Typography } from '@mui/material'
 import '../../styles/ComplaintPortal/cp_style.css'
 
@@ -15,15 +22,17 @@ const ComplaintType = ({
   activeStep: any
   setActiveStep: any
 }) => {
+  const [complaintErr, setComplaintErr] = useState(true)
   const handlePrev = () => {
     setActiveStep(activeStep - 1)
   }
   const handleNext = () => {
     complaints.forEach((complaint: any) => {
       if (complaint.state === true) {
-        setActiveStep(activeStep + 1)
+        setComplaintErr(false)
       }
     })
+    setActiveStep(activeStep + 1)
   }
 
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { TextField, Button } from '@mui/material'
 import '../../styles/ComplaintPortal/cp_style.css'
-import { useForm, SubmitHandler, Controller } from 'react-hook-form'
+
 import NavButtons from './navButtons'
 
 // const [error, setError] = useState('')
@@ -92,9 +92,10 @@ const PersonDetails = ({
           onClick={handleNext}
           fullWidth
           sx={{ height: 45 }}
+          disabled={!/^\d{10}$/.test(phone) || (phone.length !== 0) === false ? true : false}
         >
           Next
-        </Button>{' '}
+        </Button>
       </div>
     </form>
   )

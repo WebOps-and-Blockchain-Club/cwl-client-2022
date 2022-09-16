@@ -120,6 +120,11 @@ const Address = ({
           onClick={handleNext}
           fullWidth
           sx={{ height: 45 }}
+          disabled={
+            locality.trim().length == 0 || area.trim().length == 0 || street.trim().length == 0
+              ? true
+              : false
+          }
         >
           Next
         </Button>
