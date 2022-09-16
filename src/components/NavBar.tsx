@@ -8,19 +8,20 @@ import MenuIcon from '@mui/icons-material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
 import { Button } from '@mui/material'
-import { Link } from 'wouter'
+import { Link, useLocation } from 'wouter'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const logo = require('../images/IIT_Madras_Logo.png')
 
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-
+  const [location, setLocation] = useLocation()
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
 
   const handleClose = () => {
     setAnchorEl(null)
+    setLocation('/volunteer/register')
   }
 
   return (
@@ -68,8 +69,22 @@ const NavBar = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Complaint !</MenuItem>
-              <MenuItem onClick={handleClose}>Volunteer ☺ </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setAnchorEl(null)
+                  setLocation('/compliant')
+                }}
+              >
+                Complaint !
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setAnchorEl(null)
+                  setLocation('/volunteer/register')
+                }}
+              >
+                Volunteer ☺
+              </MenuItem>
             </Menu>
           </div>
         </Toolbar>
