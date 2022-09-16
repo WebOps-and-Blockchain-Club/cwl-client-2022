@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Table,
@@ -11,11 +11,12 @@ import {
   Paper,
   Checkbox,
 } from '@material-ui/core'
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
+import { DoneAllOutlined, DeleteOutlined } from '@mui/icons-material'
+import { useMutation } from '@apollo/client'
+import { UpdateIssueDocument } from '../../generated'
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } }
 
-import createData from '../../utils/createData'
 const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 700,
@@ -48,15 +49,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const rows = [
-  createData('Someone', 1234567890, 'somewhere', 'food'),
-  createData('Something', 1234577890, 'somewhere else', 'groceries, food'),
-  createData('Somewhere', 1234567790, 'another somewhere', 'shelter'),
-  createData('Sometime', 1234567779, 'any somewhere', 'food, shelter, groceries'),
-]
-
-export default function VolunteerTable() {
+// eslint-disable-next-line
+export default function VolunteerTable(props: any) {
+  const { issues } = props.props
   const classes = useStyles()
+  const [issueID, setIssueID] = useState('')
+  const [selectedIssue, setSelectedIssue] = useState(null)
+  const [selectedIssueDeleted, setSelectedIssueDeleted] = useState('')
+  // eslint-disable-next-line
+  const [updateIssue, { data }] = useMutation(UpdateIssueDocument, {
+    variables: {
+      id: issueID || '',
+    },
+  })
+
+  const handleUpdateIssue = async (issueID: string) => {
+    if (issueID === '') return
+    try {
+      const { data } = await updateIssue({
+        variables: {
+          id: issueID,
+        },
+      })
+      setSelectedIssueDeleted(issueID)
+      setTimeout(() => {
+        setSelectedIssueDeleted('')
+      }, 2000)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <div style={{ display: 'flex', width: '90%', marginLeft: 'auto', marginRight: 'auto' }}>
       <TableContainer elevation={24} component={Paper} className={classes.tableContainer}>
@@ -78,36 +101,60 @@ export default function VolunteerTable() {
                 Status
               </TableCell>
               <TableCell className={classes.tableHeaderCell}></TableCell>
+              <TableCell className={classes.tableHeaderCell}></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.username}>
-                <TableCell>
-                  {' '}
-                  <Avatar alt={row.username} src='.' className={classes.avatar} />
-                </TableCell>
-                <TableCell className={classes.name} component='th' scope='row'>
-                  {row.username}
-                </TableCell>
-                <TableCell className={classes.name1} align='center'>
-                  {row.location}
-                </TableCell>
-                <TableCell className={classes.name1} align='center'>
-                  {row.contact}
-                </TableCell>
-                <TableCell className={classes.name1} align='center'>
-                  {row.helpRequired}
-                </TableCell>
-                <TableCell align='center'>
-                  <Checkbox {...label} />
-                </TableCell>
-                <TableCell>
-                  {' '}
-                  <DeleteOutlinedIcon />{' '}
-                </TableCell>
-              </TableRow>
-            ))}
+            {/* eslint-disable-next-line */}
+            {issues.map((row: any) => {
+              return (
+                <TableRow key={row.username}>
+                  <TableCell>
+                    {' '}
+                    <Avatar alt={row.username} src='.' className={classes.avatar} />
+                  </TableCell>
+                  <TableCell className={classes.name} component='th' scope='row'>
+                    {row.username}
+                  </TableCell>
+                  <TableCell className={classes.name1} align='center'>
+                    {row.location}
+                  </TableCell>
+                  <TableCell className={classes.name1} align='center'>
+                    {row.phoneNumber}
+                  </TableCell>
+                  <TableCell className={classes.name1} align='center'>
+                    {row.tags}
+                  </TableCell>
+                  <TableCell align='center'>
+                    <Checkbox
+                      checked={selectedIssue === row.id}
+                      {...label}
+                      onChange={(e) => {
+                        e.preventDefault()
+                        if (selectedIssue === row.id) setSelectedIssue(null)
+                        else setSelectedIssue(row.id)
+                      }}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    {selectedIssue === row.id && (
+                      <DeleteOutlined
+                        onClick={(e) => {
+                          e.preventDefault()
+                          setIssueID(row.id)
+                          handleUpdateIssue(row.id)
+                        }}
+                      />
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {selectedIssueDeleted === row.id && (
+                      <DoneAllOutlined style={{ color: '#42f54b' }} />
+                    )}
+                  </TableCell>
+                </TableRow>
+              )
+            })}
           </TableBody>
         </Table>
       </TableContainer>

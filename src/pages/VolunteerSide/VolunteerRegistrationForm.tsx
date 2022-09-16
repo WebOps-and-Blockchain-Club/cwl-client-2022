@@ -11,7 +11,6 @@ import {
   CssBaseline,
   Box,
   Container,
-  Select,
   OutlinedInput,
   Avatar,
   FormControl,
@@ -21,7 +20,6 @@ import {
 } from '@mui/material'
 import { Assignment, Visibility, VisibilityOff } from '@mui/icons-material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-
 import '../../styles/VolunteerRegistrationForm.css'
 import { useMutation } from '@apollo/client'
 import { SignUpDocument } from '../../generated'

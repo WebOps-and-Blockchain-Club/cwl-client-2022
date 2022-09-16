@@ -1,5 +1,6 @@
 query getIssues {
   getIssues {
+    id
     location
     phoneNumber
     tags

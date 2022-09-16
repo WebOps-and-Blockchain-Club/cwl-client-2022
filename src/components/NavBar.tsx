@@ -68,8 +68,12 @@ const NavBar = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Complaint !</MenuItem>
-              <MenuItem onClick={handleClose}>Volunteer ☺ </MenuItem>
+              <Link to='/complaint'>
+                <MenuItem onClick={handleClose}>Complaint !</MenuItem>
+              </Link>
+              <Link to='/volunteer/login'>
+                <MenuItem onClick={handleClose}>Volunteer ☺ </MenuItem>
+              </Link>
             </Menu>
           </div>
         </Toolbar>
