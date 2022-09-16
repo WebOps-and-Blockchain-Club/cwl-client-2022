@@ -19,7 +19,7 @@ const MenuProps = {
   },
 }
 
-const names = ['Food', 'Shelter', 'Electricity', 'Drains']
+const names = ['Food', 'Shelter', 'Water', 'Medical Help', 'Transport']
 
 function getStyles(name: string, volunteerProvisions: readonly string[], theme: Theme) {
   return {
