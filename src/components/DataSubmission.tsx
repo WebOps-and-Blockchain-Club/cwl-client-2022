@@ -1,6 +1,4 @@
 import { TextField, Typography, Button, Paper, Slider, Grid, Box } from '@mui/material'
-import { shadows } from '@mui/system'
-import InputAdornment from '@mui/material/InputAdornment'
 
 import { useEffect, useState, useContext } from 'react'
 import Data from '../utils/Context'
