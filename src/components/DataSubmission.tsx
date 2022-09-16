@@ -3,8 +3,8 @@ import { shadows } from '@mui/system'
 import InputAdornment from '@mui/material/InputAdornment'
 
 import { useEffect, useState, useContext } from 'react'
-import Data from '../../utils/Context'
-import axios from 'axios'
+import Data from '../utils/Context'
+
 import { useLocation } from 'wouter'
 import { AddAPhoto } from '@mui/icons-material'
 import '../styles/DataSubmission/DataSubmission.css'
