@@ -36,14 +36,11 @@
 }
 
 .button {
-  /* margin: 3rem; */
-  /* margin-left: 20vw;
-  margin-right: 20vw; */
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  margin-bottom: 5px;
+  padding-bottom: 50 px;
 }
 
 .uplode {
@@ -54,6 +51,28 @@
   margin: 1rem;
 }
 
-.submit {
-  margin-top: 2rem;
+.waterarea {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.car {
+  background-image: url('../../images/car-man.png');
+  align-items: baseline;
+}
+
+.water {
+  background-color: rgba(8, 67, 244, 0.772);
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  color: blue;
+  text-decoration: underline;
+  padding-bottom: 20px;
+}
+.link:hover {
+  cursor: pointer;
 }

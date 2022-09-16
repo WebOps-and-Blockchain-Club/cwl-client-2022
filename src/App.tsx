@@ -3,6 +3,8 @@ import Data from './utils/Context'
 import { useState } from 'react'
 import DataSubmission from './components/DataSubmission/DataSubmission'
 import Home from './pages/Home'
+import SliderFunction from './components/DataSubmission/slider'
+
 const App = () => {
   const [coord, setCoord] = useState({ lat: 13.0827, lng: 80.2707 })
   return (
