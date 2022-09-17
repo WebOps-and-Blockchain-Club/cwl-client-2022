@@ -1,12 +1,10 @@
 import { useState, useReducer, SetStateAction } from 'react'
-import { Button, Paper, Typography } from '@mui/material'
+import { Paper, Typography } from '@mui/material'
 import '../../styles/ComplaintPortal/cp_style.css'
 import PersonDetails from '../../components/cp_components/personDetails'
 import Address from '../../components/cp_components/address'
 import ComplaintDetails from '../../components/cp_components/complaintDetails'
 import ComplaintType from '../../components/cp_components/complaintType'
-// import axios from 'axios'
-import NavButtons from '../../components/cp_components/navButtons'
 
 const complaints = [
   { id: 1, name: 'General', state: false },
@@ -79,29 +77,7 @@ const ComplaintPortal = () => {
 
   const handleSubmit = () => {
     console.log('submitted')
-
-    // e.preventDefault()
-    // axios
-    //   .post('http://localhost:4000/waterLevelData', {
-    //     name,
-    //     phone,
-    //     otp,
-    //     area,
-    //     locality,
-    //     street,
-    //     address,
-    //     problem,
-    //     complaint,
-    //     complaintDetails,
-    //     image: imageURL,
-    //   })
-    //   .then((data) => {
-    //     console.log(data.data)
-    //   })
-    //   .catch((err) => console.log(err))
   }
-
-  const tabs = ['PersonDetail', 'Address', 'ComplaintType', 'ComplaintDetails']
 
   const pageDisplay = () => {
     switch (activeStep) {
@@ -199,11 +175,10 @@ const ComplaintPortal = () => {
     padding: '5px 20px 50px',
     width: 500,
     margin: '3vh auto',
-    // backgroundColor: '#b3e5fc',
   }
 
   return (
-    <div className='complaint-portal'>
+    <div className='complaint-portal ' >
       <Typography
         variant='h3'
         sx={{ fontWeight: 'bold', justifyContent: 'center' }}
@@ -213,14 +188,6 @@ const ComplaintPortal = () => {
       </Typography>{' '}
       <Paper elevation={1} className='content' style={paperStyle}>
         <div>{pageDisplay()}</div>
-        <div>
-          {/* <NavButtons
-            activeStep={activeStep}
-            setActiveStep={setActiveStep}
-            handleSubmit={handleSubmit} */}
-
-          {/* /> */}
-        </div>
       </Paper>
     </div>
   )

@@ -40,6 +40,7 @@ const DataSubmission = (): JSX.Element => {
   // eslint-disable-next-line
   const handleImageUpload = async (file: any) => {
     const s3URL = data?.getS3URL
+    console.log(file)
     await fetch(s3URL || '', {
       method: 'PUT',
       headers: {
@@ -48,7 +49,9 @@ const DataSubmission = (): JSX.Element => {
       body: file,
     })
       .then((res) => res.json())
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res)
+      })
       .catch((e) => console.log(e))
     setImageURL((s3URL || '').split('?')[0])
   }
@@ -65,24 +68,19 @@ const DataSubmission = (): JSX.Element => {
           },
         },
       })
-      setLocation('/map')
+      setLocation('/frontpage')
     } catch (error) {
       console.error(error)
     }
   }
-
-  const paperStyle = {
-    padding: ' 10px 50px 0px 50px',
-    // width: 500,
-    margin: '1vh 30vh 0vh 30vh ',
-    backgroundColor: '#b3e5fc',
-  }
-
   return (
     <div className='data-page'>
-      <Paper className='paper' elevation={20} style={paperStyle}>
+      <Paper>
         <div className='title'>
-          <Typography variant='h3' sx={{ fontWeight: 'bold', justifyContent: 'center' }}>
+          <Typography
+            variant='h3'
+            sx={{ fontWeight: 'bold', justifyContent: 'center', fontSize: '2em' }}
+          >
             Water in My Area
           </Typography>
         </div>
@@ -105,90 +103,111 @@ const DataSubmission = (): JSX.Element => {
                 backgroundColor: '#ffffff',
                 borderRadius: 10,
               },
-              '&:focus': {
-                outline: 'none',
-              },
             }}
           />
         </div>
-        <Grid container direction='row' className='waterarea'>
-          <Grid item>
-            <Box sx={{ height: '350px' }}>
-              <div className='slider'>
-                <Slider
-                  orientation='vertical'
-                  aria-label='Always visible'
-                  min={0}
-                  max={200}
-                  value={depth}
-                  //   getAriaValueText={depth}
-                  valueLabelDisplay='on'
-                  sx={{ height: '300px' }}
-                  onChange={(e, depth) => {
-                    e.preventDefault()
-                    setDepth(depth as number)
-                  }}
-                />
-              </div>
-            </Box>
-          </Grid>
-          <Grid item>
-            <Box className='car' sx={{ height: '300px', width: '600px' }}>
-              <div>
-                <Box sx={{ height: 300 - depth * 1.5, width: '600px' }}></Box>
-              </div>
-              <div className='water'>
-                <Box sx={{ height: depth * 1.5, width: '600px', maxHeight: '300px' }}></Box>
-              </div>
-            </Box>
-          </Grid>
-        </Grid>{' '}
-        <Grid item className='link'>
-          <p>Log this as a complaint</p>{' '}
-        </Grid>
-        <Grid
-          container
-          direction='column'
-          className='button'
-          spacing='20'
-          sx={{ paddingBottom: '20px' }}
-        >
-          <Grid item>
-            <div className='upload '>
-              <Button
-                variant='contained'
-                component='label'
-                color='primary'
-                sx={{ fontSize: 17, height: 50 }}
-              >
-                <AddAPhoto fontSize='large' /> upload
-                <input
-                  type='file'
-                  accept='image/*'
-                  onChange={handleImageUpload}
-                  required
-                  name='image'
-                  hidden
-                />
-              </Button>
-              {imageURL && (
-                <div className='image'>
-                  <img src={imageURL} alt='image' width={'100px'} height={'100px'} />
+        <Grid container direction='row'>
+          <Grid container direction='row' className='waterarea' item>
+            <Grid item>
+              <Box sx={{ height: '350px' }}>
+                <div className='slider'>
+                  <Slider
+                    orientation='vertical'
+                    aria-label='Always visible'
+                    min={0}
+                    max={200}
+                    value={depth}
+                    valueLabelDisplay='on'
+                    sx={{ height: '300px' }}
+                    onChange={(e, depth) => {
+                      e.preventDefault()
+                      setDepth(depth as number)
+                    }}
+                  />
                 </div>
-              )}
-            </div>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box className='car' sx={{ height: '300px', width: '45vw' }}>
+                <div>
+                  <Box sx={{ height: 300 - depth * 1.5, width: '60vw' }}></Box>
+                </div>
+                <div className='water'>
+                  <Box sx={{ height: depth * 1.5, width: '60vw', maxHeight: '300px' }}></Box>
+                </div>
+              </Box>
+            </Grid>
           </Grid>
-          <Grid item>
-            <div className='submit '>
-              <Button
-                variant='contained'
-                color='primary'
-                onClick={handleSubmit}
-                sx={{ fontSize: 18, height: 50, width: 140 }}
-              >
-                Submit
-              </Button>
-            </div>
+          <Grid
+            container
+            direction='column'
+            className='button'
+            spacing='20'
+            sx={{ paddingBottom: '20px' }}
+            item
+          >
+            <Grid item>
+              <div className='upload '>
+                <Button
+                  variant='contained'
+                  component='label'
+                  color='primary'
+                  sx={{ fontSize: 17, height: 50 }}
+                >
+                  <AddAPhoto fontSize='large' /> upload
+                  <input
+                    type='file'
+                    accept='image/*'
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    onChange={(e: { target: { files: any } }) => {
+                      console.log(e.target.files[0])
+                      handleImageUpload(e.target.files[0])
+                    }}
+                    required
+                    name='image'
+                    hidden
+                  />
+                </Button>
+                {imageURL && (
+                  <div className='image'>
+                    <img src={imageURL} alt='image' width={'100px'} height={'100px'} />
+                  </div>
+                )}
+              </div>
+            </Grid>
+            <Grid
+              container
+              direction='row'
+              className='button'
+              spacing='20'
+              sx={{ paddingBottom: '20px' }}
+              item
+            >
+              <Grid item>
+                <div className='submit '>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={handleSubmit}
+                    sx={{ fontSize: 18, height: 50, width: 140 }}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </Grid>
+              <Grid item>
+                <div>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={handleSubmit}
+                    sx={{ fontSize: 12, height: 50, width: 140 }}
+                  >
+                    Log complaint
+                  </Button>
+                </div>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Paper>

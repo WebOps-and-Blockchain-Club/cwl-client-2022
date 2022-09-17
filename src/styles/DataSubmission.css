@@ -1,39 +1,17 @@
-/* .data-page {
-  background: rgb(2, 0, 36);
-  background: linear-gradient(
-    162deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(0, 212, 255, 1) 53%,
-    rgba(10, 73, 196, 1) 100%
-  );
-  min-height: 100vh;
-} */
-
-/* .paper {
-  background: #b3e5fc;
-
-  background: rgb(255, 255, 255);
-  background: linear-gradient(318deg, rgba(255, 255, 255, 1) 0%, rgba(158, 214, 252, 1) 74%);
-} */
-
 .title {
   display: flex;
   justify-content: center;
-  margin: 2rem;
-  margin-top: 2rem;
+  padding-top: 2em;
   color: rgb(0, 115, 230);
 }
 
 .input {
   display: flex;
   justify-content: center;
-  margin-top: 3rem;
-  margin-bottom: 3rem;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
-.input:focus {
-  outline: none;
-}
 
 .button {
   display: flex;
@@ -43,9 +21,6 @@
   padding-bottom: 50 px;
 }
 
-.uplode {
-  margin-right: 5vh;
-}
 
 .image {
   margin: 1rem;
@@ -58,8 +33,9 @@
 }
 
 .car {
-  background-image: url('../../images/car-man.png');
+  background-image: url('../images/car-man.png');
   align-items: baseline;
+  background-repeat: no-repeat;
 }
 
 .water {
@@ -73,6 +49,7 @@
   text-decoration: underline;
   padding-bottom: 20px;
 }
+
 .link:hover {
   cursor: pointer;
 }

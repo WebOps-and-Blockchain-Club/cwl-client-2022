@@ -2,29 +2,25 @@
   margin: 0;
   padding: 0;
 }
+
 .complaint-portal {
   background: rgb(2, 0, 36);
-  background: linear-gradient(
-    162deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(0, 212, 255, 1) 53%,
-    rgba(10, 73, 196, 1) 100%
-  );
-  min-height: 100vh;
+  background: linear-gradient(162deg,
+      rgba(2, 0, 36, 1) 0%,
+      rgba(0, 212, 255, 1) 53%,
+      rgba(10, 73, 196, 1) 100%);
+
 }
 
 .heading {
   display: flex;
   justify-content: center;
-  margin: 2rem;
-  margin-top: 20rem;
-  padding-top: 3rem;
+  padding-top: 1rem;
   color: white;
 }
 
 .title {
   display: flex;
-  margin-top: 5rem;
   color: rgb(0, 115, 230);
   margin-left: 2rem;
   margin-right: 2rem;
@@ -34,7 +30,6 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-
   margin-bottom: 1rem;
 }
 
@@ -54,8 +49,6 @@
 
 .button {
   margin-top: 1rem;
-  /* margin-left: 20vw;
-  margin-right: 20vw; */
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -66,6 +59,7 @@
 .uplode {
   margin-right: 5vh;
 }
+
 .image {
   margin: 1rem;
 }
