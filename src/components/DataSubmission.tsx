@@ -3,7 +3,7 @@ import { useEffect, useState, useContext, SetStateAction, Dispatch } from 'react
 import Data from '../utils/Context'
 import { useLocation } from 'wouter'
 import { AddAPhoto } from '@mui/icons-material'
-import '../styles/DataSubmission/DataSubmission.css'
+import '../styles/DataSubmission.css'
 import { useMutation, useQuery } from '@apollo/client'
 import { GetS3UrlDocument, PostWaterDataDocument } from '../generated'
 

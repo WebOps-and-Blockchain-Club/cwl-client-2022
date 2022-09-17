@@ -33,6 +33,5 @@
         "moduleDirectory": ["node_modules", "src/"]
       }
     }
-  },
-  "eslintIgnore": ["*/generated.ts"]
+  }
 }
