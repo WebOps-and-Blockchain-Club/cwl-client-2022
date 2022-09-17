@@ -5,6 +5,8 @@ import PersonDetails from '../../components/cp_components/personDetails'
 import Address from '../../components/cp_components/address'
 import ComplaintDetails from '../../components/cp_components/complaintDetails'
 import ComplaintType from '../../components/cp_components/complaintType'
+import { useMutation } from '@apollo/client'
+import { PostIssueDocument } from '../../generated'
 
 const complaints = [
   { id: 1, name: 'General', state: false },
@@ -36,6 +38,19 @@ const ComplaintPortal = () => {
   const [complaintDetails, setComplaintDetails] = useState('')
   const [, setFile] = useState('')
   const [imageURL, setImageURL] = useState('')
+
+  // const [postIssue, { data }] = useMutation(PostIssueDocument, {
+  //   variables: {
+  //     complaintInput: {
+  //       tags,
+  //       phoneNumber
+  //       location,
+  //       username,
+  //       desc,
+  //       status
+  //     }
+  //   }
+  // })
 
   // handelers for all data
   const handleNameChange = (e: { target: { value: SetStateAction<string> } }) => {
@@ -76,7 +91,23 @@ const ComplaintPortal = () => {
   }
 
   const handleSubmit = () => {
-    console.log('submitted')
+    console.log(name, phone, area, locality, street, address, problem, complaint, complaintDetails)
+    // try {
+    //   // const { data } = await postIssue({
+    //   //   variables: {
+    //   //     complaintInput: {
+    //   //     tags,
+    //   //     phoneNumber,
+    //   //     location,
+    //   //     username,
+    //   //     desc,
+    //   //     status
+    //   //   }
+    //   // });
+
+    // } catch (error) {
+    //   console.error(error);
+    // }
   }
 
   const pageDisplay = () => {
@@ -178,7 +209,7 @@ const ComplaintPortal = () => {
   }
 
   return (
-    <div className='complaint-portal ' >
+    <div className='complaint-portal '>
       <Typography
         variant='h3'
         sx={{ fontWeight: 'bold', justifyContent: 'center' }}
