@@ -11,7 +11,9 @@ import NavBar from '../src/components/NavBar'
 import Data from './utils/Context'
 import Home from './pages/Home'
 import ComplaintPortal from './pages/ComplaintPortal/complaintPortal'
-
+import FrontPage from './pages/FrontPage/FrontPage'
+import 'react-accessible-accordion/dist/fancy-example.css';
+import './styles/frontpage.css'
 const BACKEND_URL: string = process.env.REACT_APP_BACKEND_URL || ''
 
 const client = new ApolloClient({
@@ -54,6 +56,7 @@ function App() {
             <Route path='/' component={DataSubmission} />
             <Route path='/map' component={Home} />
             <Route path='/complaint' component={ComplaintPortal} />
+            <Route path="/frontpage" component={FrontPage} />
           </Switch>
         </Router>
       </Data.Provider>

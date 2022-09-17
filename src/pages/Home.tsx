@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client'
 import Map from '../components/Map'
 import { GetWaterDataDocument } from '../generated'
-import '../styles/Maps/MapDisplay.css'
-import '../styles/Maps/Marker.css'
+import '../styles/MapDisplay.css'
+import '../styles/Marker.css'
 
 const Home = () => {
   const { data: waterData } = useQuery(GetWaterDataDocument)
