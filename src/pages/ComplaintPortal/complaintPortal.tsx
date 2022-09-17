@@ -47,7 +47,8 @@ const ComplaintPortal = () => {
   //       location,
   //       username,
   //       desc,
-  //       status
+  //       status,
+  //       image,
   //     }
   //   }
   // })
@@ -93,17 +94,18 @@ const ComplaintPortal = () => {
   const handleSubmit = () => {
     console.log(name, phone, area, locality, street, address, problem, complaint, complaintDetails)
     // try {
-    //   // const { data } = await postIssue({
-    //   //   variables: {
-    //   //     complaintInput: {
-    //   //     tags,
-    //   //     phoneNumber,
-    //   //     location,
-    //   //     username,
-    //   //     desc,
-    //   //     status
-    //   //   }
-    //   // });
+    //   const { data } = await postIssue({
+    //     variables: {
+    //       complaintInput: {
+    //       tags,
+    //       phoneNumber,
+    //       location,
+    //       username,
+    //       desc,
+    //       status,
+    //       image,
+    //     }
+    //   });
 
     // } catch (error) {
     //   console.error(error);
