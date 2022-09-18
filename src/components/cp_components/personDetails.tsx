@@ -14,7 +14,6 @@ const PersonDetails = ({
   handleNameChange,
   handlePhoneChange,
   handleOtpChange,
-
   activeStep,
   setActiveStep,
 }: {
@@ -42,9 +41,9 @@ const PersonDetails = ({
           fullWidth
           margin='normal'
           variant='outlined'
-          onChange={handleNameChange}
-          // error={!!errors.name}
-          // helperText={errors.name ? errors.name?.message : ''}
+          onChange={(e) => {
+            handleNameChange(e)
+          }}
         />
       </div>
 
@@ -58,7 +57,9 @@ const PersonDetails = ({
           type='text'
           label='Phone'
           variant='outlined'
-          onChange={handlePhoneChange}
+          onChange={(e) => {
+            handlePhoneChange(e)
+          }}
           error={phone.length !== 0 && !/^\d{10}$/.test(phone)}
           helperText={!/^\d{10}$/.test(phone) ? 'Please enter a phone number' : ''}
           required
@@ -73,9 +74,7 @@ const PersonDetails = ({
             margin='normal'
             label='Enter your OTP '
             variant='outlined'
-            onChange={handleOtpChange}
-            // error={!!errors.otp}
-            // helperText={errors.otp ? errors.otp?.message : ''}
+            onChange={(e) => handleOtpChange(e)}
           />
         </div>
         <div className='otp-button'>

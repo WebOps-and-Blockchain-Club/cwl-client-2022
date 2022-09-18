@@ -46,7 +46,7 @@ const ComplaintDetails = ({
           margin='normal'
           label='Complaint'
           variant='outlined'
-          onChange={handleComplaintChange}
+          onChange={(e) => handleComplaintChange(e)}
           error={complaint.trim().length === 0}
           helperText={complaint.trim().length === 0 ? 'Please enter a complaint' : ''}
           required
@@ -62,13 +62,19 @@ const ComplaintDetails = ({
           margin='normal'
           label='Complaint Details (max 400 words)'
           variant='outlined'
-          onChange={handleComplaintDetailsChange}
+          onChange={(e) => handleComplaintDetailsChange(e)}
         />
       </div>
       <div className='upload button'>
         <Button variant='contained' component='label' color='primary' sx={{ fontSize: 17 }}>
           <PhotoCamera fontSize='large' /> upload
-          <input type='file' accept='image/*' onChange={handleImageUpload} name='image' hidden />
+          <input
+            type='file'
+            accept='image/*'
+            onChange={(e) => handleImageUpload(e)}
+            name='image'
+            hidden
+          />
         </Button>
         {imageURL && (
           <div className='image'>
@@ -86,13 +92,15 @@ const ComplaintDetails = ({
           sx={{ height: 45 }}
         >
           Back
-        </Button>{' '}
+        </Button>
         <Button
           type='submit'
           color='primary'
           className='navigation'
           variant='contained'
-          onSubmit={handleFormSubmit}
+          onClick={(e) => {
+            handleFormSubmit(e)
+          }}
           fullWidth
           sx={{ height: 45 }}
           disabled={complaint.trim().length === 0 ? true : false}

@@ -90,8 +90,12 @@ const DataSubmission = (): JSX.Element => {
             placeholder='cm'
             value={depth}
             variant='outlined'
-            onChange={(e) => {
-              setDepth(parseFloat(e.target.value))
+            onChange={(e: { target: { value: any } }) => {
+              if (!isNaN(e.target.value)) {
+                setDepth(parseFloat(e.target.value))
+              } else {
+                setDepth(0)
+              }
             }}
             sx={{ boxShadow: 15, borderRadius: 5, outline: 'none' }}
             inputProps={{
@@ -160,7 +164,6 @@ const DataSubmission = (): JSX.Element => {
                     accept='image/*'
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     onChange={(e: { target: { files: any } }) => {
-                      console.log(e.target.files[0])
                       handleImageUpload(e.target.files[0])
                     }}
                     required

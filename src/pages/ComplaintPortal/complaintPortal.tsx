@@ -1,13 +1,13 @@
-import { useState, useReducer, SetStateAction } from 'react'
+import { useState, SetStateAction, useEffect, useContext } from 'react'
 import { Paper, Typography } from '@mui/material'
 import '../../styles/ComplaintPortal/cp_style.css'
 import PersonDetails from '../../components/cp_components/personDetails'
 import Address from '../../components/cp_components/address'
 import ComplaintDetails from '../../components/cp_components/complaintDetails'
 import ComplaintType from '../../components/cp_components/complaintType'
-import { useMutation } from '@apollo/client'
-import { PostIssueDocument } from '../../generated'
-
+import { useMutation, useQuery } from '@apollo/client'
+import { PostIssueDocument, GetS3UrlDocument } from '../../generated'
+import Data from '../../utils/Context'
 const complaints = [
   { id: 1, name: 'General', state: false },
   { id: 2, name: 'Water Logging', state: false },
@@ -19,41 +19,48 @@ const complaints = [
   { id: 8, name: 'Drains', state: false },
 ]
 
-function problemReducer(state: any, complaint: any) {
-  return [...state, complaint]
-}
-
 const ComplaintPortal = () => {
   const [activeStep, setActiveStep] = useState(0)
+  const { dataS3 } = useQuery(GetS3UrlDocument)
   // All data entriy states
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [otp, setOtp] = useState('')
-  const [area, setArea] = useState('your area')
-  const [locality, setLocality] = useState('your locality')
-  const [street, setStreet] = useState('your street')
+  const [area, setArea] = useState('')
+  const [locality, setLocality] = useState('')
   const [address, setAddress] = useState('')
-  const [problem, setProblem] = useReducer(problemReducer, [complaints])
+  const [problem, setProblem] = useState(complaints)
   const [complaint, setComplaint] = useState('')
   const [complaintDetails, setComplaintDetails] = useState('')
-  const [, setFile] = useState('')
   const [imageURL, setImageURL] = useState('')
+  const { coord } = useContext(Data)
+  const [tags, setTags] = useState('')
+  useEffect(() => {
+    fetch(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${coord.lng},${coord.lat}.json?access_token=${process.env.REACT_APP_MAPBOX_SECRET_KEY}`,
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setArea(data.features[3].place_name)
+        setLocality(data.features[1].place_name.split(',')[0])
+        setAddress(data.features[0].place_name)
+      })
+      .catch((e) => console.log(e))
+  }, [])
+  const [postIssue, { data }] = useMutation(PostIssueDocument, {
+    variables: {
+      complaintInput: {
+        tags,
+        phoneNumber: phone,
+        location: JSON.stringify(coord),
+        username: name,
+        desc: complaint,
+        status,
+        image: imageURL,
+      },
+    },
+  })
 
-  // const [postIssue, { data }] = useMutation(PostIssueDocument, {
-  //   variables: {
-  //     complaintInput: {
-  //       tags,
-  //       phoneNumber
-  //       location,
-  //       username,
-  //       desc,
-  //       status,
-  //       image,
-  //     }
-  //   }
-  // })
-
-  // handelers for all data
   const handleNameChange = (e: { target: { value: SetStateAction<string> } }) => {
     setName(e.target.value)
   }
@@ -69,15 +76,17 @@ const ComplaintPortal = () => {
   const handleLocalityChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setLocality(e.target.value)
   }
-  const handleStreetChange = (e: { target: { value: React.SetStateAction<string> } }) => {
-    setStreet(e.target.value)
-  }
   const handleAddressChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setAddress(e.target.value)
   }
-  function handleComplaintTypeChange(complaint: { id?: number; name?: string; state: any }) {
-    const state = !complaint.state
-    setProblem((complaint.state = state))
+  function handleComplaintTypeChange(complaint: { id?: number; name?: string; state: boolean }) {
+    const newProblem = problem.map((cop) => {
+      if (cop.id === complaint.id) {
+        cop.state = !cop.state
+      }
+      return cop
+    })
+    setProblem(newProblem)
   }
   const handleComplaintChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setComplaint(e.target.value)
@@ -85,31 +94,66 @@ const ComplaintPortal = () => {
   const handleComplaintDetailsChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setComplaintDetails(e.target.value)
   }
-  const handleImageUpload = (e: { target: { files: any } }) => {
-    setFile(e.target.files[0])
-    setImageURL(URL.createObjectURL(e.target.files[0]))
-    console.log(URL.createObjectURL(e.target.files[0]))
+  const handleImageUpload = async (e: { target: { files: any } }) => {
+    const s3URL = dataS3?.getS3URL
+    await fetch(s3URL || '', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      body: e.target.files[0],
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((e) => console.log(e))
+    setImageURL((s3URL || '').split('?')[0])
   }
 
-  const handleSubmit = () => {
-    console.log(name, phone, area, locality, street, address, problem, complaint, complaintDetails)
-    // try {
-    //   const { data } = await postIssue({
-    //     variables: {
-    //       complaintInput: {
-    //       tags,
-    //       phoneNumber,
-    //       location,
-    //       username,
-    //       desc,
-    //       status,
-    //       image,
-    //     }
-    //   });
-
-    // } catch (error) {
-    //   console.error(error);
-    // }
+  const handleSubmit = async () => {
+    let coordnew
+    await fetch(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${JSON.stringify(
+        address,
+      )}.json?access_token=${process.env.REACT_APP_MAPBOX_SECRET_KEY}`,
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        let min = 100
+        data.features.map((e: { center: any[] }) => {
+          const x = e.center[1] - coord.lat
+          const y = e.center[0] - coord.lng
+          if (Math.sqrt(x * x + y * y) < min) {
+            min = Math.sqrt(x * x + y * y)
+            coordnew = JSON.stringify({ lat: e.center[1], lng: e.center[0] })
+          }
+        })
+      })
+      .catch((e) => console.log(e))
+    const problemTags = JSON.stringify(
+      problem
+        .filter((tag: { state: boolean }) => tag.state)
+        .map((tag: { name: string }) => tag.name),
+    )
+    setTags(problemTags)
+    try {
+      const { data } = await postIssue({
+        variables: {
+          complaintInput: {
+            tags: problemTags,
+            phoneNumber: phone,
+            location: coordnew || ' ',
+            username: name,
+            desc: complaint,
+            status,
+            image: imageURL,
+          },
+        },
+      })
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const pageDisplay = () => {
@@ -149,11 +193,9 @@ const ComplaintPortal = () => {
             <Address
               area={area}
               locality={locality}
-              street={street}
               address={address}
               handleAreaChange={handleAreaChange}
               handleLocalityChange={handleLocalityChange}
-              handleStreetChange={handleStreetChange}
               handleAddressChange={handleAddressChange}
               activeStep={activeStep}
               setActiveStep={setActiveStep}
