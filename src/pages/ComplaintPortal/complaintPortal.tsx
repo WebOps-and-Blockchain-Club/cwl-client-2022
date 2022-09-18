@@ -21,7 +21,7 @@ const complaints = [
 
 const ComplaintPortal = () => {
   const [activeStep, setActiveStep] = useState(0)
-  const { dataS3 } = useQuery(GetS3UrlDocument)
+  const { data: dataS3 } = useQuery(GetS3UrlDocument)
   // All data entriy states
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
