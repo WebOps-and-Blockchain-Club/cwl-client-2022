@@ -26,9 +26,9 @@ import { SignUpDocument } from '../../generated'
 import Volunteer from '../../interfaces/VolunteerSide/Volunteer'
 const theme = createTheme()
 const paperStyles = {
-  padding: '30px 60px',
+  padding: '20px 40px',
   width: 575,
-  margin: '60px auto',
+  margin: '40px auto',
   display: 'flex',
   borderRadius: '10px',
 }
@@ -109,13 +109,13 @@ function VolunteerRegistrationForm({
           <CssBaseline />
           <Box
             sx={{
-              marginTop: 6,
+              marginTop: 1,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+            <Avatar sx={{ bgcolor: 'primary.main' }}>
               <Assignment />
             </Avatar>
             <Typography
@@ -139,7 +139,7 @@ function VolunteerRegistrationForm({
                 item
                 style={{
                   alignItems: 'left',
-                  paddingTop: '15px',
+                  paddingTop: '10px',
                   fontFamily: '"Times New Roman", Times, serif',
                 }}
               >
@@ -203,7 +203,7 @@ function VolunteerRegistrationForm({
                 }
                 required
               />
-              <Box style={{ paddingTop: '15px' }}>
+              <Box style={{ paddingTop: '10px' }}>
                 <FormControl fullWidth required variant='outlined'>
                   <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
                   <OutlinedInput
@@ -232,7 +232,7 @@ function VolunteerRegistrationForm({
                 </FormControl>
               </Box>
               <DropDown props={{ volunteerProvisions, setVolunteerProvisions }} />
-              <Box textAlign='center' style={{ paddingTop: '30px', paddingBottom: '50px' }}>
+              <Box textAlign='center' style={{ paddingTop: '30px', paddingBottom: '20px' }}>
                 <Button
                   type='submit'
                   size='large'

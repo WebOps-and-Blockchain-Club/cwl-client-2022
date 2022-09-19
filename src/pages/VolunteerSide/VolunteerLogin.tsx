@@ -27,9 +27,9 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
 const theme = createTheme()
 const paperStyles = {
-  padding: '25px 20px',
+  padding: '15px 15px',
   width: 450,
-  margin: '60px auto',
+  margin: '50px auto',
   display: 'flex',
   borderRadius: '10px',
 }
@@ -87,14 +87,13 @@ function VolunteerLogin({ err }: { err: any }) {
         <Container component='main' maxWidth='xs'>
           <CssBaseline />
           <Box
-            sx={{
-              marginTop: 6,
+            sx={{            
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+            <Avatar sx={{  bgcolor: 'primary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography
