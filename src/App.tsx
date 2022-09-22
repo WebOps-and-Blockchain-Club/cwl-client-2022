@@ -14,6 +14,8 @@ import ComplaintPortal from './pages/ComplaintPortal/complaintPortal'
 import FrontPage from './pages/FrontPage/FrontPage'
 import 'react-accessible-accordion/dist/fancy-example.css'
 import './styles/frontpage.css'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+
 const BACKEND_URL: string = process.env.REACT_APP_BACKEND_URL || ''
 
 const client = new ApolloClient({
@@ -53,10 +55,10 @@ function App() {
         </Router>
         <Router>
           <Switch>
-            <Route path='/' component={DataSubmission} />
+            <Route path='/datasubmission' component={DataSubmission} />
             <Route path='/map' component={Home} />
             <Route path='/complaint' component={ComplaintPortal} />
-            <Route path='/frontpage' component={FrontPage} />
+            <Route path='/' component={FrontPage} />
           </Switch>
         </Router>
       </Data.Provider>
