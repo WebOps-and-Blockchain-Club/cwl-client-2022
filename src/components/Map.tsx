@@ -4,6 +4,11 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 // import { useQuery } from '@apollo/client'
 // import { GetWaterDataDocument } from '../generated'
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default
+
 // eslint-disable-next-line
 export default function Map({ waterData }: { waterData: any }) {
   const mapContainer = useRef(null)
