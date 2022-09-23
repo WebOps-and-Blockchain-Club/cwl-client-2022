@@ -44,6 +44,10 @@ function VolunteerRegistrationForm({
     string,
     React.Dispatch<React.SetStateAction<string>>,
   ] = useState('')
+  const [OthSkills, setOthSkills]: [
+    string,
+    React.Dispatch<React.SetStateAction<string>>,
+  ] = useState('')
   const [volunteerPassword, setVolunteerPassword]: [
     string,
     React.Dispatch<React.SetStateAction<string>>,
@@ -53,8 +57,10 @@ function VolunteerRegistrationForm({
     Provision[],
     React.Dispatch<React.SetStateAction<never[]>>,
   ] = useState([])
+  const [volunteerSkills, setVolunteerSkills] = useState([])
   const [error, setError] = useState(err)
   const [showPassword, setShowPassword] = useState(false)
+  const [isOthers,setIsOthers]=useState(false)
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword)
   }
@@ -134,20 +140,7 @@ function VolunteerRegistrationForm({
             >
               Fill the form to be a part of the mission
             </Typography>
-            <Grid container>
-              <Grid
-                item
-                style={{
-                  alignItems: 'left',
-                  paddingTop: '10px',
-                  fontFamily: '"Times New Roman", Times, serif',
-                }}
-              >
-                <Link href='/volunteer/login' variant='body1'>
-                  Already Registered? Sign-In
-                </Link>
-              </Grid>
-            </Grid>
+
             <Box
               component='form'
               // eslint-disable-next-line
@@ -203,7 +196,7 @@ function VolunteerRegistrationForm({
                 }
                 required
               />
-              <Box style={{ paddingTop: '10px' }}>
+              {/* <Box style={{ paddingTop: '10px' }}>
                 <FormControl fullWidth required variant='outlined'>
                   <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
                   <OutlinedInput
@@ -230,8 +223,44 @@ function VolunteerRegistrationForm({
                     required
                   />
                 </FormControl>
-              </Box>
-              <DropDown props={{ volunteerProvisions, setVolunteerProvisions }} />
+              </Box> */}
+              <DropDown
+                 isOthers={null}
+                 setIsOthers={null}
+                props={{
+                  volunteerProvisions,
+                  setVolunteerProvisions,
+                  Tags: 'Help',
+                  names: ['Food', 'Shelter', 'Water', 'Medical Help', 'Transport'],
+                }}
+              />
+              <DropDown
+                isOthers={isOthers}
+                setIsOthers={setIsOthers}
+                props={{
+                  volunteerProvisions: volunteerSkills,
+                  setVolunteerProvisions: setVolunteerSkills,
+                  Tags: 'Skills',
+                  names: ['Transportation', 'Plumbing', 'Swimming', 'Electrical','Others'],
+                }}
+              />
+              {isOthers?
+              <TextField
+               margin='normal'
+               fullWidth
+               autoFocus
+               variant='outlined'
+               label='Other skills'
+               value={OthSkills}
+               onChange={(e) => {
+                if(/^[a-zA-Z]*$/g.test(e.target.value)){
+                  setOthSkills(e.target.value)
+                }
+                e.preventDefault()
+              }}
+              />: null}
+                
+              
               <Box textAlign='center' style={{ paddingTop: '30px', paddingBottom: '20px' }}>
                 <Button
                   type='submit'
