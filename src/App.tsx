@@ -3,7 +3,8 @@ import { Router, Switch, Route, Redirect } from 'wouter'
 import { InMemoryCache, ApolloProvider, ApolloClient } from '@apollo/client'
 import VolunteerRegistrationForm from './pages/VolunteerSide/VolunteerRegistrationForm'
 import VolunteerLogin from './pages/VolunteerSide/VolunteerLogin'
-import VolunteerDashboard from './pages/VolunteerSide/VolunteerDashboard'
+import CompliantDashboard from './components/Volunteer/ComplaintDashboard'
+import Admin from './pages/Admin'
 import useCheckUser from './hooks/useCheckUser'
 import User from './interfaces/User'
 import DataSubmission from './components/DataSubmission'
@@ -46,7 +47,7 @@ function App() {
             <Route
               // exact
               path='/dashboard'
-              component={() => (user ? <VolunteerDashboard /> : <Redirect to='/login' />)}
+              component={() => (user ? <Admin /> : <Redirect to='/login' />)}
             />
             <Route path='/:rest*' component={() => <Redirect to='/login' />} />
           </Switch>

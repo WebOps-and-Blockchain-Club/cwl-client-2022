@@ -33,8 +33,7 @@ export default function Map({ waterData }: { waterData: any }) {
   }
 
   useEffect(() => {
-    mapboxgl.accessToken =
-      'pk.eyJ1IjoiaXNodTExNDQwNyIsImEiOiJjbDRsMnNhZW8waTk0M2JxcGx0N2liYTNqIn0.SQAlOr75DZykR8FMj57FlA'
+    mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_SECRET_KEY || ' '
     if (map.current) return // initialize map only once
     map.current = new mapboxgl.Map({
       container: mapContainer.current || '',
