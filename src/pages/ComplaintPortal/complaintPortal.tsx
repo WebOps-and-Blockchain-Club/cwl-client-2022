@@ -7,6 +7,7 @@ import ComplaintDetails from '../../components/cp_components/complaintDetails'
 import ComplaintType from '../../components/cp_components/complaintType'
 import { useMutation, useQuery } from '@apollo/client'
 import { PostIssueDocument, GetS3UrlDocument } from '../../generated'
+import { useLocation } from 'wouter'
 import Data from '../../utils/Context'
 const complaints = [
   { id: 1, name: 'General', state: false },
@@ -35,6 +36,7 @@ const ComplaintPortal = () => {
   const [imageURL, setImageURL] = useState('')
   const { coord } = useContext(Data)
   const [tags, setTags] = useState('')
+  const [, setLocation] = useLocation()
   useEffect(() => {
     fetch(
       `https://api.mapbox.com/geocoding/v5/mapbox.places/${coord.lng},${coord.lat}.json?access_token=${process.env.REACT_APP_MAPBOX_SECRET_KEY}`,
@@ -151,6 +153,7 @@ const ComplaintPortal = () => {
           },
         },
       })
+      setLocation('/')
     } catch (error) {
       console.error(error)
     }

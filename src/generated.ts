@@ -77,6 +77,7 @@ export type Query = {
   __typename?: 'Query'
   getIssues: Array<Issue>
   getS3URL: Scalars['String']
+  getVolunteers: Array<Volunteer>
   getWaterData: Array<WaterData>
   login: LoginResponse
 }
@@ -135,7 +136,7 @@ export type LoginQueryVariables = Exact<{
 
 export type LoginQuery = {
   __typename?: 'Query'
-  login: { __typename?: 'LoginResponse'; success: boolean; username: string; tags: string }
+  login: { __typename?: 'LoginResponse'; success: boolean }
 }
 
 export type GetS3UrlQueryVariables = Exact<{ [key: string]: never }>
@@ -152,6 +153,18 @@ export type GetWaterDataQuery = {
     location: string
     image: string
     date: any
+  }>
+}
+
+export type GetVolunteersQueryVariables = Exact<{ [key: string]: never }>
+
+export type GetVolunteersQuery = {
+  __typename?: 'Query'
+  getVolunteers: Array<{
+    __typename?: 'Volunteer'
+    username: string
+    tags: string
+    phoneNumber: string
   }>
 }
 
@@ -271,11 +284,7 @@ export const LoginDocument = {
             ],
             selectionSet: {
               kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'success' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'tags' } },
-              ],
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'success' } }],
             },
           },
         ],
@@ -325,6 +334,33 @@ export const GetWaterDataDocument = {
     },
   ],
 } as unknown as DocumentNode<GetWaterDataQuery, GetWaterDataQueryVariables>
+export const GetVolunteersDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getVolunteers' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'getVolunteers' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'tags' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'phoneNumber' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetVolunteersQuery, GetVolunteersQueryVariables>
 export const SignUpDocument = {
   kind: 'Document',
   definitions: [
