@@ -44,10 +44,8 @@ function VolunteerRegistrationForm({
     string,
     React.Dispatch<React.SetStateAction<string>>,
   ] = useState('')
-  const [OthSkills, setOthSkills]: [
-    string,
-    React.Dispatch<React.SetStateAction<string>>,
-  ] = useState('')
+  const [OthSkills, setOthSkills]: [string, React.Dispatch<React.SetStateAction<string>>] =
+    useState('')
   const [volunteerPassword, setVolunteerPassword]: [
     string,
     React.Dispatch<React.SetStateAction<string>>,
@@ -57,10 +55,11 @@ function VolunteerRegistrationForm({
     Provision[],
     React.Dispatch<React.SetStateAction<never[]>>,
   ] = useState([])
+  const [otp, setOtp] = useState(false)
   const [volunteerSkills, setVolunteerSkills] = useState([])
   const [error, setError] = useState(err)
   const [showPassword, setShowPassword] = useState(false)
-  const [isOthers,setIsOthers]=useState(false)
+  const [isOthers, setIsOthers] = useState(false)
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword)
   }
@@ -196,6 +195,28 @@ function VolunteerRegistrationForm({
                 }
                 required
               />
+              <div>
+                <div className='otp-button'>
+                  <Button
+                    variant='contained'
+                    onClick={() => {
+                      setOtp(true)
+                    }}
+                    color='primary'
+                  >
+                    Get OTP
+                  </Button>
+                </div>
+                <div>
+                  <TextField
+                    id='otp'
+                    fullWidth
+                    margin='normal'
+                    label='Enter your OTP '
+                    variant='outlined'
+                  />
+                </div>
+              </div>
               {/* <Box style={{ paddingTop: '10px' }}>
                 <FormControl fullWidth required variant='outlined'>
                   <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
@@ -224,54 +245,57 @@ function VolunteerRegistrationForm({
                   />
                 </FormControl>
               </Box> */}
-              <DropDown
-                 isOthers={null}
-                 setIsOthers={null}
-                props={{
-                  volunteerProvisions,
-                  setVolunteerProvisions,
-                  Tags: 'Help',
-                  names: ['Food', 'Shelter', 'Water', 'Medical Help', 'Transport'],
-                }}
-              />
-              <DropDown
-                isOthers={isOthers}
-                setIsOthers={setIsOthers}
-                props={{
-                  volunteerProvisions: volunteerSkills,
-                  setVolunteerProvisions: setVolunteerSkills,
-                  Tags: 'Skills',
-                  names: ['Transportation', 'Plumbing', 'Swimming', 'Electrical','Others'],
-                }}
-              />
-              {isOthers?
-              <TextField
-               margin='normal'
-               fullWidth
-               autoFocus
-               variant='outlined'
-               label='Other skills'
-               value={OthSkills}
-               onChange={(e) => {
-                if(/^[a-zA-Z]*$/g.test(e.target.value)){
-                  setOthSkills(e.target.value)
-                }
-                e.preventDefault()
-              }}
-              />: null}
-                
-              
-              <Box textAlign='center' style={{ paddingTop: '30px', paddingBottom: '20px' }}>
-                <Button
-                  type='submit'
-                  size='large'
-                  variant='contained'
-                  disabled={!(volunteerName && volunteerPhone && volunteerPassword)}
-                >
-                  Submit
-                </Button>
-                <div style={{ color: 'red' }}>{error}</div>
-              </Box>
+              {otp ? (
+                <div>
+                  <DropDown
+                    isOthers={null}
+                    setIsOthers={null}
+                    props={{
+                      volunteerProvisions,
+                      setVolunteerProvisions,
+                      Tags: 'Help',
+                      names: ['Food', 'Shelter', 'Water', 'Medical Help', 'Transport'],
+                    }}
+                  />
+                  <DropDown
+                    isOthers={isOthers}
+                    setIsOthers={setIsOthers}
+                    props={{
+                      volunteerProvisions: volunteerSkills,
+                      setVolunteerProvisions: setVolunteerSkills,
+                      Tags: 'Skills',
+                      names: ['Transportation', 'Plumbing', 'Swimming', 'Electrical', 'Others'],
+                    }}
+                  />
+                  {isOthers ? (
+                    <TextField
+                      margin='normal'
+                      fullWidth
+                      autoFocus
+                      variant='outlined'
+                      label='Other skills'
+                      value={OthSkills}
+                      onChange={(e) => {
+                        if (/^[a-zA-Z]*$/g.test(e.target.value)) {
+                          setOthSkills(e.target.value)
+                        }
+                        e.preventDefault()
+                      }}
+                    />
+                  ) : null}
+                  <Box textAlign='center' style={{ paddingTop: '30px', paddingBottom: '20px' }}>
+                    <Button
+                      type='submit'
+                      size='large'
+                      variant='contained'
+                      disabled={!(volunteerName && volunteerPhone && volunteerPassword)}
+                    >
+                      Submit
+                    </Button>
+                    <div style={{ color: 'red' }}>{error}</div>
+                  </Box>
+                </div>
+              ) : null}
             </Box>
           </Box>
         </Container>
