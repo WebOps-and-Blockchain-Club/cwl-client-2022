@@ -1,8 +1,15 @@
 import { useRef, useEffect, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
+import GMT2IST from '../utils/GMT2IST'
+import getColorByDepth from '../utils/getColorByDepth'
 // import { useQuery } from '@apollo/client'
 // import { GetWaterDataDocument } from '../generated'
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default
 
 // eslint-disable-next-line
 export default function Map({ waterData }: { waterData: any }) {
@@ -14,27 +21,31 @@ export default function Map({ waterData }: { waterData: any }) {
   const [zoom, setZoom] = useState(9)
   // const [isWaterData, setIsWaterData] = useState(false)
   // const { data: waterData } = useQuery(GetWaterDataDocument)
-  console.log(waterData)
   // setIsWaterData(true)
   const placeMarkers = () => {
-    console.log(waterData)
     // eslint-disable-next-line
     waterData?.getWaterData.map((e: any) => {
       const coord = JSON.parse(e.location)
-      console.log(coord)
-      return new mapboxgl.Marker()
+      return new mapboxgl.Marker({ color: getColorByDepth(e.depth) })
         .setLngLat([coord.lng, coord.lat])
         .setPopup(
           new mapboxgl.Popup({ offset: 25 }) // add popups
-            .setHTML(`<h4>Water Level:${e.depth}cm</h4><img src='${e.image}' height='120px'>`),
+            .setHTML(
+              `<h4>Water Level:${e.depth}cm</h4><img src='${e.image}' height='120px'><div>${GMT2IST(
+                e.date
+                  .toLocaleString(undefined, {
+                    timeZone: 'Asia/Kolkata',
+                  })
+                  .slice(11, 19),
+              )}</div>`,
+            ),
         )
         .addTo(map.current)
     })
   }
 
   useEffect(() => {
-    mapboxgl.accessToken =
-      'pk.eyJ1IjoiaXNodTExNDQwNyIsImEiOiJjbDRsMnNhZW8waTk0M2JxcGx0N2liYTNqIn0.SQAlOr75DZykR8FMj57FlA'
+    mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_SECRET_KEY || ' '
     if (map.current) return // initialize map only once
     map.current = new mapboxgl.Map({
       container: mapContainer.current || '',

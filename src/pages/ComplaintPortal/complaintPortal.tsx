@@ -7,6 +7,7 @@ import ComplaintDetails from '../../components/cp_components/complaintDetails'
 import ComplaintType from '../../components/cp_components/complaintType'
 import { useMutation, useQuery } from '@apollo/client'
 import { PostIssueDocument, GetS3UrlDocument } from '../../generated'
+import { useLocation } from 'wouter'
 import Data from '../../utils/Context'
 const complaints = [
   { id: 1, name: 'General', state: false },
@@ -35,6 +36,7 @@ const ComplaintPortal = () => {
   const [imageURL, setImageURL] = useState('')
   const { coord } = useContext(Data)
   const [tags, setTags] = useState('')
+  const [, setLocation] = useLocation()
   useEffect(() => {
     fetch(
       `https://api.mapbox.com/geocoding/v5/mapbox.places/${coord.lng},${coord.lat}.json?access_token=${process.env.REACT_APP_MAPBOX_SECRET_KEY}`,
@@ -47,7 +49,7 @@ const ComplaintPortal = () => {
       })
       .catch((e) => console.log(e))
   }, [])
-  const [postIssue, { data }] = useMutation(PostIssueDocument, {
+  const [postIssue] = useMutation(PostIssueDocument, {
     variables: {
       complaintInput: {
         tags,
@@ -94,6 +96,7 @@ const ComplaintPortal = () => {
   const handleComplaintDetailsChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setComplaintDetails(e.target.value)
   }
+  // eslint-disable-next-line
   const handleImageUpload = async (e: { target: { files: any } }) => {
     const s3URL = dataS3?.getS3URL
     await fetch(s3URL || '', {
@@ -121,6 +124,7 @@ const ComplaintPortal = () => {
       .then((res) => res.json())
       .then((data) => {
         let min = 100
+        // eslint-disable-next-line
         data.features.map((e: { center: any[] }) => {
           const x = e.center[1] - coord.lat
           const y = e.center[0] - coord.lng
@@ -138,7 +142,7 @@ const ComplaintPortal = () => {
     )
     setTags(problemTags)
     try {
-      const { data } = await postIssue({
+      await postIssue({
         variables: {
           complaintInput: {
             tags: problemTags,
@@ -151,6 +155,7 @@ const ComplaintPortal = () => {
           },
         },
       })
+      setLocation('/')
     } catch (error) {
       console.error(error)
     }

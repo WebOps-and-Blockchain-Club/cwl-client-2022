@@ -19,8 +19,6 @@ const MenuProps = {
   },
 }
 
-const names = ['Food', 'Shelter', 'Water', 'Medical Help', 'Transport']
-
 function getStyles(name: string, volunteerProvisions: readonly string[], theme: Theme) {
   return {
     fontWeight:
@@ -32,17 +30,24 @@ function getStyles(name: string, volunteerProvisions: readonly string[], theme: 
 
 // eslint-disable-next-line
 function DropDown(props: any) {
-  const { volunteerProvisions, setVolunteerProvisions } = props.props
+  const { volunteerProvisions, setVolunteerProvisions, names, Tags } = props.props
+  const { setIsOthers } = props
+
   const theme = useTheme()
 
   const handleChange = (event: SelectChangeEvent<typeof volunteerProvisions>) => {
     const {
       target: { value },
     } = event
-    setVolunteerProvisions(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    )
+    if (value == 'Others') {
+      setIsOthers(true)
+      console.log('Hi')
+    } else {
+      setVolunteerProvisions(
+        // On autofill we get a stringified value.
+        typeof value === 'string' ? value.split(',') : value,
+      )
+    }
   }
   const handleDelete = (value: string) => {
     setVolunteerProvisions(volunteerProvisions.filter((e: any) => e != value)) // eslint-disable-line
@@ -50,13 +55,13 @@ function DropDown(props: any) {
   return (
     <Box style={{ paddingTop: '15px' }}>
       <FormControl fullWidth>
-        <InputLabel id='demo-multiple-chip-label'>Tags</InputLabel>
+        <InputLabel id='demo-multiple-chip-label'>{Tags}</InputLabel>
         <Select
           labelId='demo-multiple-chip-label'
           id='demo-multiple-chip'
           multiple
           value={volunteerProvisions}
-          label='Tags'
+          label={Tags}
           onChange={handleChange}
           input={<OutlinedInput id='select-multiple-chip' label='Chip' />}
           renderValue={(selected) => (
@@ -79,7 +84,8 @@ function DropDown(props: any) {
           )}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {/* eslint-disable-next-line */}
+          {names.map((name: any) => (
             <MenuItem key={name} value={name} style={getStyles(name, volunteerProvisions, theme)}>
               {name}
             </MenuItem>

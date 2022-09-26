@@ -10,23 +10,23 @@ import { Grid, Button, Typography } from '@mui/material'
 import '../../styles/ComplaintPortal/cp_style.css'
 
 const ComplaintType = ({
-  problem,
   complaints,
   handleComplaintTypeChange,
   activeStep,
   setActiveStep,
 }: {
-  problem: any
-  complaints: any
-  handleComplaintTypeChange: any
-  activeStep: any
-  setActiveStep: any
+  problem: any // eslint-disable-line
+  complaints: any // eslint-disable-line
+  handleComplaintTypeChange: any // eslint-disable-line
+  activeStep: any // eslint-disable-line
+  setActiveStep: any // eslint-disable-line
 }) => {
-  const [complaintErr, setComplaintErr] = useState(true)
+  const [, setComplaintErr] = useState(true)
   const handlePrev = () => {
     setActiveStep(activeStep - 1)
   }
   const handleNext = () => {
+    // eslint-disable-next-line
     complaints.forEach((complaint: any) => {
       if (complaint.state === true) {
         setComplaintErr(false)
@@ -49,12 +49,12 @@ const ComplaintType = ({
         {complaints.map(
           (complaint: {
             id: Key | null | undefined
-            state: any
+            state: any // eslint-disable-line
             name:
               | string
               | number
               | boolean
-              | ReactElement<any, string | JSXElementConstructor<any>>
+              | ReactElement<any, string | JSXElementConstructor<any>> // eslint-disable-line
               | ReactFragment
               | ReactPortal
               | null

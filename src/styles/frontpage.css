@@ -238,6 +238,11 @@ p {
     align-items: center;
     height: 40vh;
     flex-wrap: wrap;
+
+}
+
+.logo:hover {
+    cursor: pointer;
 }
 
 .logo1 {

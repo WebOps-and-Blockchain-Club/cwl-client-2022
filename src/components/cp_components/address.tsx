@@ -11,20 +11,16 @@ const Address = ({
   activeStep,
   setActiveStep,
 }: {
-  area: any
-  locality: any
-  address: any
-  handleAreaChange: any
-  handleLocalityChange: any
-  handleAddressChange: any
+  area: any // eslint-disable-line
+  locality: any // eslint-disable-line
+  address: any // eslint-disable-line
+  handleAreaChange: any // eslint-disable-line
+  handleLocalityChange: any // eslint-disable-line
+  handleAddressChange: any // eslint-disable-line
 
-  activeStep: any
-  setActiveStep: any
+  activeStep: any // eslint-disable-line
+  setActiveStep: any // eslint-disable-line
 }) => {
-  const handlePrev = () => {
-    setActiveStep(activeStep - 1)
-  }
-
   const handleNext = () => {
     if (area.trim().length !== 0) {
       if (locality.trim().length !== 0) {

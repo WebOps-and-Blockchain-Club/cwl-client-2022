@@ -14,7 +14,7 @@ const logo = require('../images/IIT_Madras_Logo.png')
 
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-  const [location, setLocation] = useLocation()
+  const [, setLocation] = useLocation()
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
@@ -32,7 +32,7 @@ const NavBar = () => {
             <img src={logo} alt='IITM' width='50px' height='auto' />
           </IconButton>
           <Link to='/'>
-            <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+            <Typography variant='h6' sx={{ flexGrow: 1 }}>
               Chennai Waterlogging Platform
             </Typography>
           </Link>
@@ -75,7 +75,7 @@ const NavBar = () => {
                   setLocation('/complaint')
                 }}
               >
-                Complaint !
+                Complaint
               </MenuItem>
               <MenuItem
                 onClick={() => {
@@ -83,7 +83,7 @@ const NavBar = () => {
                   setLocation('/volunteer/register')
                 }}
               >
-                Volunteer ☺
+                Volunteer
               </MenuItem>
             </Menu>
           </div>

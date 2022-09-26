@@ -48,9 +48,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '15px',
   },
 }))
-
 // eslint-disable-next-line
-export default function VolunteerTable(props: any) {
+export default function CompliantTable(props: any) {
   const { issues } = props.props
   const classes = useStyles()
   const [issueID, setIssueID] = useState('')
@@ -66,7 +65,7 @@ export default function VolunteerTable(props: any) {
   const handleUpdateIssue = async (issueID: string) => {
     if (issueID === '') return
     try {
-      const { data } = await updateIssue({
+      await updateIssue({
         variables: {
           id: issueID,
         },
@@ -110,20 +109,19 @@ export default function VolunteerTable(props: any) {
               return (
                 <TableRow key={row.username}>
                   <TableCell>
-                    {' '}
                     <Avatar alt={row.username} src='.' className={classes.avatar} />
                   </TableCell>
                   <TableCell className={classes.name} component='th' scope='row'>
                     {row.username}
                   </TableCell>
                   <TableCell className={classes.name1} align='center'>
-                    {row.location}
+                    ({JSON.parse(row.location).lat},{JSON.parse(row.location).lng})
                   </TableCell>
                   <TableCell className={classes.name1} align='center'>
                     {row.phoneNumber}
                   </TableCell>
                   <TableCell className={classes.name1} align='center'>
-                    {row.tags}
+                    {JSON.parse(row.tags).map((e: string) => e + ',')}
                   </TableCell>
                   <TableCell align='center'>
                     <Checkbox
