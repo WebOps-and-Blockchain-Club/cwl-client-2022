@@ -1,4 +1,4 @@
-import { TextField, Typography, Button, Paper, Slider, Grid, Box } from '@mui/material'
+import { TextField, Typography, Button, Slider, Grid, Box } from '@mui/material'
 
 import { useEffect, useState, useContext } from 'react'
 import Data from '../utils/Context'
@@ -16,7 +16,7 @@ const DataSubmission = (): JSX.Element => {
   const [, setLocation] = useLocation()
   const { data } = useQuery(GetS3UrlDocument)
 
-  const [postWaterData, { data: result }] = useMutation(PostWaterDataDocument, {
+  const [postWaterData] = useMutation(PostWaterDataDocument, {
     variables: {
       waterDataInput: {
         location: JSON.stringify(coord),
@@ -59,7 +59,7 @@ const DataSubmission = (): JSX.Element => {
   // eslint-disable-next-line
   const handleSubmit = async (e: any) => {
     try {
-      const { data } = await postWaterData({
+      await postWaterData({
         variables: {
           waterDataInput: {
             location: JSON.stringify(coord),
@@ -89,6 +89,7 @@ const DataSubmission = (): JSX.Element => {
           placeholder='cm'
           value={depth}
           variant='outlined'
+          // eslint-disable-next-line
           onChange={(e: { target: { value: any } }) => {
             if (!isNaN(e.target.value)) {
               setDepth(parseFloat(e.target.value))

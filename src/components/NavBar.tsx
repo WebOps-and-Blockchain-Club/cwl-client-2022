@@ -14,7 +14,7 @@ const logo = require('../images/IIT_Madras_Logo.png')
 
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-  const [location, setLocation] = useLocation()
+  const [, setLocation] = useLocation()
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }

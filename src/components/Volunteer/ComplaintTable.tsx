@@ -65,7 +65,7 @@ export default function CompliantTable(props: any) {
   const handleUpdateIssue = async (issueID: string) => {
     if (issueID === '') return
     try {
-      const { data } = await updateIssue({
+      await updateIssue({
         variables: {
           id: issueID,
         },

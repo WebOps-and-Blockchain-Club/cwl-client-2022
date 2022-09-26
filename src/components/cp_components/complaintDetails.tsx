@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { TextField, Button } from '@mui/material'
 import { PhotoCamera } from '@mui/icons-material'
 import '../../styles/ComplaintPortal/cp_style.css'
@@ -14,21 +14,22 @@ const ComplaintDetails = ({
   setActiveStep,
   handleSubmit,
 }: {
-  complaint: any
-  complaintDetails: any
-  handleComplaintChange: any
-  handleComplaintDetailsChange: any
-  imageURL: any
-  handleImageUpload: any
-  activeStep: any
+  complaint: any // eslint-disable-line
+  complaintDetails: any // eslint-disable-line
+  handleComplaintChange: any // eslint-disable-line
+  handleComplaintDetailsChange: any // eslint-disable-line
+  imageURL: any // eslint-disable-line
+  handleImageUpload: any // eslint-disable-line
+  activeStep: any // eslint-disable-line
 
-  setActiveStep: any
-  handleSubmit: any
+  setActiveStep: any // eslint-disable-line
+  handleSubmit: any // eslint-disable-line
 }) => {
   const handlePrev = () => {
     setActiveStep(activeStep - 1)
   }
 
+  // eslint-disable-next-line
   const handleFormSubmit = (e: any) => {
     if (complaint.trim().length !== 0) {
       handleSubmit()

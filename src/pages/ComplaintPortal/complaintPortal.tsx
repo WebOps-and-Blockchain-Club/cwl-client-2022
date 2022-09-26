@@ -96,6 +96,7 @@ const ComplaintPortal = () => {
   const handleComplaintDetailsChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setComplaintDetails(e.target.value)
   }
+  // eslint-disable-next-line
   const handleImageUpload = async (e: { target: { files: any } }) => {
     const s3URL = dataS3?.getS3URL
     await fetch(s3URL || '', {
@@ -123,6 +124,7 @@ const ComplaintPortal = () => {
       .then((res) => res.json())
       .then((data) => {
         let min = 100
+        // eslint-disable-next-line
         data.features.map((e: { center: any[] }) => {
           const x = e.center[1] - coord.lat
           const y = e.center[0] - coord.lng
@@ -140,7 +142,7 @@ const ComplaintPortal = () => {
     )
     setTags(problemTags)
     try {
-      const { data } = await postIssue({
+      await postIssue({
         variables: {
           complaintInput: {
             tags: problemTags,

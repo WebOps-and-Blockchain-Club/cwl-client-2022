@@ -19,7 +19,6 @@ const MenuProps = {
   },
 }
 
-
 function getStyles(name: string, volunteerProvisions: readonly string[], theme: Theme) {
   return {
     fontWeight:
@@ -31,24 +30,23 @@ function getStyles(name: string, volunteerProvisions: readonly string[], theme: 
 
 // eslint-disable-next-line
 function DropDown(props: any) {
-  const {volunteerProvisions, setVolunteerProvisions,names,Tags} = props.props
-  const {isOthers,setIsOthers}=props;
-  
+  const { volunteerProvisions, setVolunteerProvisions, names, Tags } = props.props
+  const { setIsOthers } = props
+
   const theme = useTheme()
 
   const handleChange = (event: SelectChangeEvent<typeof volunteerProvisions>) => {
     const {
       target: { value },
     } = event
-    if(value=='Others'){
+    if (value == 'Others') {
       setIsOthers(true)
       console.log('Hi')
-    }
-    else{
-    setVolunteerProvisions(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    )
+    } else {
+      setVolunteerProvisions(
+        // On autofill we get a stringified value.
+        typeof value === 'string' ? value.split(',') : value,
+      )
     }
   }
   const handleDelete = (value: string) => {
@@ -86,7 +84,8 @@ function DropDown(props: any) {
           )}
           MenuProps={MenuProps}
         >
-          {names.map((name:any) => (
+          {/* eslint-disable-next-line */}
+          {names.map((name: any) => (
             <MenuItem key={name} value={name} style={getStyles(name, volunteerProvisions, theme)}>
               {name}
             </MenuItem>

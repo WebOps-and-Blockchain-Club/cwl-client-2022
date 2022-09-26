@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { TextField, Button } from '@mui/material'
 import '../../styles/ComplaintPortal/cp_style.css'
-
-import NavButtons from './navButtons'
 
 // const [error, setError] = useState('')
 // const handleError = (err: boolean) => {}
@@ -17,15 +15,14 @@ const PersonDetails = ({
   activeStep,
   setActiveStep,
 }: {
-  name: any
-  phone: any
-  otp: any
-  handleNameChange: any
-  handlePhoneChange: any
-  handleOtpChange: any
-
-  activeStep: any
-  setActiveStep: any
+  name: any // eslint-disable-line
+  phone: any // eslint-disable-line
+  otp: any // eslint-disable-line
+  handleNameChange: any // eslint-disable-line
+  handlePhoneChange: any // eslint-disable-line
+  handleOtpChange: any // eslint-disable-line
+  activeStep: any // eslint-disable-line
+  setActiveStep: any // eslint-disable-line
 }) => {
   const handleNext = () => {
     if (!/^\d{10}$/.test(phone) === false) setActiveStep(activeStep + 1)

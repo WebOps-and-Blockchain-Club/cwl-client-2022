@@ -19,10 +19,8 @@ export default function Map({ waterData }: { waterData: any }) {
   const [zoom, setZoom] = useState(9)
   // const [isWaterData, setIsWaterData] = useState(false)
   // const { data: waterData } = useQuery(GetWaterDataDocument)
-  console.log(waterData)
   // setIsWaterData(true)
   const placeMarkers = () => {
-    console.log(waterData)
     // eslint-disable-next-line
     waterData?.getWaterData.map((e: any) => {
       const coord = JSON.parse(e.location)

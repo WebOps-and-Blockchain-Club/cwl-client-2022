@@ -6,19 +6,12 @@ import {
   TextField,
   Typography,
   Paper,
-  Grid,
-  Link,
   CssBaseline,
   Box,
   Container,
-  OutlinedInput,
   Avatar,
-  FormControl,
-  InputLabel,
-  InputAdornment,
-  IconButton,
 } from '@mui/material'
-import { Assignment, Visibility, VisibilityOff } from '@mui/icons-material'
+import { Assignment } from '@mui/icons-material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import '../../styles/VolunteerRegistrationForm.css'
 import { useMutation } from '@apollo/client'
@@ -46,10 +39,7 @@ function VolunteerRegistrationForm({
   ] = useState('')
   const [OthSkills, setOthSkills]: [string, React.Dispatch<React.SetStateAction<string>>] =
     useState('')
-  const [volunteerPassword, setVolunteerPassword]: [
-    string,
-    React.Dispatch<React.SetStateAction<string>>,
-  ] = useState('')
+  const [volunteerPassword]: [string, React.Dispatch<React.SetStateAction<string>>] = useState('')
   // eslint-disable-next-line
   const [volunteerProvisions, setVolunteerProvisions]: [
     Provision[],
@@ -58,11 +48,7 @@ function VolunteerRegistrationForm({
   const [otp, setOtp] = useState(false)
   const [volunteerSkills, setVolunteerSkills] = useState([])
   const [error, setError] = useState(err)
-  const [showPassword, setShowPassword] = useState(false)
   const [isOthers, setIsOthers] = useState(false)
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword)
-  }
 
   // eslint-disable-next-line
   const [signUp, { data }] = useMutation(SignUpDocument, {

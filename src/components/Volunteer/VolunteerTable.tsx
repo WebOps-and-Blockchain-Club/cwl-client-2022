@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Table,
@@ -9,10 +9,7 @@ import {
   TableRow,
   Avatar,
   Paper,
-  Checkbox,
 } from '@material-ui/core'
-
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } }
 
 const useStyles = makeStyles((theme) => ({
   table: {
