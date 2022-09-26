@@ -8,14 +8,15 @@ import { AddAPhoto } from '@mui/icons-material'
 import '../styles/DataSubmission.css'
 import { useMutation, useQuery } from '@apollo/client'
 import { GetS3UrlDocument, PostWaterDataDocument } from '../generated'
-
+import Modal_ from '../components/Modal'
 const DataSubmission = (): JSX.Element => {
   const { coord, setCoord } = useContext(Data)
   const [depth, setDepth] = useState(0)
   const [imageURL, setImageURL] = useState('')
   const [, setLocation] = useLocation()
   const { data } = useQuery(GetS3UrlDocument)
-
+  const [error, setError] = useState('Enter Water level')
+  const [open, setOpen] = useState(false)
   const [postWaterData] = useMutation(PostWaterDataDocument, {
     variables: {
       waterDataInput: {
@@ -40,7 +41,6 @@ const DataSubmission = (): JSX.Element => {
   // eslint-disable-next-line
   const handleImageUpload = async (file: any) => {
     const s3URL = data?.getS3URL
-    console.log(file)
     await fetch(s3URL || '', {
       method: 'PUT',
       headers: {
@@ -58,19 +58,33 @@ const DataSubmission = (): JSX.Element => {
 
   // eslint-disable-next-line
   const handleSubmit = async (e: any) => {
-    try {
-      await postWaterData({
-        variables: {
-          waterDataInput: {
-            location: JSON.stringify(coord),
-            image: imageURL,
-            depth,
+    if (coord.lat === 13.0827 && coord.lng === 80.2707) {
+      setOpen(true)
+    } else {
+      if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(function (position) {
+          setCoord({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          })
+        })
+        setOpen(false)
+      }
+
+      try {
+        await postWaterData({
+          variables: {
+            waterDataInput: {
+              location: JSON.stringify(coord),
+              image: imageURL,
+              depth,
+            },
           },
-        },
-      })
-      setLocation('/frontpage')
-    } catch (error) {
-      console.error(error)
+        })
+        setLocation('/volunteer/register')
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
   return (
@@ -91,8 +105,18 @@ const DataSubmission = (): JSX.Element => {
           variant='outlined'
           // eslint-disable-next-line
           onChange={(e: { target: { value: any } }) => {
-            if (!isNaN(e.target.value)) {
+            if (parseFloat(e.target.value) == 0) {
+              setError('Enter Water level')
+            } else if (parseFloat(e.target.value) > 200) {
+              setError('Water Level should be less than 200cm')
+            } else if (!isNaN(parseFloat(e.target.value))) {
               setDepth(parseFloat(e.target.value))
+              if (
+                error === 'Water Level should be less than 200cm' ||
+                error === 'Enter Water level'
+              ) {
+                setError('')
+              }
             } else {
               setDepth(0)
             }
@@ -197,10 +221,12 @@ const DataSubmission = (): JSX.Element => {
                   Submit
                 </Button>
               </div>
+              <div>{error}</div>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
+      <Modal_ open={open} setOpen={setOpen} error={error} />
     </div>
   )
 }
