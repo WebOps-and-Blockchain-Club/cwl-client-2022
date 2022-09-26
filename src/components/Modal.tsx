@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Button from '@mui/material/Button'
 import { styled } from '@mui/material/styles'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -47,8 +46,8 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
   )
 }
 
-export default function Modal_(props: { open: any; setOpen: any; error: any }) {
-  const { open, setOpen, error } = props
+export default function Modal_(props: { open: any; setOpen: any }) {
+  const { open, setOpen } = props
   const handleClose = () => {
     setOpen(false)
   }

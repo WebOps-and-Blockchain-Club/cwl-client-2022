@@ -211,7 +211,7 @@ const DataSubmission = (): JSX.Element => {
             item
           >
             <Grid item>
-              <div className='submit '>
+              <div className='submit ' style={{ marginBottom: '10px' }}>
                 <Button
                   variant='contained'
                   color='primary'
@@ -221,12 +221,12 @@ const DataSubmission = (): JSX.Element => {
                   Submit
                 </Button>
               </div>
-              <div>{error}</div>
+              <Typography color='primary'>{error}</Typography>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      <Modal_ open={open} setOpen={setOpen} error={error} />
+      <Modal_ open={open} setOpen={setOpen} />
     </div>
   )
 }
