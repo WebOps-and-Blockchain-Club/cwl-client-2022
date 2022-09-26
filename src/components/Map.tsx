@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import GMT2IST from '../utils/GMT2IST'
+import getColorByDepth from '../utils/getColorByDepth'
 // import { useQuery } from '@apollo/client'
 // import { GetWaterDataDocument } from '../generated'
 
@@ -25,8 +26,7 @@ export default function Map({ waterData }: { waterData: any }) {
     // eslint-disable-next-line
     waterData?.getWaterData.map((e: any) => {
       const coord = JSON.parse(e.location)
-      console.log(coord)
-      return new mapboxgl.Marker()
+      return new mapboxgl.Marker({ color: getColorByDepth(e.depth) })
         .setLngLat([coord.lng, coord.lat])
         .setPopup(
           new mapboxgl.Popup({ offset: 25 }) // add popups
