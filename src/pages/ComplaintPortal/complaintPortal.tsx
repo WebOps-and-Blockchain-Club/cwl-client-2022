@@ -47,7 +47,7 @@ const ComplaintPortal = () => {
       })
       .catch((e) => console.log(e))
   }, [])
-  const [postIssue, { data }] = useMutation(PostIssueDocument, {
+  const [postIssue] = useMutation(PostIssueDocument, {
     variables: {
       complaintInput: {
         tags,
