@@ -11,8 +11,6 @@ query getIssues {
 query login($loginInput: LoginInput!) {
   login(LoginInput: $loginInput) {
     success
-    username
-    tags
   }
 }
 
@@ -28,7 +26,13 @@ query getWaterData {
     date
   }
 }
-
+query getVolunteers {
+  getVolunteers {
+    username
+    tags
+    phoneNumber
+  }
+}
 mutation signUp($volunteerInput: VolunteerInput!) {
   signUp(VolunteerInput: $volunteerInput) {
     id

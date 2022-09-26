@@ -4,6 +4,11 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 // import { useQuery } from '@apollo/client'
 // import { GetWaterDataDocument } from '../generated'
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default
+
 // eslint-disable-next-line
 export default function Map({ waterData }: { waterData: any }) {
   const mapContainer = useRef(null)
@@ -33,8 +38,7 @@ export default function Map({ waterData }: { waterData: any }) {
   }
 
   useEffect(() => {
-    mapboxgl.accessToken =
-      'pk.eyJ1IjoiaXNodTExNDQwNyIsImEiOiJjbDRsMnNhZW8waTk0M2JxcGx0N2liYTNqIn0.SQAlOr75DZykR8FMj57FlA'
+    mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_SECRET_KEY || ' '
     if (map.current) return // initialize map only once
     map.current = new mapboxgl.Map({
       container: mapContainer.current || '',

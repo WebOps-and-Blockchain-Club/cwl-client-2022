@@ -63,13 +63,7 @@ function VolunteerLogin({ err }: { err: any }) {
   const handleSubmit = (): void => {
     try {
       if (data?.login.success) {
-        const volunteer: Volunteer = {
-          phoneNumber: volunteerPhone,
-          username: data?.login.username,
-          // tags: JSON.parse(data?.login.tags),
-          tags: ['Food', 'Shelter'],
-        }
-        localStorage.setItem('USER', JSON.stringify(volunteer))
+        localStorage.setItem('USER', JSON.stringify({ sucess: data?.login.success }))
         window.location.reload()
       } else {
         throw Error('Invalid credentials')
@@ -87,13 +81,13 @@ function VolunteerLogin({ err }: { err: any }) {
         <Container component='main' maxWidth='xs'>
           <CssBaseline />
           <Box
-            sx={{            
+            sx={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{  bgcolor: 'primary.main' }}>
+            <Avatar sx={{ bgcolor: 'primary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography
@@ -159,17 +153,6 @@ function VolunteerLogin({ err }: { err: any }) {
                   required
                 />
               </FormControl>
-
-              <Grid container>
-                <Grid
-                  item
-                  style={{ paddingTop: '15px', fontFamily: '"Times New Roman", Times, serif' }}
-                >
-                  <Link href='/volunteer/register' variant='body2'>
-                    Don &apos;t have an account? Sign Up
-                  </Link>
-                </Grid>
-              </Grid>
               <Box style={{ paddingTop: '20px', paddingBottom: '50px' }}>
                 <Button
                   type='submit'

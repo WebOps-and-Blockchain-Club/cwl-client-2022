@@ -3,7 +3,7 @@ import { Router, Switch, Route, Redirect } from 'wouter'
 import { InMemoryCache, ApolloProvider, ApolloClient } from '@apollo/client'
 import VolunteerRegistrationForm from './pages/VolunteerSide/VolunteerRegistrationForm'
 import VolunteerLogin from './pages/VolunteerSide/VolunteerLogin'
-import VolunteerDashboard from './pages/VolunteerSide/VolunteerDashboard'
+import Admin from './pages/Admin'
 import useCheckUser from './hooks/useCheckUser'
 import User from './interfaces/User'
 import DataSubmission from './components/DataSubmission'
@@ -14,6 +14,8 @@ import ComplaintPortal from './pages/ComplaintPortal/complaintPortal'
 import FrontPage from './pages/FrontPage/FrontPage'
 import 'react-accessible-accordion/dist/fancy-example.css'
 import './styles/frontpage.css'
+import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loader
+
 const BACKEND_URL: string = process.env.REACT_APP_BACKEND_URL || ''
 
 const client = new ApolloClient({
@@ -29,34 +31,27 @@ function App() {
     <ApolloProvider client={client}>
       <Data.Provider value={{ coord, setCoord }}>
         <NavBar />
-        <Router base='/volunteer'>
-          <Switch>
-            <Route
-              // exact
-              path='/register'
-              component={() =>
-                user ? <Redirect to='/dashboard' /> : <VolunteerRegistrationForm err={''} />
-              }
-            />
-            <Route
-              // exact
-              path='/login'
-              component={() => (user ? <Redirect to='/dashboard' /> : <VolunteerLogin err={''} />)}
-            />
-            <Route
-              // exact
-              path='/dashboard'
-              component={() => (user ? <VolunteerDashboard /> : <Redirect to='/login' />)}
-            />
-            <Route path='/:rest*' component={() => <Redirect to='/login' />} />
-          </Switch>
-        </Router>
         <Router>
           <Switch>
-            <Route path='/' component={DataSubmission} />
+            <Route
+              // exact
+              path='/admin/dashboard'
+              component={() => (!user ? <Redirect to='/admin/login' /> : <Admin />)}
+            />
+            <Route path='/' component={FrontPage} />
             <Route path='/map' component={Home} />
             <Route path='/complaint' component={ComplaintPortal} />
-            <Route path='/frontpage' component={FrontPage} />
+            <Route
+              // exact
+              path='/volunteer/register'
+              component={() => <VolunteerRegistrationForm err={''} />}
+            />
+            <Route
+              // exact
+              path='/admin/login'
+              component={() => <VolunteerLogin err={''} />}
+            />
+            <Route path='/:rest*' component={() => <Redirect to='/admin/login' />} />
           </Switch>
         </Router>
       </Data.Provider>

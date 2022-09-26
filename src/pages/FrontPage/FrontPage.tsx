@@ -1,33 +1,90 @@
-import Example from '../../components/Accordion';
-
+import Example from '../../components/Accordion'
+import DataSubmission from '../../components/DataSubmission'
+import MapIcon from '@mui/icons-material/Map'
+import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter'
+import WavesIcon from '@mui/icons-material/Waves'
+import { Link } from 'wouter'
 const FrontPage = () => {
+  return (
+    <>
+      <DataSubmission />
+      <div className='logos'>
+        <div className='logo'>
+          <div className='logo1'>
+            <MapIcon />
+          </div>
+          <div className='tag'>Map View</div>
+        </div>
+        <div className='logo'>
+          <div className='logo2'>
+            <Link to='/complaint'>
+              <FormatAlignCenterIcon />
+            </Link>
+          </div>
+          <div className='tag'>Complaint Portal</div>
+        </div>
+        <div className='logo'>
+          <div className='logo3'>
+            <Link to='/volunteer/register'>
+              <WavesIcon />
+            </Link>
+          </div>
+          <div className='tag'>Volunteer Registration</div>
+        </div>
+      </div>
+      <div>
+        <div className='container'>
+          {/* <div className="container-pic"></div> */}
+          <div className='container-info'>
+            <Example />
+          </div>
+        </div>
 
-    return (
-        <>
-            <div className="container">
-                <div className="container-pic"></div>
-                <div className="container-info"><Example /></div>
+        <div className='footer'>
+          <div className='row'>
+            <div className='column'>
+              <div className='footer-info'>
+                <h3>You must be the change you wish to see in the world</h3>
+                <p>Get In touch with us using any of the platforms</p>
+              </div>
             </div>
-            <div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore similique eos, repudiandae aliquam ad architecto illum quidem nobis odit praesentium ex, minus itaque! Omnis provident ullam inventore, quo pariatur exercitationem.
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita deleniti reprehenderit nulla, officia quaerat ab obcaecati aut numquam reiciendis laboriosam repellendus rerum delectus quidem commodi, deserunt vel fugit odio voluptatem!lo. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non sequi itaque sit dicta corrupti dolores eaque! Sed quas quidem veritatis, facere nulla, corrupti at quam atque qui modi, nostrum et.
+          </div>
+          <div
+            className='row'
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'centre',
+                alignItems: 'center',
+              }}
+            >
+              <img
+                src={require('../../images/CFI Logo (with text) - Black.png')}
+                width='60px'
+                alt='CFI-logo'
+              />
+              <img
+                src={require('../../images/WebopsandBlockchainLogo.png')}
+                width='60px'
+                alt='CFI-logo'
+              />
             </div>
-            <div className="footer">
-                <div className="row">
-                    <div className="column">
-                        <div className="footer-info">
-                            <h3>You must be the change you wish to see in the world</h3>
-                            <p>Get In touch with us using any of the platforms</p>
-                        </div>
-                    </div>
-
-                </div>
-                <div className="row">
-                    <p className="sec-row">CFI 2022 © All Rights Reserved</p>
-                    <p className="sec-row">DESIGNED BY WEB OPERATIONS & BLOCKCHAIN | CENTER FOR INOVATION</p>
-                </div>
-            </div>
-        </>
-    )
+          </div>
+          <div className='row'>
+            <p className='sec-row'>CFI 2022 © All Rights Reserved</p>
+            <p className='sec-row'>
+              DESIGNED BY WEB OPERATIONS & BLOCKCHAIN | CENTER FOR INOVATION
+            </p>
+          </div>
+        </div>
+      </div>
+    </>
+  )
 }
 
 export default FrontPage
