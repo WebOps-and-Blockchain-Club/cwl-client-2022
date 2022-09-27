@@ -46,8 +46,12 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
   )
 }
 
-export default function Modal_(props: { open: any; setOpen: any }) {
-  const { open, setOpen } = props
+export default function Modal_(props: {
+  open: any
+  setOpen: any
+  text: { heading: string; body: string }
+}) {
+  const { open, setOpen, text } = props
   const handleClose = () => {
     setOpen(false)
   }
@@ -56,10 +60,10 @@ export default function Modal_(props: { open: any; setOpen: any }) {
     <div>
       <BootstrapDialog onClose={handleClose} aria-labelledby='customized-dialog-title' open={open}>
         <BootstrapDialogTitle id='customized-dialog-title' onClose={handleClose}>
-          Location Required
+          {text.heading}
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <Typography>Water level data submission requires location access</Typography>
+          <Typography>{text.body}</Typography>
         </DialogContent>
       </BootstrapDialog>
     </div>

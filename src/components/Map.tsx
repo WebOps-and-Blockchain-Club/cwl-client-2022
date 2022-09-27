@@ -31,7 +31,9 @@ export default function Map({ waterData }: { waterData: any }) {
         .setPopup(
           new mapboxgl.Popup({ offset: 25 }) // add popups
             .setHTML(
-              `<h4>Water Level:${e.depth}cm</h4><img src='${e.image}' height='120px' class="popup-img"><div>${GMT2IST(
+              `<h4>Water Level:${e.depth}cm</h4><img src='${
+                e.image
+              }' height='120px' class="popup-img"><div>${GMT2IST(
                 e.date
                   .toLocaleString(undefined, {
                     timeZone: 'Asia/Kolkata',
@@ -65,7 +67,26 @@ export default function Map({ waterData }: { waterData: any }) {
 
   return (
     <div>
-      <div ref={mapContainer} className='map-container' />
+      <div
+        style={{
+          position: 'fixed',
+          bottom: '5px',
+          right: '5px',
+          zIndex: 1000,
+          backgroundColor: 'white',
+          textAlign: 'right',
+        }}
+      >
+        <img
+          src={require('../images/floodGradient.png')}
+          alt={'ScaleImage'}
+          width='150px'
+          style={{ maxWidth: '70vw' }}
+        />
+      </div>
+      <div style={{ maxHeight: 'calc(100vh)', overflow: 'hidden' }}>
+        <div ref={mapContainer} className='map-container' style={{ height: '100vh' }} />
+      </div>
     </div>
   )
 }

@@ -3,7 +3,6 @@ import { TextField, Typography, Button, Slider, Grid, Box } from '@mui/material'
 import { useEffect, useState, useContext } from 'react'
 import Data from '../utils/Context'
 
-import { useLocation } from 'wouter'
 import { AddAPhoto } from '@mui/icons-material'
 import '../styles/DataSubmission.css'
 import { useMutation, useQuery } from '@apollo/client'
@@ -13,10 +12,13 @@ const DataSubmission = (): JSX.Element => {
   const { coord, setCoord } = useContext(Data)
   const [depth, setDepth] = useState(0)
   const [imageURL, setImageURL] = useState('')
-  const [, setLocation] = useLocation()
   const { data } = useQuery(GetS3UrlDocument)
   const [error, setError] = useState('Enter Water level')
   const [open, setOpen] = useState(false)
+  const [text, setText] = useState({
+    heading: 'Location Required',
+    body: 'Water level data submission requires location access',
+  })
   const [postWaterData] = useMutation(PostWaterDataDocument, {
     variables: {
       waterDataInput: {
@@ -81,7 +83,12 @@ const DataSubmission = (): JSX.Element => {
             },
           },
         })
-        setLocation('/volunteer/register')
+        setText({
+          heading: 'Data Submitted',
+          body: `Water level in the given area is updated as ${depth} cm`,
+        })
+        setOpen(true)
+        window.location.reload()
       } catch (error) {
         console.error(error)
       }
@@ -226,7 +233,7 @@ const DataSubmission = (): JSX.Element => {
           </Grid>
         </Grid>
       </Grid>
-      <Modal_ open={open} setOpen={setOpen} />
+      <Modal_ open={open} setOpen={setOpen} text={text} />
     </div>
   )
 }
