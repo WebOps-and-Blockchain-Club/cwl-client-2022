@@ -3,6 +3,11 @@ import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import GMT2IST from '../utils/GMT2IST'
 import getColorByDepth from '../utils/getColorByDepth'
+import MapBoxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+// import MapboxGeocoder from '@mapbox/mapbox-gl-directions';
+
+
 // import { useQuery } from '@apollo/client'
 // import { GetWaterDataDocument } from '../generated'
 
@@ -31,7 +36,7 @@ export default function Map({ waterData }: { waterData: any }) {
         .setPopup(
           new mapboxgl.Popup({ offset: 25 }) // add popups
             .setHTML(
-              `<h4>Water Level:${e.depth}cm</h4><img src='${e.image}' height='120px'><div>${GMT2IST(
+              `<h4>Water Level:${e.depth}cm</h4><img src='${e.image}' height='120px'><div class="date">${GMT2IST(
                 e.date
                   .toLocaleString(undefined, {
                     timeZone: 'Asia/Kolkata',
@@ -58,7 +63,32 @@ export default function Map({ waterData }: { waterData: any }) {
       setLng(map.current.getCenter().lng.toFixed(4))
       setLat(map.current.getCenter().lat.toFixed(4))
       setZoom(map.current.getZoom().toFixed(2))
-    })
+    });
+    const search = new MapBoxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      marker: true,
+      mapboxgl: mapboxgl,
+      collapsed: true,
+    });
+    map.current.addControl(search, 'top-right');
+    search.on('result', (e) => {
+      const coord = e.result.geometry.coordinates;
+      return new mapboxgl.Marker({ color: getColorByDepth(e.depth) })
+        .setLngLat([coord.lng, coord.lat])
+        .setPopup(
+          new mapboxgl.Popup({ offset: 25 }) // add popups
+            .setHTML(
+              `<h4>Water Level:${e.depth}cm</h4><img src='${e.image}' height='120px'><div class="date">${GMT2IST(
+                e.date
+                  .toLocaleString(undefined, {
+                    timeZone: 'Asia/Kolkata',
+                  })
+                  .slice(11, 19),
+              )}</div>`,
+            ),
+        )
+        .addTo(map.current)
+    });
   }, [])
 
   placeMarkers()
