@@ -53,3 +53,21 @@
 .link:hover {
   cursor: pointer;
 }
+
+/* .car {
+  background-image: url('../images/car.png');
+  align-items: baseline;
+  background-repeat: no-repeat;
+}
+
+.bike {
+  background-image: url('../images/bike.png');
+  align-items: baseline;
+  background-repeat: no-repeat;
+}
+
+.cycle {
+  background-image: url('../images/cycle.png');
+  align-items: baseline;
+  background-repeat: no-repeat;
+} */
