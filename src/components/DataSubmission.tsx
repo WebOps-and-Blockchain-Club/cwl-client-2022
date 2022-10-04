@@ -2,7 +2,7 @@ import { TextField, Typography, Button, Slider, Grid, Box } from '@mui/material'
 
 import { useEffect, useState, useContext } from 'react'
 import Data from '../utils/Context'
-
+import Language from '../utils/lang'
 import { AddAPhoto } from '@mui/icons-material'
 import '../styles/DataSubmission.css'
 import { useMutation, useQuery } from '@apollo/client'
@@ -10,10 +10,11 @@ import { GetS3UrlDocument, PostWaterDataDocument } from '../generated'
 import Modal_ from '../components/Modal'
 const DataSubmission = (): JSX.Element => {
   const { coord, setCoord } = useContext(Data)
+  const { checked, setChecked } = useContext(Language)
   const [depth, setDepth] = useState(0)
   const [imageURL, setImageURL] = useState('')
   const { data } = useQuery(GetS3UrlDocument)
-  const [error, setError] = useState('Enter Water level')
+  const [error, setError] = checked ? useState('Enter Water level') : useState('நீர்மடட்டம் தேவை')
   const [open, setOpen] = useState(false)
   const [text, setText] = useState({
     heading: 'Location Required',
@@ -97,12 +98,21 @@ const DataSubmission = (): JSX.Element => {
   return (
     <div className='data-page'>
       <div className='title'>
-        <Typography
-          variant='h3'
-          sx={{ fontWeight: 'bold', justifyContent: 'center', fontSize: '2em' }}
-        >
-          Water in My Area
-        </Typography>
+        {checked ? (
+          <Typography
+            variant='h3'
+            sx={{ fontWeight: 'bold', justifyContent: 'center', fontSize: '2em' }}
+          >
+            Water in My Area
+          </Typography>
+        ) : (
+          <Typography
+            variant='h3'
+            sx={{ fontWeight: 'bold', justifyContent: 'center', fontSize: '2em' }}
+          >
+            எனது பகுதியில் நீர்மட்டம்
+          </Typography>
+        )}
       </div>
       <div className='input'>
         <TextField
@@ -113,14 +123,20 @@ const DataSubmission = (): JSX.Element => {
           // eslint-disable-next-line
           onChange={(e: { target: { value: any } }) => {
             if (parseFloat(e.target.value) == 0) {
-              setError('Enter Water level')
+              checked ? setError('Enter Water level') : setError('நீர்மடட்டம் தேவை')
+              // setError('Enter Water level')
             } else if (parseFloat(e.target.value) > 200) {
-              setError('Water Level should be less than 200cm')
+              checked
+                ? setError('Water Level should be less than 200cm')
+                : setError('நீர்மடட்டம் 200 செ.மீ கீழ் தேவை')
             } else if (!isNaN(parseFloat(e.target.value))) {
               setDepth(parseFloat(e.target.value))
+
               if (
                 error === 'Water Level should be less than 200cm' ||
-                error === 'Enter Water level'
+                error === 'Enter Water level' ||
+                error === 'நீர்மடட்டம் 200 செ.மீ கீழ் தேவை' ||
+                error === 'நீர்மடட்டம் தேவை'
               ) {
                 setError('')
               }
@@ -181,34 +197,66 @@ const DataSubmission = (): JSX.Element => {
           sx={{ paddingBottom: '20px' }}
           item
         >
-          <Grid item>
-            <div className='upload '>
-              <Button
-                variant='contained'
-                component='label'
-                color='primary'
-                sx={{ fontSize: 17, height: 50 }}
-              >
-                <AddAPhoto fontSize='large' /> upload
-                <input
-                  type='file'
-                  accept='image/*'
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  onChange={(e: { target: { files: any } }) => {
-                    handleImageUpload(e.target.files[0])
-                  }}
-                  required
-                  name='image'
-                  hidden
-                />
-              </Button>
-              {imageURL && (
-                <div className='image'>
-                  <img src={imageURL} alt='image' width={'100px'} height={'100px'} />
-                </div>
-              )}
-            </div>
-          </Grid>
+          {checked ? (
+            <Grid item>
+              <div className='upload '>
+                <Button
+                  variant='contained'
+                  component='label'
+                  color='primary'
+                  sx={{ fontSize: 17, height: 50 }}
+                >
+                  <AddAPhoto fontSize='large' /> upload
+                  <input
+                    type='file'
+                    accept='image/*'
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    onChange={(e: { target: { files: any } }) => {
+                      handleImageUpload(e.target.files[0])
+                    }}
+                    required
+                    name='image'
+                    hidden
+                  />
+                </Button>
+                {imageURL && (
+                  <div className='image'>
+                    <img src={imageURL} alt='image' width={'100px'} height={'100px'} />
+                  </div>
+                )}
+              </div>
+            </Grid>
+          ) : (
+            <Grid item>
+              <div className='upload '>
+                <Button
+                  variant='contained'
+                  component='label'
+                  color='primary'
+                  sx={{ fontSize: 17, height: 50 }}
+                >
+                  <AddAPhoto fontSize='large' /> பதிவேற்றுக
+                  <input
+                    type='file'
+                    accept='image/*'
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    onChange={(e: { target: { files: any } }) => {
+                      handleImageUpload(e.target.files[0])
+                    }}
+                    required
+                    name='image'
+                    hidden
+                  />
+                </Button>
+                {imageURL && (
+                  <div className='image'>
+                    <img src={imageURL} alt='image' width={'100px'} height={'100px'} />
+                  </div>
+                )}
+              </div>
+            </Grid>
+          )}
+
           <Grid
             container
             direction='row'
@@ -219,14 +267,25 @@ const DataSubmission = (): JSX.Element => {
           >
             <Grid item>
               <div className='submit ' style={{ marginBottom: '10px' }}>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={handleSubmit}
-                  sx={{ fontSize: 18, height: 50, width: 140 }}
-                >
-                  Submit
-                </Button>
+                {checked ? (
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={handleSubmit}
+                    sx={{ fontSize: 18, height: 50, width: 140 }}
+                  >
+                    Submit
+                  </Button>
+                ) : (
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={handleSubmit}
+                    sx={{ fontSize: 18, height: 50, width: 140 }}
+                  >
+                    சமர்ப்பிதஂதிடு
+                  </Button>
+                )}
               </div>
               <Typography color='primary'>{error}</Typography>
             </Grid>
