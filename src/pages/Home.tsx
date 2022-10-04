@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client'
+import ClusterMap from '../components/cluster-map/ClusterMap'
 import Map from '../components/Map'
 import { GetWaterDataDocument } from '../generated'
 import '../styles/MapDisplay.css'
@@ -9,6 +10,7 @@ const Home = () => {
   return (
     <div>
       <Map waterData={waterData} />
+      {/* <ClusterMap waterData={waterData} /> */}
     </div>
   )
 }
