@@ -31,7 +31,7 @@ const NavBar = () => {
   }
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked)
-    console.log(event.target.checked) 
+    console.log(event.target.checked)
   }
 
   return (
@@ -42,47 +42,46 @@ const NavBar = () => {
             <img src={logo} alt='IITM' width='50px' height='auto' />
           </IconButton>
           <Link to='/'>
-            {checked?(<Typography variant='h6' sx={{ flexGrow: 1 }}>
-              Chennai Waterlogging Platform
-            </Typography>
-            ):
-            (
-             <Typography variant='h6' sx={{ flexGrow: 1 }}>
-              செனஂனை மழைநீரஂ தேக்கபஂ பதிவுதஂ தளமஂ
-            </Typography>
+            {checked ? (
+              <Typography variant='h6' sx={{ flexGrow: 1 }}>
+                Chennai Waterlogging Platform
+              </Typography>
+            ) : (
+              <Typography variant='h6' sx={{ flexGrow: 1 }}>
+                செனஂனை மழைநீரஂ தேக்கபஂ பதிவுதஂ தளமஂ
+              </Typography>
             )}
-           
           </Link>
 
-          
           {/* <Stack direction='row' spacing={0.5} sx={{ m: 1 }} alignItems='center'> */}
-          <Stack direction='row' sx={{m:2}} alignItems='center'>
-          <Typography sx={{paddingBottom:0.4,fontWeight: 'bold', fontSize: 18, m: 0.1 }}>அ</Typography>
+          <Stack direction='row' sx={{ m: 2 }} alignItems='center'>
+            <Typography sx={{ paddingBottom: 0.4, fontWeight: 'bold', fontSize: 18, m: 0.1 }}>
+              அ
+            </Typography>
 
-          <Switch
-            sx={{ m: -1 }}
-            checked={checked}
-            defaultChecked
-            onChange={handleChange}
-            color='default'
-            inputProps={{ 'aria-label': 'controlled' }}
-          />
-          <Typography sx={{m: 0.5, fontWeight: 'bold', fontSize: 18 }}>En</Typography>
-          {/* </Stack> */}
+            <Switch
+              sx={{ m: -1 }}
+              checked={checked}
+              defaultChecked
+              onChange={handleChange}
+              color='default'
+              inputProps={{ 'aria-label': 'controlled' }}
+            />
+            <Typography sx={{ m: 0.5, fontWeight: 'bold', fontSize: 18 }}>En</Typography>
+            {/* </Stack> */}
           </Stack>
           <Link to='/map'>
-            {checked?(
-            <Button variant='contained' sx={{ backgroundColor: '#00897b' }}>
-              Map
-            </Button>
-            ):(
+            {checked ? (
               <Button variant='contained' sx={{ backgroundColor: '#00897b' }}>
-              வரைபடம்
-            </Button>
-            )
-}
+                Map
+              </Button>
+            ) : (
+              <Button variant='contained' sx={{ backgroundColor: '#00897b' }}>
+                வரைபடம்
+              </Button>
+            )}
           </Link>
-          
+
           <div>
             <IconButton
               size='large'
@@ -108,42 +107,45 @@ const NavBar = () => {
               }}
               open={Boolean(anchorEl)}
               onClose={handleClose}
-            >  
-            {checked?( <MenuItem
-                onClick={() => {
-                  setAnchorEl(null)
-                  setLocation('/complaint')
-                }}
-              >
-                Complaint
-              </MenuItem>):(
-                 <MenuItem
-                 onClick={() => {
-                   setAnchorEl(null)
-                   setLocation('/complaint')
-                 }}
-               >
-                 புகார் செய்ய
-               </MenuItem>
+            >
+              {checked ? (
+                <MenuItem
+                  onClick={() => {
+                    setAnchorEl(null)
+                    setLocation('/complaint')
+                  }}
+                >
+                  Report
+                </MenuItem>
+              ) : (
+                <MenuItem
+                  onClick={() => {
+                    setAnchorEl(null)
+                    setLocation('/complaint')
+                  }}
+                >
+                  அறிக்கை
+                </MenuItem>
               )}
-               {checked?( <MenuItem
-                onClick={() => {
-                  setAnchorEl(null)
-                  setLocation('/volunteer/register')
-                }}
-              >
-                Volunteer
-              </MenuItem>):(
-                 <MenuItem
-                 onClick={() => {
-                   setAnchorEl(null)
-                   setLocation('/volunteer/register')
-                 }}
-               >
-                 தன்னார்வலருக்கு
-               </MenuItem>
+              {checked ? (
+                <MenuItem
+                  onClick={() => {
+                    setAnchorEl(null)
+                    setLocation('/volunteer/register')
+                  }}
+                >
+                  Volunteer
+                </MenuItem>
+              ) : (
+                <MenuItem
+                  onClick={() => {
+                    setAnchorEl(null)
+                    setLocation('/volunteer/register')
+                  }}
+                >
+                  தன்னார்வலருக்கு
+                </MenuItem>
               )}
-              
             </Menu>
           </div>
         </Toolbar>
