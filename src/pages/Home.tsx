@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <div>
       <Map waterData={waterData} />
-      {/* <ClusterMap waterData={waterData} /> */}
+      {/* <ClusterMap /> */}
     </div>
   )
 }
