@@ -14,7 +14,7 @@ export default function SimpleAccordion() {
           aria-controls='panel1a-content'
           id='panel1a-header'
         >
-          <Typography className='question'>What we are ?</Typography>
+          <Typography className='question'>Who we are ?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography variant='h6' className='answers'>
