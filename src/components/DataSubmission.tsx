@@ -4,6 +4,7 @@ import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import { useEffect, useState, useContext } from 'react'
 import Data from '../utils/Context'
+import Language from '../utils/lang'
 import { AddAPhoto } from '@mui/icons-material'
 import '../styles/DataSubmission.css'
 import { useMutation, useQuery } from '@apollo/client'
@@ -12,10 +13,11 @@ import Modal_ from '../components/Modal'
 
 const DataSubmission = (): JSX.Element => {
   const { coord, setCoord } = useContext(Data)
+  const { checked } = useContext(Language)
   const [depth, setDepth] = useState(0)
   const [imageURL, setImageURL] = useState('')
   const { data } = useQuery(GetS3UrlDocument)
-  const [error, setError] = useState('Enter Water level')
+  const [error, setError] = checked ? useState('Enter Water level') : useState('நீர்மடட்டம் தேவை')
   const [open, setOpen] = useState(false)
   const [text, setText] = useState({
     heading: 'Location Required',
@@ -108,12 +110,21 @@ const DataSubmission = (): JSX.Element => {
       <Grid container direction='column' className='waterarea' spacing='20' item>
         <Grid item>
           <div className='title'>
-            <Typography
-              variant='h3'
-              sx={{ fontWeight: 'bold', justifyContent: 'center', fontSize: '2.25rem' }}
-            >
-              Water in My Area
-            </Typography>
+            {checked ? (
+              <Typography
+                variant='h3'
+                sx={{ fontWeight: 'bold', justifyContent: 'center', fontSize: '2em' }}
+              >
+                Water in My Area
+              </Typography>
+            ) : (
+              <Typography
+                variant='h3'
+                sx={{ fontWeight: 'bold', justifyContent: 'center', fontSize: '2em' }}
+              >
+                எனது பகுதியில் நீர்மட்டம்
+              </Typography>
+            )}
           </div>
           <div className='input'>
             <TextField
