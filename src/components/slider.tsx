@@ -1,6 +1,5 @@
-import { TextField, Typography, Button, Paper, Slider, Box, Grid } from '@mui/material'
-import { useEffect, useState, useContext, SetStateAction } from 'react'
-import { Link } from 'wouter'
+import { TextField, Typography, Paper, Slider, Box, Grid } from '@mui/material'
+import { useState } from 'react'
 import '../../styles/DataSubmission/DataSubmission.css'
 
 // const car = require('../../images/car-man.png')
@@ -19,9 +18,6 @@ const SliderFunction = () => {
   //       depth
   //     }
   //   }
-  const handleDepthChange = (e: any, depth: number) => {
-    setDepth(depth)
-  }
 
   return (
     <div className='data-page'>

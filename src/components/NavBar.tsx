@@ -9,10 +9,9 @@ import MenuIcon from '@mui/icons-material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
 import { Button } from '@mui/material'
-import Switch, { SwitchProps } from '@mui/material/Switch'
+import Switch from '@mui/material/Switch'
 import Stack from '@mui/material/Stack'
 import { Link, useLocation } from 'wouter'
-import { styled } from '@mui/material/styles'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const logo = require('../images/IIT_Madras_Logo.png')
 
