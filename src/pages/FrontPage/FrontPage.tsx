@@ -1,16 +1,13 @@
 import Example from '../../components/Accordion'
 import DataSubmission from '../../components/DataSubmission'
-import MapIcon from '@mui/icons-material/Map'
-import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter'
-import WavesIcon from '@mui/icons-material/Waves'
 import { Link } from 'wouter'
 import { Fab } from '@mui/material'
-import { NotListedLocationRounded, QuestionMarkRounded } from '@mui/icons-material'
+import { QuestionMarkRounded } from '@mui/icons-material'
 import { useState } from 'react'
 import Modal_ from '../../components/Modal'
 const FrontPage = () => {
   const [open, setOpen] = useState(false)
-  const [text, setText] = useState({
+  const [text] = useState({
     heading: 'Chennai WaterLogging Platform',
     body: 'Water level data is collected for use by Greater Chennai Corporation. ',
   })

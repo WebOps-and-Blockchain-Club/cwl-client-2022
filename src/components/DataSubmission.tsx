@@ -1,10 +1,10 @@
-import { TextField, Typography, Button, Slider, Grid, Box, Tab, Tabs, Paper } from '@mui/material'
+import { TextField, Typography, Button, Slider, Grid, Box, Tab } from '@mui/material'
 import TabContext from '@mui/lab/TabContext'
 import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import { useEffect, useState, useContext } from 'react'
 import Data from '../utils/Context'
-import { AddAPhoto, Label } from '@mui/icons-material'
+import { AddAPhoto } from '@mui/icons-material'
 import '../styles/DataSubmission.css'
 import { useMutation, useQuery } from '@apollo/client'
 import { GetS3UrlDocument, PostWaterDataDocument } from '../generated'
@@ -168,7 +168,7 @@ const DataSubmission = (): JSX.Element => {
                   <Slider
                     orientation='vertical'
                     aria-label='Always visible'
-                    valueLabelFormat={(value) => {
+                    valueLabelFormat={() => {
                       return (
                         <div style={{ textAlign: 'center' }}>
                           <p className='pulsatingDot' style={{ color: colour }}>
