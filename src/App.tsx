@@ -8,6 +8,7 @@ import useCheckUser from './hooks/useCheckUser'
 import User from './interfaces/User'
 import NavBar from '../src/components/NavBar'
 import Data from './utils/Context'
+import Language from './utils/lang'
 import Home from './pages/Home'
 import ComplaintPortal from './pages/ComplaintPortal/complaintPortal'
 import FrontPage from './pages/FrontPage/FrontPage'
@@ -25,34 +26,37 @@ const client = new ApolloClient({
 function App() {
   const user: User | null = useCheckUser()
   const [coord, setCoord] = useState({ lat: 13.0827, lng: 80.2707 })
+  const [checked, setChecked] = useState(true)
 
   return (
     <ApolloProvider client={client}>
       <Data.Provider value={{ coord, setCoord }}>
-        <NavBar />
-        <Router>
-          <Switch>
-            <Route
-              // exact
-              path='/admin/dashboard'
-              component={() => (!user ? <Redirect to='/admin/login' /> : <Admin />)}
-            />
-            <Route path='/' component={FrontPage} />
-            <Route path='/map' component={Home} />
-            <Route path='/complaint' component={ComplaintPortal} />
-            <Route
-              // exact
-              path='/volunteer/register'
-              component={() => <VolunteerRegistrationForm err={''} />}
-            />
-            <Route
-              // exact
-              path='/admin/login'
-              component={() => <VolunteerLogin err={''} />}
-            />
-            <Route path='/:rest*' component={() => <Redirect to='/admin/login' />} />
-          </Switch>
-        </Router>
+        <Language.Provider value={{ checked, setChecked }}>
+          <NavBar />
+          <Router>
+            <Switch>
+              <Route
+                // exact
+                path='/admin/dashboard'
+                component={() => (!user ? <Redirect to='/admin/login' /> : <Admin />)}
+              />
+              <Route path='/' component={FrontPage} />
+              <Route path='/map' component={Home} />
+              <Route path='/complaint' component={ComplaintPortal} />
+              <Route
+                // exact
+                path='/volunteer/register'
+                component={() => <VolunteerRegistrationForm err={''} />}
+              />
+              <Route
+                // exact
+                path='/admin/login'
+                component={() => <VolunteerLogin err={''} />}
+              />
+              <Route path='/:rest*' component={() => <Redirect to='/admin/login' />} />
+            </Switch>
+          </Router>
+        </Language.Provider>
       </Data.Provider>
     </ApolloProvider>
   )
