@@ -6,6 +6,7 @@ import getColorByDepth from '../utils/getColorByDepth'
 import MapBoxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import '../images/mapbox-icon.png'
+import input from 'antd/lib/input'
 // import MapboxGeocoder from '@mapbox/mapbox-gl-directions';
 
 
@@ -72,6 +73,7 @@ export default function Map({ waterData }: { waterData: any }) {
       collapsed: true,
     });
     map.current.addControl(search, 'top-right');
+    map.current.addControl(new mapboxgl.NavigationControl());
     // search.on('result', (e) => {
     //   const coord = e.result.geometry.coordinates;
     //   return new mapboxgl.Marker({ color: getColorByDepth(e.depth) })
@@ -219,6 +221,7 @@ export default function Map({ waterData }: { waterData: any }) {
 
   return (
     <div>
+
       <div
         style={{
           position: 'fixed',
