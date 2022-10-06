@@ -219,9 +219,9 @@ const DataSubmission = (): JSX.Element => {
                 <TabContext value={value}>
                   <Box sx={{ borderBottom: 1, borderColor: 'divider' }} className='sliderTab'>
                     <TabList onChange={handleChange} centered>
-                      <Tab label='Car' value='1' />
-                      <Tab label='Bike' value='2' />
-                      <Tab label='Cycle' value='3' />
+                      <Tab label={checked ? 'Car' : 'கார்'} value='1' />
+                      <Tab label={checked ? 'Bike' : 'பைக்'} value='2' />
+                      <Tab label={checked ? 'Cycle' : 'மிதிவண்டி'} value='3' />
                     </TabList>
                   </Box>
                   <TabPanel value='1'>
@@ -257,7 +257,7 @@ const DataSubmission = (): JSX.Element => {
                 </TabContext>
               </Box>
             </Grid>
-          </Grid>{' '}
+          </Grid>
         </Grid>
       </Grid>
 
@@ -277,7 +277,7 @@ const DataSubmission = (): JSX.Element => {
               color='primary'
               sx={{ fontSize: 15, height: 40 }}
             >
-              <AddAPhoto fontSize='medium' /> upload
+              <AddAPhoto fontSize='medium' /> {checked ? <div>Upload</div> : <div>பதிவேற்றுக</div>}
               <input
                 type='file'
                 accept='image/*'
@@ -298,9 +298,9 @@ const DataSubmission = (): JSX.Element => {
               variant='contained'
               color='primary'
               onClick={handleSubmit}
-              sx={{ fontSize: 15, height: 40, width: 100 }}
+              sx={{ fontSize: 15, height: 40, width: 120 }}
             >
-              Submit
+              {checked ? <div>Submit</div> : <div>சமர்ப்பிதஂதிடு</div>}
             </Button>
           </div>
         </Grid>
