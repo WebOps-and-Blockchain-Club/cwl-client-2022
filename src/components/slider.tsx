@@ -82,9 +82,9 @@ const SliderFunction = () => {
               </div>
             </Box>
           </Grid>
-        </Grid>{' '}
+        </Grid>
         <Grid item className='link'>
-          <p>Log this as a complaint</p>{' '}
+          <p>Log this as a complaint</p>
         </Grid>
       </Paper>
     </div>
