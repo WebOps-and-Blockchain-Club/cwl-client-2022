@@ -1,11 +1,11 @@
-import Example from '../../components/Accordion'
+import Info from '../../components/Info'
 import DataSubmission from '../../components/DataSubmission'
-import { Link } from 'wouter'
 import Language from '../../utils/lang'
-import { useContext,useState } from 'react'
+import { useContext, useState } from 'react'
 import { Fab } from '@mui/material'
 import { QuestionMarkRounded } from '@mui/icons-material'
 import Modal_ from '../../components/Modal'
+
 const FrontPage = () => {
   const [open, setOpen] = useState(false)
   const [text] = useState({
@@ -20,7 +20,7 @@ const FrontPage = () => {
   return (
     <>
       <DataSubmission />
-      <div className='logos'>
+      {/* <div className='logos'>
         <div className='logo'>
           <div className='logo1'>
             <img src={require('../../images/mapIcon.png')} width='60px' alt='CFI-logo' />{' '}
@@ -51,15 +51,13 @@ const FrontPage = () => {
             <div className='tag'>தன்னார்வ பதிவு</div>
           )}
         </div>
-      </div>
+      </div> */}
       <div>
         <div className='container'>
-          {/* <div className="container-pic"></div> */}
           <div className='container-info'>
-            <Example />
+            <Info />
           </div>
         </div>
-
         <div className='footer'>
           <div className='row'>
             <div className='column'>

@@ -14,43 +14,12 @@
   flex-wrap: wrap;
 }
 
-.MuiTypography-root.MuiTypography-body1.css-ahj2mt-MuiTypography-root {
-  font-size: 23px;
-  text-align: center;
-  /* background:rgb(14, 126, 237);
-    color: #fff; */
-}
-
-.css-o4b71y-MuiAccordionSummary-content {
-  justify-content: center;
-  display: flex;
-}
-
-/* .MuiCollapse-root.MuiCollapse-vertical.MuiCollapse-entered.css-pwcg7p-MuiCollapse-root {
-    color:rgb(14, 126, 237);
-    background: #fff;
-} */
-.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiAccordion-root.MuiAccordion-rounded.MuiAccordion-gutters.css-1elwnq4-MuiPaper-root-MuiAccordion-root {
-  background: rgb(0, 115, 230);
-}
-
 #panel1a-content {
   background: #fff;
 }
 
-/* .MuiAccordionSummary-content.Mui-expanded.MuiAccordionSummary-contentGutters.css-o4b71y-MuiAccordionSummary-content p {
-    color: #fff;
-} */
-
-/* .MuiTypography-root.MuiTypography-body1.css-ahj2mt-MuiTypography-root {
-    color:rgb(14, 126, 237);
-} */
-.css-smkl36-MuiCollapse-wrapper {
-  background: #fff;
-}
 
 .question {
-  /* background:rgb(14, 126, 237); */
   color: #fff;
 }
 
@@ -59,9 +28,7 @@
   color: rgb(0, 115, 230);
 }
 
-.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiAccordion-root.MuiAccordion-rounded.Mui-expanded.MuiAccordion-gutters.css-1elwnq4-MuiPaper-root-MuiAccordion-root {
-  margin: 0;
-}
+
 
 .container-info {
   /* padding: 10px; */
