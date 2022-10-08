@@ -113,14 +113,22 @@ const DataSubmission = (): JSX.Element => {
             {checked ? (
               <Typography
                 variant='h3'
-                sx={{ fontWeight: 'bold', justifyContent: 'center', fontSize: '2em' }}
+                sx={{
+                  fontWeight: 'bold',
+                  justifyContent: 'center',
+                  fontSize: '2em',
+                }}
               >
                 Water in My Area
               </Typography>
             ) : (
               <Typography
-                variant='h3'
-                sx={{ fontWeight: 'bold', justifyContent: 'center', fontSize: '2em' }}
+                variant='h4'
+                sx={{
+                  fontWeight: 'bold',
+                  justifyContent: 'center',
+                  fontSize: '1.3em',
+                }}
               >
                 எனது பகுதியில் நீர்மட்டம்
               </Typography>
@@ -230,7 +238,13 @@ const DataSubmission = (): JSX.Element => {
                         <Box sx={{ height: 200 - depth, width: '300px' }}></Box>
                       </div>
                       <div className='water'>
-                        <Box sx={{ height: depth, width: '300px', maxHeight: '200px' }}></Box>
+                        <Box
+                          sx={{
+                            height: depth,
+                            width: '300px',
+                            maxHeight: '200px',
+                          }}
+                        ></Box>
                       </div>
                     </Box>
                   </TabPanel>{' '}
@@ -240,7 +254,13 @@ const DataSubmission = (): JSX.Element => {
                         <Box sx={{ height: 200 - depth, width: '300px' }}></Box>
                       </div>
                       <div className='water'>
-                        <Box sx={{ height: depth, width: '300px', maxHeight: '200px' }}></Box>
+                        <Box
+                          sx={{
+                            height: depth,
+                            width: '300px',
+                            maxHeight: '200px',
+                          }}
+                        ></Box>
                       </div>
                     </Box>
                   </TabPanel>{' '}
@@ -250,7 +270,13 @@ const DataSubmission = (): JSX.Element => {
                         <Box sx={{ height: 200 - depth, width: '300px' }}></Box>
                       </div>
                       <div className='water'>
-                        <Box sx={{ height: depth, width: '300px', maxHeight: '200px' }}></Box>
+                        <Box
+                          sx={{
+                            height: depth,
+                            width: '300px',
+                            maxHeight: '200px',
+                          }}
+                        ></Box>
                       </div>
                     </Box>
                   </TabPanel>
