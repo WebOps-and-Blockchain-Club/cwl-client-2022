@@ -8,10 +8,15 @@ import Modal_ from '../../components/Modal'
 
 const FrontPage = () => {
   const [open, setOpen] = useState(false)
-  const [text] = useState({
+  const [textEn] = useState({
     heading: 'Chennai WaterLogging Platform',
-    body: 'Water level data is collected for use by Greater Chennai Corporation. ',
+    body: 'This website allows the user to submit the rainwater logging level in your area. The entered rainwater level is updated on the map with the image that the user uploads as a reference. Users will also be able to have knowledge about the rainwater logging level of the Chennai city on the map.',
   })
+  const [textTam] = useState({
+    heading: 'சென்னை மழைநீர் தேக்கப் பதிவுத் தளம்',
+    body: 'இந்தத் தளம், உங்கள் பகுதியில் மழைநீர் தேக்க நிலையைச் சமர்ப்பிக்க பயனரை அனுமதிக்கிறது. உள்ளிடப்பட்ட மழைநீர் நிலை வரைபடத்தில் பயனர் பதிவேற்றும் புகைப்படத்துடன் புதுப்பிக்கப்படுகிறது. சென்னை மாநகரின் மழைநீர் தேக்க நிலை குறித்த விவரங்களையும் பயனர்கள் வரைபடத்தில் அறிந்து கொள்ளலாம்.',
+  })
+
   const handleOpen = () => {
     setOpen(true)
   }
@@ -20,38 +25,6 @@ const FrontPage = () => {
   return (
     <>
       <DataSubmission />
-      {/* <div className='logos'>
-        <div className='logo'>
-          <div className='logo1'>
-            <img src={require('../../images/mapIcon.png')} width='60px' alt='CFI-logo' />{' '}
-          </div>
-          {checked ? <div className='tag'>View Map</div> : <div className='tag'>வரைபடம்</div>}
-        </div>
-        <div className='logo'>
-          <div className='logo2'>
-            <Link to='/complaint'>
-              <img src={require('../../images/reportIcon.png')} width='60px' alt='CFI-logo' />
-            </Link>
-          </div>
-          {checked ? (
-            <div className='tag'>Report Issue</div>
-          ) : (
-            <div className='tag'>புகார் தளம்</div>
-          )}
-        </div>
-        <div className='logo'>
-          <div className='logo3'>
-            <Link to='/volunteer/register'>
-              <img src={require('../../images/volunteerIcon.png')} width='60px' alt='CFI-logo' />
-            </Link>
-          </div>
-          {checked ? (
-            <div className='tag'>Volunteer Registration</div>
-          ) : (
-            <div className='tag'>தன்னார்வ பதிவு</div>
-          )}
-        </div>
-      </div> */}
       <div>
         <div className='container'>
           <div className='container-info'>
@@ -114,7 +87,11 @@ const FrontPage = () => {
             <Fab color='primary' size='large' onClick={handleOpen}>
               <QuestionMarkRounded />
             </Fab>
-            <Modal_ open={open} setOpen={setOpen} text={text} />
+            {checked ? (
+              <Modal_ open={open} setOpen={setOpen} text={textEn} />
+            ) : (
+              <Modal_ open={open} setOpen={setOpen} text={textTam} />
+            )}
           </div>
         </div>
       </div>

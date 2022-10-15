@@ -80,7 +80,6 @@ const NavBar = () => {
                 <Grid item>
                   <Stack direction='row' sx={{ marginRight: 1 }} alignItems='center'>
                     <Typography sx={{ fontWeight: 'bold', fontSize: 18, m: 0.1 }}>அ</Typography>
-
                     <Switch
                       sx={{ m: -1 }}
                       checked={checked}
