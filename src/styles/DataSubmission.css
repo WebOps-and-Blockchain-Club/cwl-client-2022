@@ -8,8 +8,6 @@
 .title {
   display: flex;
   justify-content: center;
-
-  color: rgb(0, 115, 230);
 }
 
 .input {

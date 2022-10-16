@@ -1,5 +1,13 @@
 import { useState, SetStateAction, useEffect, useContext } from 'react'
-import { Paper, Typography } from '@mui/material'
+import {
+  Box,
+  createTheme,
+  Paper,
+  ThemeProvider,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import '../../styles/ComplaintPortal/cp_style.css'
 import PersonDetails from '../../components/cp_components/personDetails'
 import Address from '../../components/cp_components/address'
@@ -9,6 +17,16 @@ import { useMutation, useQuery } from '@apollo/client'
 import { PostIssueDocument, GetS3UrlDocument } from '../../generated'
 import { useLocation } from 'wouter'
 import Data from '../../utils/Context'
+import { lightBlue } from '@mui/material/colors'
+
+const themes = createTheme({
+  palette: {
+    primary: {
+      main: lightBlue[700],
+    },
+  },
+})
+
 const complaints = [
   { id: 1, name: 'General', state: false },
   { id: 2, name: 'Water Logging', state: false },
@@ -163,13 +181,13 @@ const ComplaintPortal = () => {
 
   const pageDisplay = () => {
     switch (activeStep) {
-      case 0:
+      case 1:
         return (
           <div>
             <Typography
-              variant='h4'
+              variant={matches ? 'h6' : 'h5'}
               className='title'
-              sx={{ marginTop: '1rem', justifyContent: 'center' }}
+              sx={{ marginTop: '1rem', justifyContent: 'center', color: '#0288d1' }}
             >
               My Details
             </Typography>
@@ -185,13 +203,13 @@ const ComplaintPortal = () => {
             />
           </div>
         )
-      case 1:
+      case 2:
         return (
           <div>
             <Typography
-              variant='h4'
+              variant={matches ? 'h6' : 'h5'}
               className='title'
-              sx={{ marginTop: '1rem', justifyContent: 'center' }}
+              sx={{ marginTop: '1rem', justifyContent: 'center', color: '#0288d1' }}
             >
               My Address
             </Typography>
@@ -207,15 +225,15 @@ const ComplaintPortal = () => {
             />
           </div>
         )
-      case 2:
+      case 0:
         return (
           <div>
             <Typography
-              variant='h4'
+              variant={matches ? 'h6' : 'h5'}
               className='title'
-              sx={{ marginTop: '1rem', justifyContent: 'center' }}
+              sx={{ marginTop: '1rem', justifyContent: 'center', color: '#0288d1' }}
             >
-              Report Type
+              Issue
             </Typography>
             <ComplaintType
               problem={problem}
@@ -230,9 +248,9 @@ const ComplaintPortal = () => {
         return (
           <div>
             <Typography
-              variant='h4'
+              variant='h5'
               className='title'
-              sx={{ marginTop: '1rem', justifyContent: 'center' }}
+              sx={{ marginTop: '1rem', justifyContent: 'center', color: '#0288d1' }}
             >
               Complaint Details
             </Typography>
@@ -251,24 +269,36 @@ const ComplaintPortal = () => {
         )
     }
   }
-  const paperStyle = {
-    padding: '5px 20px 50px',
-    width: 500,
-    margin: '3vh auto',
-  }
+
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.down('sm'))
+  const wid = matches ? '75vw' : '50vw'
 
   return (
     <div className='complaint-portal '>
-      <Typography
-        variant='h3'
-        sx={{ fontWeight: 'bold', justifyContent: 'center' }}
-        className='heading'
-      >
-        Report Portal
-      </Typography>{' '}
-      <Paper elevation={1} className='content' style={paperStyle}>
-        <div>{pageDisplay()}</div>
-      </Paper>
+      <ThemeProvider theme={themes}>
+        <Box
+          className='content'
+          sx={{
+            padding: 5,
+            border: 5,
+            boxShadow: 15,
+            borderColor: '#0288d1',
+            borderRadius: 5,
+            width: wid,
+            maxWidth: 480,
+          }}
+        >
+          <Typography
+            variant={matches ? 'h5' : 'h4'}
+            sx={{ justifyContent: 'center', color: '#0288d1' }}
+            className='heading'
+          >
+            Report Portal
+          </Typography>
+          <div>{pageDisplay()}</div>
+        </Box>
+      </ThemeProvider>
     </div>
   )
 }

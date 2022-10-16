@@ -7,10 +7,9 @@ const useStyles = makeStyles(() => ({
     margin: '10px',
   },
   header: {
-    backgroundColor: 'rgb(14, 126, 237)',
+    backgroundColor: '#0288d1',
     borderRadius: '16px',
     padding: '16px',
-    fontColor: '#fff',
   },
 }))
 const Info = () => {

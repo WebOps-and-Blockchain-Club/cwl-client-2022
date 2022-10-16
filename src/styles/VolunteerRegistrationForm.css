@@ -1,3 +1,10 @@
-.subtitle{
-    text-align: center;
+.subtitle {
+  text-align: center;
+}
+
+.volunteer {
+  margin-top: 5vh;
+  display: grid;
+  justify-content: center;
+  align-items: center;
 }

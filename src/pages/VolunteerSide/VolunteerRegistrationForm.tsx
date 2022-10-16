@@ -5,32 +5,48 @@ import {
   Button,
   TextField,
   Typography,
-  Paper,
-  CssBaseline,
   Box,
+  CssBaseline,
+  Paper,
   Container,
   Avatar,
+  Grid,
+  useTheme,
+  useMediaQuery,
+  createTheme,
+  ThemeProvider,
 } from '@mui/material'
 import { Assignment } from '@mui/icons-material'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
 import '../../styles/VolunteerRegistrationForm.css'
 import { useMutation } from '@apollo/client'
 import { SignUpDocument } from '../../generated'
 import Volunteer from '../../interfaces/VolunteerSide/Volunteer'
-const theme = createTheme()
-const paperStyles = {
-  padding: '20px 40px',
-  width: 575,
-  margin: '40px auto',
-  display: 'flex',
-  borderRadius: '10px',
-}
+import { makeStyles } from '@material-ui/styles'
+import { lightBlue } from '@mui/material/colors'
+
+const themes = createTheme({
+  palette: {
+    primary: {
+      main: lightBlue[700],
+    },
+  },
+})
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    height: '100%',
+  },
+  text: {
+    width: '300px',
+  },
+}))
 
 function VolunteerRegistrationForm({
   err,
 }: {
   err: any // eslint-disable-line
-}) {
+}): JSX.Element {
   const [volunteerName, setVolunteerName]: [string, React.Dispatch<React.SetStateAction<string>>] =
     useState('')
   const [volunteerPhone, setVolunteerPhone]: [
@@ -93,200 +109,228 @@ function VolunteerRegistrationForm({
     }
   }
 
-  return (
-    <ThemeProvider theme={theme}>
-      <Paper elevation={20} style={paperStyles}>
-        <Container component='main' maxWidth='xs'>
-          <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Avatar sx={{ bgcolor: 'primary.main' }}>
-              <Assignment />
-            </Avatar>
-            <Typography
-              component='h1'
-              variant='h4'
-              align='center'
-              style={{ fontFamily: '"Times New Roman", Times, serif', textAlign: 'center' }}
-            >
-              Volunteer Registration Form
-            </Typography>
-            <Typography
-              // variant='h6'
-              color='#bdbdbd'
-              fontSize='8'
-              style={{ textAlign: 'center', padding: '5px', paddingBottom: '10px' }}
-            >
-              Fill the form to be a part of the mission
-            </Typography>
+  const classes = useStyles()
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.down('sm'))
 
-            <Box
-              component='form'
-              // eslint-disable-next-line
-              onSubmit={(e: any) => {
-                e.preventDefault()
-                handleSubmit()
-              }}
-              noValidate
-              sx={{ mt: 3 }}
-            >
-              <TextField
-                margin='normal'
-                fullWidth
-                autoFocus
-                // style={{ paddingBottom: '20px' }}
-                id='volunteer-name'
-                label='Name'
-                variant='outlined'
-                value={volunteerName}
-                onChange={(e) => {
-                  setVolunteerName(e.target.value)
-                  e.preventDefault()
+  return (
+    <div className='volunteer'>
+      <ThemeProvider theme={themes}>
+        <Box
+          className={classes.root}
+          sx={{
+            borderRadius: 4,
+            boxShadow: 15,
+            backgroundColor: '#29b6f6',
+            // maxWidth: 900,
+            alignItems: 'center',
+          }}
+        >
+          <Grid container direction='row'>
+            <Grid item>
+              <Box className={classes.text}>
+                <h1> Heading</h1>
+                <p>content</p>
+                {/* ========================Enter content============================= */}
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box
+                sx={{
+                  backgroundColor: '#ffffff',
+                  borderRadius: 4,
+                  margin: 2,
+                  padding: 2,
+                  // border: 3,
+                  // borderColor: '#85B5E3',
                 }}
-                error={
-                  volunteerName.length !== 0 &&
-                  !/^[A-Z]?[a-z]*(\s[A-Z])?[a-z]*$/.test(volunteerName)
-                }
-                helperText={
-                  volunteerName.length !== 0 &&
-                  !/^[A-Z]?[a-z]*(\s[A-Z])?[a-z]*$/.test(volunteerName)
-                    ? 'Please enter a valid name'
-                    : ''
-                }
-                required
-              />
-              <TextField
-                margin='normal'
-                fullWidth
-                autoFocus
-                id='volunteer-phone'
-                label='Phone'
-                variant='outlined'
-                value={volunteerPhone}
-                onChange={(e) => {
-                  setVolunteerPhone(e.target.value)
-                  e.preventDefault()
-                }}
-                error={volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)}
-                helperText={
-                  volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)
-                    ? 'Please enter a valid phone number'
-                    : ''
-                }
-                required
-              />
-              <div>
-                <div className='otp-button'>
-                  <Button
-                    variant='contained'
-                    onClick={() => {
-                      setOtp(true)
+              >
+                <Container component='main' maxWidth='xs'>
+                  <CssBaseline />
+                  <Box
+                    sx={{
+                      marginTop: 1,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
                     }}
-                    color='primary'
                   >
-                    Get OTP
-                  </Button>
-                </div>
-                <div>
-                  <TextField
-                    id='otp'
-                    fullWidth
-                    margin='normal'
-                    label='Enter your OTP '
-                    variant='outlined'
-                  />
-                </div>
-              </div>
-              {/* <Box style={{ paddingTop: '10px' }}>
-                <FormControl fullWidth required variant='outlined'>
-                  <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
-                  <OutlinedInput
-                    id='volunteer-password'
-                    fullWidth
-                    type={showPassword ? 'text' : 'password'}
-                    value={volunteerPassword}
-                    label='Password'
-                    onChange={(e) => {
-                      setVolunteerPassword(e.target.value)
-                      e.preventDefault()
-                    }}
-                    endAdornment={
-                      <InputAdornment position='end'>
-                        <IconButton
-                          aria-label='toggle password visibility'
-                          onClick={handleClickShowPassword}
-                          edge='end'
-                        >
-                          {!showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    required
-                  />
-                </FormControl>
-              </Box> */}
-              {otp ? (
-                <div>
-                  <DropDown
-                    isOthers={null}
-                    setIsOthers={null}
-                    props={{
-                      volunteerProvisions,
-                      setVolunteerProvisions,
-                      Tags: 'Help',
-                      names: ['Food', 'Shelter', 'Water', 'Medical Help', 'Transport'],
-                    }}
-                  />
-                  <DropDown
-                    isOthers={isOthers}
-                    setIsOthers={setIsOthers}
-                    props={{
-                      volunteerProvisions: volunteerSkills,
-                      setVolunteerProvisions: setVolunteerSkills,
-                      Tags: 'Skills',
-                      names: ['Transportation', 'Plumbing', 'Swimming', 'Electrical', 'Others'],
-                    }}
-                  />
-                  {isOthers ? (
-                    <TextField
-                      margin='normal'
-                      fullWidth
-                      autoFocus
-                      variant='outlined'
-                      label='Other skills'
-                      value={OthSkills}
-                      onChange={(e) => {
-                        if (/^[a-zA-Z]*$/g.test(e.target.value)) {
-                          setOthSkills(e.target.value)
-                        }
-                        e.preventDefault()
-                      }}
-                    />
-                  ) : null}
-                  <Box textAlign='center' style={{ paddingTop: '30px', paddingBottom: '20px' }}>
-                    <Button
-                      type='submit'
-                      size='large'
-                      variant='contained'
-                      disabled={!(volunteerName && volunteerPhone && volunteerPassword)}
+                    <Avatar sx={{ bgcolor: 'primary.main' }}>
+                      <Assignment />
+                    </Avatar>
+                    <Typography
+                      component='h3'
+                      variant={matches ? 'h5' : 'h4'}
+                      align='center'
+                      style={{ textAlign: 'center', color: '#0288d1' }}
                     >
-                      Submit
-                    </Button>
-                    <div style={{ color: 'red' }}>{error}</div>
+                      Volunteer Registration Form
+                    </Typography>
+                    <Typography
+                      // variant='h6'
+                      color='#bdbdbd'
+                      fontSize='8'
+                      style={{ textAlign: 'center', padding: '5px', paddingBottom: '10px' }}
+                    >
+                      Fill the form to be a part of the mission
+                    </Typography>
+
+                    <Box
+                      component='form'
+                      // eslint-disable-next-line
+                      onSubmit={(e: any) => {
+                        e.preventDefault()
+                        handleSubmit()
+                      }}
+                      noValidate
+                      sx={{ mt: 3 }}
+                    >
+                      <TextField
+                        margin='normal'
+                        fullWidth
+                        autoFocus
+                        // style={{ paddingBottom: '20px' }}
+                        id='volunteer-name'
+                        label='Name'
+                        variant='outlined'
+                        value={volunteerName}
+                        onChange={(e) => {
+                          setVolunteerName(e.target.value)
+                          e.preventDefault()
+                        }}
+                        error={
+                          volunteerName.length !== 0 &&
+                          !/^[A-Z]?[a-z]*(\s[A-Z])?[a-z]*$/.test(volunteerName)
+                        }
+                        helperText={
+                          volunteerName.length !== 0 &&
+                          !/^[A-Z]?[a-z]*(\s[A-Z])?[a-z]*$/.test(volunteerName)
+                            ? 'Please enter a valid name'
+                            : ''
+                        }
+                        required
+                      />
+
+                      <TextField
+                        margin='normal'
+                        fullWidth
+                        autoFocus
+                        id='volunteer-phone'
+                        label='Phone'
+                        variant='outlined'
+                        value={volunteerPhone}
+                        onChange={(e) => {
+                          setVolunteerPhone(e.target.value)
+                          e.preventDefault()
+                        }}
+                        error={volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)}
+                        helperText={
+                          volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)
+                            ? 'Please enter a valid phone number'
+                            : ''
+                        }
+                        required
+                      />
+                      <Grid
+                        container
+                        direction='row'
+                        sx={{ alignItems: 'center', justifyContent: 'space-between' }}
+                      >
+                        <Grid item xs={6}>
+                          <div>
+                            <TextField
+                              id='otp'
+                              fullWidth
+                              margin='normal'
+                              label='Enter your OTP '
+                              variant='outlined'
+                            />
+                          </div>
+                        </Grid>
+                        <Grid item>
+                          <div className='otp-button'>
+                            <Button
+                              variant='contained'
+                              onClick={() => {
+                                setOtp(true)
+                              }}
+                              color='primary'
+                            >
+                              Get OTP
+                            </Button>
+                          </div>
+                        </Grid>
+                      </Grid>
+
+                      {otp ? (
+                        <div>
+                          <DropDown
+                            isOthers={null}
+                            setIsOthers={null}
+                            props={{
+                              volunteerProvisions,
+                              setVolunteerProvisions,
+                              Tags: 'Help',
+                              names: ['Food', 'Shelter', 'Water', 'Medical Help', 'Transport'],
+                            }}
+                          />
+                          <DropDown
+                            isOthers={isOthers}
+                            setIsOthers={setIsOthers}
+                            props={{
+                              volunteerProvisions: volunteerSkills,
+                              setVolunteerProvisions: setVolunteerSkills,
+                              Tags: 'Skills',
+                              names: [
+                                'Transportation',
+                                'Plumbing',
+                                'Swimming',
+                                'Electrical',
+                                'Others',
+                              ],
+                            }}
+                          />
+                          {isOthers ? (
+                            <TextField
+                              margin='normal'
+                              fullWidth
+                              autoFocus
+                              variant='outlined'
+                              label='Other skills'
+                              value={OthSkills}
+                              onChange={(e) => {
+                                if (/^[a-zA-Z]*$/g.test(e.target.value)) {
+                                  setOthSkills(e.target.value)
+                                }
+                                e.preventDefault()
+                              }}
+                            />
+                          ) : null}
+                          <Box
+                            textAlign='center'
+                            style={{ paddingTop: '30px', paddingBottom: '20px' }}
+                          >
+                            <Button
+                              type='submit'
+                              size='large'
+                              variant='contained'
+                              disabled={!(volunteerName && volunteerPhone && volunteerPassword)}
+                            >
+                              Submit
+                            </Button>
+                            <div style={{ color: 'red' }}>{error}</div>
+                          </Box>
+                        </div>
+                      ) : null}
+                    </Box>
                   </Box>
-                </div>
-              ) : null}
-            </Box>
-          </Box>
-        </Container>
-      </Paper>
-    </ThemeProvider>
+                </Container>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+      </ThemeProvider>
+    </div>
   )
 }
 

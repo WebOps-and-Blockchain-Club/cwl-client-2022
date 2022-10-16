@@ -18,7 +18,6 @@
   background: #fff;
 }
 
-
 .question {
   color: #fff;
 }
@@ -27,8 +26,6 @@
   background: #fff;
   color: rgb(0, 115, 230);
 }
-
-
 
 .container-info {
   /* padding: 10px; */
@@ -60,11 +57,6 @@ p {
   text-align: center;
 }
 
-.footer {
-  background-color: rgb(14, 115, 230);
-  padding: 30px;
-}
-
 .footer-info {
   text-align: center !important;
   padding: 10px;
@@ -76,15 +68,15 @@ p {
 }
 
 .sponsor h1 {
-  color: #6059df;
+  color: #01579b;
   font-style: normal;
   font-weight: 600;
   font-size: 36px;
 }
 
 .footer {
-  background-color: rgb(14, 126, 237);
-  padding: 50px 50px 10px 50px;
+  background-color: rgb(1, 87, 155);
+  padding: 25px 50px 10px 50px;
   min-height: 200px;
   display: flex;
   flex-direction: column;
