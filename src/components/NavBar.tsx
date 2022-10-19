@@ -89,7 +89,7 @@ const NavBar = () => {
                 <Grid container direction='row' sx={{ alignItems: 'center' }}>
                   <Grid item>
                     <Stack direction='row' sx={{ marginRight: 1 }} alignItems='center'>
-                      <Typography sx={{ fontWeight: 'bold', fontSize: 18, m: 0.1 }}>அ</Typography>
+                      <Typography sx={{ fontWeight: 'bold', fontSize: 10, m: 0.1 }}>அ</Typography>
 
                       <Switch
                         sx={{ m: -1 }}
@@ -99,7 +99,7 @@ const NavBar = () => {
                         color='default'
                         inputProps={{ 'aria-label': 'controlled' }}
                       />
-                      <Typography sx={{ m: 0.5, fontWeight: 'bold', fontSize: 18 }}>En</Typography>
+                      <Typography sx={{ m: 0.5, fontWeight: 'bold', fontSize: 10 }}>En</Typography>
                     </Stack>
                   </Grid>
                   <Grid item>

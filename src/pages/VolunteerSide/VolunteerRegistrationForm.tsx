@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import Provision from '../../interfaces/VolunteerSide/Provision'
 import DropDown from '../../components/DropDown'
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
+import { auth } from '../../utils/FirebaseConfig'
 import {
   Button,
   TextField,
@@ -21,6 +23,7 @@ import '../../styles/VolunteerRegistrationForm.css'
 import { useMutation } from '@apollo/client'
 import { SignUpDocument } from '../../generated'
 import Volunteer from '../../interfaces/VolunteerSide/Volunteer'
+import PhoneInput from 'react-phone-number-input'
 import { makeStyles } from '@material-ui/styles'
 import { lightBlue } from '@mui/material/colors'
 
@@ -41,6 +44,14 @@ const useStyles = makeStyles((theme) => ({
     width: '300px',
   },
 }))
+const theme = createTheme()
+const paperStyles = {
+  padding: '20px 40px',
+  width: 575,
+  margin: '40px auto',
+  display: 'flex',
+  borderRadius: '10px',
+}
 
 function VolunteerRegistrationForm({
   err,
@@ -61,11 +72,14 @@ function VolunteerRegistrationForm({
     Provision[],
     React.Dispatch<React.SetStateAction<never[]>>,
   ] = useState([])
-  const [otp, setOtp] = useState(false)
+  const [validate, setValidate] = useState(false)
+  const [otp, setOtp] = useState<string>('')
   const [volunteerSkills, setVolunteerSkills] = useState([])
   const [error, setError] = useState(err)
   const [isOthers, setIsOthers] = useState(false)
-
+  const [otpOpener, setotpOpener] = useState(false)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [result, setResult] = useState<any>({})
   // eslint-disable-next-line
   const [signUp, { data }] = useMutation(SignUpDocument, {
     variables: {
@@ -95,20 +109,42 @@ function VolunteerRegistrationForm({
         },
       })
       console.log(data)
-      const volunteer: Volunteer = {
-        phoneNumber: volunteerPhone,
-        username: data?.signUp.username || '',
-        tags: JSON.parse(data?.signUp.tags || ''),
-      }
-      localStorage.setItem('USER', JSON.stringify(volunteer))
-      window.location.reload()
+      // const volunteer: Volunteer = {
+      //   phoneNumber: volunteerPhone,
+      //   username: data?.signUp.username || '',
+      //   tags: JSON.parse(data?.signUp.tags || ''),
+      // }
+
       // eslint-disable-next-line
     } catch (error: any) {
       setError(error.message)
       console.error(error)
     }
   }
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const setUpRecatcha = (number: any) => {
+    const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {}, auth)
+    recaptchaVerifier.render()
+    return signInWithPhoneNumber(auth, number, recaptchaVerifier)
+  }
+  const handleOtp = async (e: { preventDefault: () => void }) => {
+    e.preventDefault()
+    if (volunteerPhone.length === 10) {
+      const response = await setUpRecatcha('+91' + volunteerPhone)
+      setResult(response)
+      setotpOpener(false)
+    }
+  }
+  const verifyOtp = async (e: { preventDefault: () => void }) => {
+    e.preventDefault()
+    if (otp === '' || otp === null) return
+    try {
+      await result.confirm(otp)
+      setValidate(true)
+    } catch (err) {
+      console.log(err)
+    }
+  }
   const classes = useStyles()
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.down('sm'))
@@ -210,59 +246,64 @@ function VolunteerRegistrationForm({
                         }
                         required
                       />
-
-                      <TextField
-                        margin='normal'
-                        fullWidth
-                        autoFocus
-                        id='volunteer-phone'
-                        label='Phone'
-                        variant='outlined'
+                      <PhoneInput
+                        defaultCountry='IN'
                         value={volunteerPhone}
-                        onChange={(e) => {
-                          setVolunteerPhone(e.target.value)
-                          e.preventDefault()
+                        onChange={(e: string) => {
+                          if (e && e.length === 13) {
+                            setVolunteerPhone(e.replace('+91', ''))
+                          }
                         }}
-                        error={volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)}
-                        helperText={
-                          volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)
-                            ? 'Please enter a valid phone number'
-                            : ''
-                        }
-                        required
+                        placeholder='Enter Phone Number'
                       />
-                      <Grid
-                        container
-                        direction='row'
-                        sx={{ alignItems: 'center', justifyContent: 'space-between' }}
-                      >
-                        <Grid item xs={6}>
-                          <div>
+                      {/* <TextField
+                margin='normal'
+                fullWidth
+                autoFocus
+                id='volunteer-phone'
+                label='Phone'
+                variant='outlined'
+                value={volunteerPhone}
+                onChange={(e) => {
+                  setVolunteerPhone(e.target.value)
+                  setPhoneNumberValidate(true)
+                  e.preventDefault()
+                }}
+                error={volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)}
+                helperText={
+                  volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)
+                    ? 'Please enter a valid phone number'
+                    : ''
+                }
+                required
+              /> */}
+                      <div>
+                        <div className='otp-button'>
+                          <Button variant='contained' onClick={handleOtp} color='primary'>
+                            Get OTP
+                          </Button>
+                          <div id='recaptcha-container'></div>
+                        </div>
+                        {otpOpener ? (
+                          <div className='otp-button'>
                             <TextField
                               id='otp'
                               fullWidth
                               margin='normal'
                               label='Enter your OTP '
                               variant='outlined'
-                            />
-                          </div>
-                        </Grid>
-                        <Grid item>
-                          <div className='otp-button'>
-                            <Button
-                              variant='contained'
-                              onClick={() => {
-                                setOtp(true)
+                              value={otp}
+                              onChange={(e: { target: { value: string } }) => {
+                                setOtp(e.target.value)
                               }}
-                              color='primary'
-                            >
-                              Get OTP
+                            />
+                            <Button variant='contained' onClick={verifyOtp} color='primary'>
+                              Verify OTP
                             </Button>
                           </div>
-                        </Grid>
-                      </Grid>
-
-                      {otp ? (
+                        ) : null}
+                      </div>
+                      {validate ? (
                         <div>
                           <DropDown
                             isOthers={null}

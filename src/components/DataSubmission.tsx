@@ -8,12 +8,9 @@ import {
   Tab,
   createTheme,
   ThemeProvider,
-  useMediaQuery,
-  useTheme,
 } from '@mui/material'
-import TabContext from '@mui/lab/TabContext'
-import TabList from '@mui/lab/TabList'
-import TabPanel from '@mui/lab/TabPanel'
+
+import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { useEffect, useState, useContext } from 'react'
 import Data from '../utils/Context'
 import Language from '../utils/lang'
@@ -125,8 +122,6 @@ const DataSubmission = (): JSX.Element => {
       }
     }
   }
-  const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.down('sm'))
   return (
     <div className='data-page'>
       <ThemeProvider theme={themes}>
@@ -215,9 +210,15 @@ const DataSubmission = (): JSX.Element => {
                       valueLabelFormat={() => {
                         return (
                           <div style={{ textAlign: 'center' }}>
-                            <p className='pulsatingDot' style={{ color: colour }}>
-                              Water Level
-                            </p>
+                            {checked ? (
+                              <p className='pulsatingDot' style={{ color: colour }}>
+                                Water Level
+                              </p>
+                            ) : (
+                              <p className='pulsatingDot' style={{ color: colour }}>
+                                நீர் மட்டம்
+                              </p>
+                            )}
                           </div>
                         )
                       }}

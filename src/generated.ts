@@ -45,8 +45,7 @@ export type LoginInput = {
 export type LoginResponse = {
   __typename?: 'LoginResponse';
   success: Scalars['Boolean'];
-  tags: Scalars['String'];
-  username: Scalars['String'];
+  token: Scalars['String'];
 };
 
 export type Mutation = {
@@ -101,7 +100,6 @@ export type Volunteer = {
 };
 
 export type VolunteerInput = {
-  password: Scalars['String'];
   phoneNumber: Scalars['String'];
   tags: Scalars['String'];
   username: Scalars['String'];
