@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import Provision from '../../interfaces/VolunteerSide/Provision'
 import DropDown from '../../components/DropDown'
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
+import { auth } from '../../utils/FirebaseConfig'
 import {
   Button,
   TextField,
@@ -16,7 +18,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import '../../styles/VolunteerRegistrationForm.css'
 import { useMutation } from '@apollo/client'
 import { SignUpDocument } from '../../generated'
-import Volunteer from '../../interfaces/VolunteerSide/Volunteer'
+import PhoneInput from 'react-phone-number-input'
 const theme = createTheme()
 const paperStyles = {
   padding: '20px 40px',
@@ -25,7 +27,7 @@ const paperStyles = {
   display: 'flex',
   borderRadius: '10px',
 }
-
+import 'react-phone-number-input/style.css'
 function VolunteerRegistrationForm({
   err,
 }: {
@@ -45,11 +47,14 @@ function VolunteerRegistrationForm({
     Provision[],
     React.Dispatch<React.SetStateAction<never[]>>,
   ] = useState([])
-  const [otp, setOtp] = useState(false)
+  const [validate, setValidate] = useState(false)
+  const [otp, setOtp] = useState<string>('')
   const [volunteerSkills, setVolunteerSkills] = useState([])
   const [error, setError] = useState(err)
   const [isOthers, setIsOthers] = useState(false)
-
+  const [otpOpener, setotpOpener] = useState(false)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [result, setResult] = useState<any>({})
   // eslint-disable-next-line
   const [signUp, { data }] = useMutation(SignUpDocument, {
     variables: {
@@ -79,20 +84,42 @@ function VolunteerRegistrationForm({
         },
       })
       console.log(data)
-      const volunteer: Volunteer = {
-        phoneNumber: volunteerPhone,
-        username: data?.signUp.username || '',
-        tags: JSON.parse(data?.signUp.tags || ''),
-      }
-      localStorage.setItem('USER', JSON.stringify(volunteer))
-      window.location.reload()
+      // const volunteer: Volunteer = {
+      //   phoneNumber: volunteerPhone,
+      //   username: data?.signUp.username || '',
+      //   tags: JSON.parse(data?.signUp.tags || ''),
+      // }
+
       // eslint-disable-next-line
     } catch (error: any) {
       setError(error.message)
       console.error(error)
     }
   }
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const setUpRecatcha = (number: any) => {
+    const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {}, auth)
+    recaptchaVerifier.render()
+    return signInWithPhoneNumber(auth, number, recaptchaVerifier)
+  }
+  const handleOtp = async (e: { preventDefault: () => void }) => {
+    e.preventDefault()
+    if (volunteerPhone.length === 10) {
+      const response = await setUpRecatcha('+91' + volunteerPhone)
+      setResult(response)
+      setotpOpener(false)
+    }
+  }
+  const verifyOtp = async (e: { preventDefault: () => void }) => {
+    e.preventDefault()
+    if (otp === '' || otp === null) return
+    try {
+      await result.confirm(otp)
+      setValidate(true)
+    } catch (err) {
+      console.log(err)
+    }
+  }
   return (
     <ThemeProvider theme={theme}>
       <Paper elevation={20} style={paperStyles}>
@@ -161,7 +188,17 @@ function VolunteerRegistrationForm({
                 }
                 required
               />
-              <TextField
+              <PhoneInput
+                defaultCountry='IN'
+                value={volunteerPhone}
+                onChange={(e: string) => {
+                  if (e && e.length === 13) {
+                    setVolunteerPhone(e.replace('+91', ''))
+                  }
+                }}
+                placeholder='Enter Phone Number'
+              />
+              {/* <TextField
                 margin='normal'
                 fullWidth
                 autoFocus
@@ -171,6 +208,7 @@ function VolunteerRegistrationForm({
                 value={volunteerPhone}
                 onChange={(e) => {
                   setVolunteerPhone(e.target.value)
+                  setPhoneNumberValidate(true)
                   e.preventDefault()
                 }}
                 error={volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)}
@@ -180,58 +218,34 @@ function VolunteerRegistrationForm({
                     : ''
                 }
                 required
-              />
+              /> */}
               <div>
                 <div className='otp-button'>
-                  <Button
-                    variant='contained'
-                    onClick={() => {
-                      setOtp(true)
-                    }}
-                    color='primary'
-                  >
+                  <Button variant='contained' onClick={handleOtp} color='primary'>
                     Get OTP
                   </Button>
+                  <div id='recaptcha-container'></div>
                 </div>
-                <div>
-                  <TextField
-                    id='otp'
-                    fullWidth
-                    margin='normal'
-                    label='Enter your OTP '
-                    variant='outlined'
-                  />
-                </div>
+                {otpOpener ? (
+                  <div className='otp-button'>
+                    <TextField
+                      id='otp'
+                      fullWidth
+                      margin='normal'
+                      label='Enter your OTP '
+                      variant='outlined'
+                      value={otp}
+                      onChange={(e: { target: { value: string } }) => {
+                        setOtp(e.target.value)
+                      }}
+                    />
+                    <Button variant='contained' onClick={verifyOtp} color='primary'>
+                      Verify OTP
+                    </Button>
+                  </div>
+                ) : null}
               </div>
-              {/* <Box style={{ paddingTop: '10px' }}>
-                <FormControl fullWidth required variant='outlined'>
-                  <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
-                  <OutlinedInput
-                    id='volunteer-password'
-                    fullWidth
-                    type={showPassword ? 'text' : 'password'}
-                    value={volunteerPassword}
-                    label='Password'
-                    onChange={(e) => {
-                      setVolunteerPassword(e.target.value)
-                      e.preventDefault()
-                    }}
-                    endAdornment={
-                      <InputAdornment position='end'>
-                        <IconButton
-                          aria-label='toggle password visibility'
-                          onClick={handleClickShowPassword}
-                          edge='end'
-                        >
-                          {!showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    required
-                  />
-                </FormControl>
-              </Box> */}
-              {otp ? (
+              {validate ? (
                 <div>
                   <DropDown
                     isOthers={null}
