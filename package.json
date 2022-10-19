@@ -1,91 +1,98 @@
 {
-	"name": "cwl-client-2022",
-	"version": "0.1.0",
-	"private": true,
-	"dependencies": {
-		"@apollo/client": "^3.6.9",
-		"@emotion/react": "^11.10.0",
-		"@emotion/styled": "^11.10.0",
-		"@graphql-typed-document-node/core": "^3.1.1",
-		"@hookform/resolvers": "^2.9.7",
-		"@mapbox/mapbox-gl-geocoder": "^5.0.1",
-		"@material-ui/core": "^4.12.4",
-		"@mui/icons-material": "^5.10.2",
-		"@mui/material": "^5.10.0",
-		"@mui/styles": "^5.9.3",
-		"@testing-library/jest-dom": "^5.14.1",
-		"@testing-library/react": "^13.0.0",
-		"@testing-library/user-event": "^13.2.1",
-		"@types/jest": "^27.0.1",
-		"@types/node": "^16.7.13",
-		"@types/react": "^18.0.0",
-		"@types/react-dom": "^18.0.0",
-		"antd": "^4.23.3",
-		"graphql": "^16.6.0",
-		"mapbox-gl": "^2.10.0",
-		"mapbox-gl-geocoder": "^2.0.1",
-		"react": "^18.2.0",
-		"react-accessible-accordion": "^5.0.0",
-		"react-apollo": "^3.1.5",
-		"react-dom": "^18.2.0",
-		"react-hook-form": "^7.34.2",
-		"react-map-gl": "^7.0.19",
-		"react-responsive-carousel": "^3.2.23",
-		"react-scripts": "5.0.1",
-		"ts-dotenv": "^0.8.3",
-		"typescript": "^4.4.2",
-		"universal-cookie": "^4.0.4",
-		"web-vitals": "^2.1.0",
-		"worker-loader": "3.0.8",
-		"wouter": "^2.8.0-alpha.2",
-		"yup": "^0.32.11"
-	},
-	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject",
-		"lint": "eslint . --ext ts --ext tsx --ext js",
-		"server": "json-server --watch ./src/shared/db.json --port 4000",
-		"generate": "graphql-codegen --watch --config codegen.yml"
-	},
-	"eslintConfig": {
-		"extends": [
-			"react-app",
-			"react-app/jest"
-		]
-	},
-	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		]
-	},
-	"devDependencies": {
-		"@graphql-codegen/cli": "2.12.0",
-		"@graphql-codegen/introspection": "2.2.1",
-		"@graphql-codegen/typed-document-node": "^2.3.3",
-		"@graphql-codegen/typescript": "^2.7.3",
-		"@graphql-codegen/typescript-operations": "^2.5.3",
-		"@graphql-codegen/typescript-resolvers": "2.7.3",
-		"@types/mapbox-gl": "^2.7.5",
-		"@types/mapbox__mapbox-gl-geocoder": "^4.7.3",
-		"@typescript-eslint/eslint-plugin": "^5.33.0",
-		"@typescript-eslint/parser": "^5.33.0",
-		"eslint": "^8.22.0",
-		"eslint-config-airbnb": "^19.0.4",
-		"eslint-config-prettier": "^8.5.0",
-		"eslint-plugin-import": "^2.26.0",
-		"eslint-plugin-jsx-a11y": "^6.6.1",
-		"eslint-plugin-prettier": "^4.2.1",
-		"eslint-plugin-react": "^7.30.1",
-		"eslint-plugin-react-hooks": "^4.6.0",
-		"prettier": "^2.7.1"
-	}
+  "name": "cwl-client-2022",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@apollo/client": "^3.6.9",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@graphql-typed-document-node/core": "^3.1.1",
+    "@hookform/resolvers": "^2.9.7",
+    "@mapbox/mapbox-gl-geocoder": "^5.0.1",
+    "@material-ui/core": "^4.12.4",
+    "@mui/icons-material": "^5.10.2",
+    "@mui/lab": "^5.0.0-alpha.101",
+    "@mui/material": "^5.10.0",
+    "@mui/styles": "^5.9.3",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@turf/random": "^6.5.0",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.13",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@urbica/react-map-gl": "^1.16.2",
+    "@urbica/react-map-gl-cluster": "^0.2.0",
+    "antd": "^4.23.3",
+    "firebase": "^9.11.0",
+    "graphql": "^16.6.0",
+    "mapbox-gl": "^2.10.0",
+    "mapbox-gl-geocoder": "^2.0.1",
+    "react": "^18.2.0",
+    "react-accessible-accordion": "^5.0.0",
+    "react-apollo": "^3.1.5",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.34.2",
+    "react-map-gl": "^7.0.19",
+    "react-phone-number-input": "^3.2.11",
+    "react-responsive-carousel": "^3.2.23",
+    "react-scripts": "5.0.1",
+    "supercluster": "^7.1.5",
+    "ts-dotenv": "^0.8.3",
+    "typescript": "^4.4.2",
+    "universal-cookie": "^4.0.4",
+    "web-vitals": "^2.1.0",
+    "worker-loader": "3.0.8",
+    "wouter": "^2.8.0-alpha.2",
+    "yup": "^0.32.11"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "GENERATE_SOURCEMAP=false react-scripts buildd",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint . --ext ts --ext tsx --ext js",
+    "server": "json-server --watch ./src/shared/db.json --port 4000",
+    "generate": "graphql-codegen --watch --config codegen.yml"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "2.12.0",
+    "@graphql-codegen/introspection": "2.2.1",
+    "@graphql-codegen/typed-document-node": "^2.3.3",
+    "@graphql-codegen/typescript": "^2.7.3",
+    "@graphql-codegen/typescript-operations": "^2.5.3",
+    "@graphql-codegen/typescript-resolvers": "2.7.3",
+    "@types/mapbox-gl": "^2.7.5",
+    "@types/mapbox__mapbox-gl-geocoder": "^4.7.3",
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/parser": "^5.33.0",
+    "eslint": "^8.22.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^2.7.1"
+  }
 }

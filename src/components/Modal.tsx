@@ -26,7 +26,14 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
   const { children, onClose, ...other } = props
 
   return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+    <DialogTitle
+      fontSize={20}
+      textAlign='center'
+      color='primary'
+      fontWeight='bold'
+      sx={{ m: 0, p: 2 }}
+      {...other}
+    >
       {children}
       {onClose ? (
         <IconButton
@@ -36,7 +43,7 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
             position: 'absolute',
             right: 8,
             top: 8,
-            color: (theme) => theme.palette.grey[500],
+            color: (theme) => theme.palette.error.main,
           }}
         >
           <CloseIcon />
@@ -63,7 +70,7 @@ export default function Modal_(props: {
           {text.heading}
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <Typography>{text.body}</Typography>
+          <Typography fontSize={18}>{text.body}</Typography>
         </DialogContent>
       </BootstrapDialog>
     </div>

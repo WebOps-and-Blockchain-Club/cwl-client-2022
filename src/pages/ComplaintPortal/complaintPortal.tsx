@@ -215,7 +215,7 @@ const ComplaintPortal = () => {
               className='title'
               sx={{ marginTop: '1rem', justifyContent: 'center' }}
             >
-              Complaint Type
+              Report Type
             </Typography>
             <ComplaintType
               problem={problem}
@@ -264,7 +264,7 @@ const ComplaintPortal = () => {
         sx={{ fontWeight: 'bold', justifyContent: 'center' }}
         className='heading'
       >
-        Complaint Portal
+        Report Portal
       </Typography>{' '}
       <Paper elevation={1} className='content' style={paperStyle}>
         <div>{pageDisplay()}</div>

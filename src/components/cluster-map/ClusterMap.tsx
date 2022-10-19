@@ -72,7 +72,7 @@ const ClusterMap = () => {
                     longitude: -103.59,
                     zoom: 3
                 }}
-                mapStyle="mapbox://styles/mapbox/streets-v11"
+                mapStyle="mapbox://styles/mapbox/dark-v9"
                 mapboxAccessToken={process.env.REACT_APP_MAPBOX_SECRET_KEY}
                 interactiveLayerIds={[clusterLayer.id!]}
                 onClick={onClick}

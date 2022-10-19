@@ -1,40 +1,82 @@
+.data-page {
+  padding-top: 30px;
+  /* background-color: rgb(251, 241, 241); */
+  margin-bottom: 25px;
+  overflow: hidden;
+}
+
 .title {
   display: flex;
   justify-content: center;
-  padding-top: 2em;
+
   color: rgb(0, 115, 230);
 }
 
 .input {
   display: flex;
   justify-content: center;
-  margin-top: 15px;
+  margin-top: 20px;
   margin-bottom: 15px;
+  position: relative;
+  left: 20px;
 }
+/* .left {
+  background-color: rgb(178, 240, 243);
+} */
 
-
+.cm {
+  position: relative;
+  top: 15px;
+  right: 50px;
+}
 .button {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 5px;
-  padding-bottom: 50 px;
 }
 
-
 .image {
-  margin: 1rem;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
 }
 
 .waterarea {
   display: flex;
   justify-content: center;
+}
+/* .sliderImage {
+  position: relative;
+  left: -15px;
+} */
+
+.sliderTab {
+  position: relative;
+  left: 15px;
+}
+
+.slider {
   align-items: baseline;
+  /* position: relative; */
+  /* left: 5px; */
 }
 
 .car {
-  background-image: url('../images/car-man.png');
+  background-image: url('../images/car.png');
   align-items: baseline;
+  background-repeat: no-repeat;
+}
+
+.bike {
+  background-image: url('../images/bike.png');
+  align-items: baseline;
+  background-repeat: no-repeat;
+}
+
+.cycle {
+  background-image: url('../images/cycle.png');
+  align-items: baseline;
+  justify-content: center;
   background-repeat: no-repeat;
 }
 
@@ -71,3 +113,46 @@
   align-items: baseline;
   background-repeat: no-repeat;
 } */
+
+.pulsatingDot {
+  animation: pulseDot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite;
+  /* background-color: var(--pulsating-dot, #00beff);
+  border-radius: 50%;
+  box-sizing: border-box; */
+  color: #70e0f4;
+  /* height: 15px;
+  width: 15px; */
+}
+
+.pulsatingDot:before {
+  animation: pulseRing 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  background-color: var(--pulsating-dot, #00beff);
+  border-radius: 45px;
+  content: '';
+  display: block;
+  height: 300%;
+  left: -100%;
+  position: relative;
+  top: -100%;
+  width: 300%;
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.5);
+  }
+  80%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
