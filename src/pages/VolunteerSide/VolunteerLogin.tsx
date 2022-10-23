@@ -21,6 +21,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useLocation } from 'wouter'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import Cookies from 'universal-cookie'
+const cookies = new Cookies()
 
 const theme = createTheme()
 const paperStyles = {
@@ -61,6 +63,7 @@ function VolunteerLogin({ err }: { err: any }) {
     try {
       if (data?.login.success) {
         localStorage.setItem('USER', JSON.stringify({ sucess: data?.login.success }))
+        cookies.set('authToken', data?.login.token)
         window.location.reload()
       } else {
         throw Error('Invalid credentials')
