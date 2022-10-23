@@ -1,4 +1,3 @@
-import React from 'react'
 import { TextField, Button, createTheme, ThemeProvider } from '@mui/material'
 import { PhotoCamera } from '@mui/icons-material'
 import '../../styles/ComplaintPortal/cp_style.css'
@@ -54,7 +53,7 @@ const ComplaintDetails = ({
             value={complaint}
             fullWidth
             margin='normal'
-            label='Complaint'
+            label='Report'
             variant='outlined'
             onChange={(e) => handleComplaintChange(e)}
             // error={complaint.trim().length === 0}
@@ -70,7 +69,7 @@ const ComplaintDetails = ({
             value={complaintDetails}
             fullWidth
             margin='normal'
-            label='Complaint Details (max 400 words)'
+            label='Report Details (max 400 words)'
             variant='outlined'
             onChange={(e) => handleComplaintDetailsChange(e)}
           />

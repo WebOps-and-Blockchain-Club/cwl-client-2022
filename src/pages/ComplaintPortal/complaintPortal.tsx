@@ -1,13 +1,5 @@
 import { useState, SetStateAction, useEffect, useContext } from 'react'
-import {
-  Box,
-  createTheme,
-  Paper,
-  ThemeProvider,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
+import { Box, createTheme, ThemeProvider, Typography, useMediaQuery, useTheme } from '@mui/material'
 import '../../styles/ComplaintPortal/cp_style.css'
 import PersonDetails from '../../components/cp_components/personDetails'
 import Address from '../../components/cp_components/address'
@@ -252,7 +244,7 @@ const ComplaintPortal = () => {
               className='title'
               sx={{ marginTop: '1rem', justifyContent: 'center', color: '#0288d1' }}
             >
-              Complaint Details
+              Report Details
             </Typography>
             <ComplaintDetails
               complaint={complaint}

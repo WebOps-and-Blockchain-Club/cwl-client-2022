@@ -34,23 +34,21 @@ const themes = createTheme({
   },
 })
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
     height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
-    width: '300px',
+    width: '360px',
+  },
+  innerDiv: {
+    padding: '10px',
   },
 }))
-const theme = createTheme()
-const paperStyles = {
-  padding: '20px 40px',
-  width: 575,
-  margin: '40px auto',
-  display: 'flex',
-  borderRadius: '10px',
-}
 
 function VolunteerRegistrationForm({
   err,
@@ -159,70 +157,74 @@ function VolunteerRegistrationForm({
             boxShadow: 15,
             backgroundColor: '#29b6f6',
             // maxWidth: 900,
+            display: 'flex',
+            justifyContent: 'center',
             alignItems: 'center',
           }}
         >
           <Grid container direction='row'>
             <Grid item>
               <Box className={classes.text}>
-                {checked ? (
-                  <Typography
-                    component='h6'
-                    variant={matches ? 'h6' : 'h6'}
-                    align='center'
-                    style={{ textAlign: 'center', color: '#fff', marginTop: '20px' }}
-                  >
-                    Volunteer Registration Form
-                  </Typography>
-                ) : (
-                  <Typography
-                    component='h6'
-                    variant={matches ? 'h6' : 'h6'}
-                    align='center'
-                    style={{ textAlign: 'center', color: '#fff', marginTop: '20px' }}
-                  >
-                    தன்னார்வ பதிவு படிவம்
-                  </Typography>
-                )}
+                <div className={classes.innerDiv}>
+                  {checked ? (
+                    <Typography
+                      component='h6'
+                      variant={matches ? 'h6' : 'h6'}
+                      align='center'
+                      style={{ textAlign: 'center', color: '#fff', marginTop: '20px' }}
+                    >
+                      Volunteer Registration Form
+                    </Typography>
+                  ) : (
+                    <Typography
+                      component='h6'
+                      variant={matches ? 'h6' : 'h6'}
+                      align='center'
+                      style={{ textAlign: 'center', color: '#fff', marginTop: '20px' }}
+                    >
+                      தன்னார்வ பதிவு படிவம்
+                    </Typography>
+                  )}
 
-                {checked ? (
-                  <Typography
-                    align='center'
-                    sx={{
-                      textAlign: 'center',
-                      color: '#fff',
-                      marginTop: '20px',
-                    }}
-                  >
-                    This registration form serves the purpose of getting information from the
-                    volunteers who are open to helping needy people in and around their locality
-                    with essential things that they are willing to give like Food, Shelter, General
-                    etc. Further, We would like you to tell us your occupational skills (if any)
-                    that may assist in helping the people who are facing issues during these tough
-                    times. As you will be identifying yourself as a volunteer by registering here,
-                    We might contact you if your help is needed. We confirm that your information
-                    will not be shared outside this platform.
-                  </Typography>
-                ) : (
-                  <Typography
-                    align='center'
-                    sx={{
-                      textAlign: 'center',
-                      color: '#fff',
-                      marginTop: '20px',
-                    }}
-                  >
-                    இந்தப் பதிவுப் படிவம், உணவு, தங்குமிடம் போன்றவற்றை மற்றும் அத்தியாவசியப்
-                    பொருட்களைத் தங்கள் பகுதியில் சுற்றியுள்ள மக்களுக்கும் வழங்கி உதவத் தயாராக
-                    இருக்கும் தன்னார்வத் தொண்டர்களிடமிருந்து தங்களது தகவல்களைப் பெறுவதற்கு
-                    உதவுகிறது. மேலும், இந்த கடினமான காலங்களில் பிரச்சனைகளை எதிர்கொள்ளும் மக்களுக்கு
-                    உதவக்கூடிய உங்கள் தொழில் திறன்களை (ஏதேனும் இருந்தால்) எங்களிடம் கூற
-                    விரும்புகிறோம். இங்கே பதிவு செய்வதன் மூலம் நீங்கள் உங்களை ஒரு தன்னார்வத்
-                    தொண்டராக அடையாளம் காண்பீர்கள், உங்கள் உதவி தேவைப்பட்டால் நாங்கள் உங்களைத்
-                    தொடர்பு கொள்ளலாம். இந்த தளத்திற்கு வெளியே உங்கள் தகவல் பகிரப்படாது என்பதை
-                    உறுதிப்படுத்துகிறோம்.
-                  </Typography>
-                )}
+                  {checked ? (
+                    <Typography
+                      align='center'
+                      sx={{
+                        textAlign: 'center',
+                        color: '#fff',
+                        marginTop: '20px',
+                      }}
+                    >
+                      This registration form serves the purpose of getting information from the
+                      volunteers who are open to helping needy people in and around their locality
+                      with essential things that they are willing to give like Food, Shelter,
+                      General etc. Further, We would like you to tell us your occupational skills
+                      (if any) that may assist in helping the people who are facing issues during
+                      these tough times. As you will be identifying yourself as a volunteer by
+                      registering here, We might contact you if your help is needed. We confirm that
+                      your information will not be shared outside this platform.
+                    </Typography>
+                  ) : (
+                    <Typography
+                      align='center'
+                      sx={{
+                        textAlign: 'center',
+                        color: '#fff',
+                        marginTop: '20px',
+                      }}
+                    >
+                      இந்தப் பதிவுப் படிவம், உணவு, தங்குமிடம் போன்றவற்றை மற்றும் அத்தியாவசியப்
+                      பொருட்களைத் தங்கள் பகுதியில் சுற்றியுள்ள மக்களுக்கும் வழங்கி உதவத் தயாராக
+                      இருக்கும் தன்னார்வத் தொண்டர்களிடமிருந்து தங்களது தகவல்களைப் பெறுவதற்கு
+                      உதவுகிறது. மேலும், இந்த கடினமான காலங்களில் பிரச்சனைகளை எதிர்கொள்ளும்
+                      மக்களுக்கு உதவக்கூடிய உங்கள் தொழில் திறன்களை (ஏதேனும் இருந்தால்) எங்களிடம் கூற
+                      விரும்புகிறோம். இங்கே பதிவு செய்வதன் மூலம் நீங்கள் உங்களை ஒரு தன்னார்வத்
+                      தொண்டராக அடையாளம் காண்பீர்கள், உங்கள் உதவி தேவைப்பட்டால் நாங்கள் உங்களைத்
+                      தொடர்பு கொள்ளலாம். இந்த தளத்திற்கு வெளியே உங்கள் தகவல் பகிரப்படாது என்பதை
+                      உறுதிப்படுத்துகிறோம்.
+                    </Typography>
+                  )}
+                </div>
               </Box>
             </Grid>
             <Grid item>
@@ -236,7 +238,7 @@ function VolunteerRegistrationForm({
                   // borderColor: '#85B5E3',
                 }}
               >
-                <Container component='main' maxWidth='xs'>
+                <Container component='main'>
                   <CssBaseline />
                   <Box
                     sx={{
