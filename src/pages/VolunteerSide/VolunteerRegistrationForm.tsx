@@ -1,15 +1,15 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import Provision from '../../interfaces/VolunteerSide/Provision'
 import DropDown from '../../components/DropDown'
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 import { auth } from '../../utils/FirebaseConfig'
+import Language from '../../utils/lang'
 import {
   Button,
   TextField,
   Typography,
   Box,
   CssBaseline,
-  Paper,
   Container,
   Avatar,
   Grid,
@@ -22,7 +22,6 @@ import { Assignment } from '@mui/icons-material'
 import '../../styles/VolunteerRegistrationForm.css'
 import { useMutation } from '@apollo/client'
 import { SignUpDocument } from '../../generated'
-import Volunteer from '../../interfaces/VolunteerSide/Volunteer'
 import PhoneInput from 'react-phone-number-input'
 import { makeStyles } from '@material-ui/styles'
 import { lightBlue } from '@mui/material/colors'
@@ -78,6 +77,7 @@ function VolunteerRegistrationForm({
   const [error, setError] = useState(err)
   const [isOthers, setIsOthers] = useState(false)
   const [otpOpener, setotpOpener] = useState(false)
+  const { checked } = useContext(Language)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [result, setResult] = useState<any>({})
   // eslint-disable-next-line
@@ -165,9 +165,64 @@ function VolunteerRegistrationForm({
           <Grid container direction='row'>
             <Grid item>
               <Box className={classes.text}>
-                <h1> Heading</h1>
-                <p>content</p>
-                {/* ========================Enter content============================= */}
+                {checked ? (
+                  <Typography
+                    component='h6'
+                    variant={matches ? 'h6' : 'h6'}
+                    align='center'
+                    style={{ textAlign: 'center', color: '#fff', marginTop: '20px' }}
+                  >
+                    Volunteer Registration Form
+                  </Typography>
+                ) : (
+                  <Typography
+                    component='h6'
+                    variant={matches ? 'h6' : 'h6'}
+                    align='center'
+                    style={{ textAlign: 'center', color: '#fff', marginTop: '20px' }}
+                  >
+                    தன்னார்வ பதிவு படிவம்
+                  </Typography>
+                )}
+
+                {checked ? (
+                  <Typography
+                    align='center'
+                    sx={{
+                      textAlign: 'center',
+                      color: '#fff',
+                      marginTop: '20px',
+                    }}
+                  >
+                    This registration form serves the purpose of getting information from the
+                    volunteers who are open to helping needy people in and around their locality
+                    with essential things that they are willing to give like Food, Shelter, General
+                    etc. Further, We would like you to tell us your occupational skills (if any)
+                    that may assist in helping the people who are facing issues during these tough
+                    times. As you will be identifying yourself as a volunteer by registering here,
+                    We might contact you if your help is needed. We confirm that your information
+                    will not be shared outside this platform.
+                  </Typography>
+                ) : (
+                  <Typography
+                    align='center'
+                    sx={{
+                      textAlign: 'center',
+                      color: '#fff',
+                      marginTop: '20px',
+                    }}
+                  >
+                    இந்தப் பதிவுப் படிவம், உணவு, தங்குமிடம் போன்றவற்றை மற்றும் அத்தியாவசியப்
+                    பொருட்களைத் தங்கள் பகுதியில் சுற்றியுள்ள மக்களுக்கும் வழங்கி உதவத் தயாராக
+                    இருக்கும் தன்னார்வத் தொண்டர்களிடமிருந்து தங்களது தகவல்களைப் பெறுவதற்கு
+                    உதவுகிறது. மேலும், இந்த கடினமான காலங்களில் பிரச்சனைகளை எதிர்கொள்ளும் மக்களுக்கு
+                    உதவக்கூடிய உங்கள் தொழில் திறன்களை (ஏதேனும் இருந்தால்) எங்களிடம் கூற
+                    விரும்புகிறோம். இங்கே பதிவு செய்வதன் மூலம் நீங்கள் உங்களை ஒரு தன்னார்வத்
+                    தொண்டராக அடையாளம் காண்பீர்கள், உங்கள் உதவி தேவைப்பட்டால் நாங்கள் உங்களைத்
+                    தொடர்பு கொள்ளலாம். இந்த தளத்திற்கு வெளியே உங்கள் தகவல் பகிரப்படாது என்பதை
+                    உறுதிப்படுத்துகிறோம்.
+                  </Typography>
+                )}
               </Box>
             </Grid>
             <Grid item>
@@ -194,14 +249,7 @@ function VolunteerRegistrationForm({
                     <Avatar sx={{ bgcolor: 'primary.main' }}>
                       <Assignment />
                     </Avatar>
-                    <Typography
-                      component='h3'
-                      variant={matches ? 'h5' : 'h4'}
-                      align='center'
-                      style={{ textAlign: 'center', color: '#0288d1' }}
-                    >
-                      Volunteer Registration Form
-                    </Typography>
+
                     <Typography
                       // variant='h6'
                       color='#bdbdbd'
