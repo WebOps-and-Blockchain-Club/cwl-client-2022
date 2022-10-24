@@ -96,6 +96,7 @@ function VolunteerRegistrationForm({
       return
     }
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data } = await signUp({
         variables: {
           volunteerInput: {
@@ -106,17 +107,9 @@ function VolunteerRegistrationForm({
           },
         },
       })
-      console.log(data)
-      // const volunteer: Volunteer = {
-      //   phoneNumber: volunteerPhone,
-      //   username: data?.signUp.username || '',
-      //   tags: JSON.parse(data?.signUp.tags || ''),
-      // }
-
       // eslint-disable-next-line
     } catch (error: any) {
       setError(error.message)
-      console.error(error)
     }
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -130,7 +123,7 @@ function VolunteerRegistrationForm({
     if (volunteerPhone.length === 10) {
       const response = await setUpRecatcha('+91' + volunteerPhone)
       setResult(response)
-      setotpOpener(false)
+      setotpOpener(true)
     }
   }
   const verifyOtp = async (e: { preventDefault: () => void }) => {
@@ -296,63 +289,7 @@ function VolunteerRegistrationForm({
                         }
                         required
                       />
-                      <PhoneInput
-                        defaultCountry='IN'
-                        value={volunteerPhone}
-                        onChange={(e: string) => {
-                          if (e && e.length === 13) {
-                            setVolunteerPhone(e.replace('+91', ''))
-                          }
-                        }}
-                        placeholder='Enter Phone Number'
-                      />
-                      {/* <TextField
-                margin='normal'
-                fullWidth
-                autoFocus
-                id='volunteer-phone'
-                label='Phone'
-                variant='outlined'
-                value={volunteerPhone}
-                onChange={(e) => {
-                  setVolunteerPhone(e.target.value)
-                  setPhoneNumberValidate(true)
-                  e.preventDefault()
-                }}
-                error={volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)}
-                helperText={
-                  volunteerPhone.length !== 0 && !/^\d{10}$/.test(volunteerPhone)
-                    ? 'Please enter a valid phone number'
-                    : ''
-                }
-                required
-              /> */}
-                      <div>
-                        <div className='otp-button'>
-                          <Button variant='contained' onClick={handleOtp} color='primary'>
-                            Get OTP
-                          </Button>
-                          <div id='recaptcha-container'></div>
-                        </div>
-                        {otpOpener ? (
-                          <div className='otp-button'>
-                            <TextField
-                              id='otp'
-                              fullWidth
-                              margin='normal'
-                              label='Enter your OTP '
-                              variant='outlined'
-                              value={otp}
-                              onChange={(e: { target: { value: string } }) => {
-                                setOtp(e.target.value)
-                              }}
-                            />
-                            <Button variant='contained' onClick={verifyOtp} color='primary'>
-                              Verify OTP
-                            </Button>
-                          </div>
-                        ) : null}
-                      </div>
+
                       {validate ? (
                         <div>
                           <DropDown
@@ -405,14 +342,54 @@ function VolunteerRegistrationForm({
                               type='submit'
                               size='large'
                               variant='contained'
-                              disabled={!(volunteerName && volunteerPhone && volunteerPassword)}
+                              disabled={!(volunteerName && volunteerPhone)}
                             >
                               Submit
                             </Button>
                             <div style={{ color: 'red' }}>{error}</div>
                           </Box>
                         </div>
-                      ) : null}
+                      ) : (
+                        <div>
+                          {!otpOpener ? (
+                            <div>
+                              <PhoneInput
+                                defaultCountry='IN'
+                                value={volunteerPhone}
+                                onChange={(e: string) => {
+                                  if (e && e.length === 13) {
+                                    setVolunteerPhone(e.replace('+91', ''))
+                                  }
+                                }}
+                                placeholder='Enter Phone Number'
+                              />
+                              <div className='otp-button'>
+                                <Button variant='contained' onClick={handleOtp} color='primary'>
+                                  Get OTP
+                                </Button>
+                                <div id='recaptcha-container'></div>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className='otp-button'>
+                              <TextField
+                                id='otp'
+                                fullWidth
+                                margin='normal'
+                                label='Enter your OTP '
+                                variant='outlined'
+                                value={otp}
+                                onChange={(e: { target: { value: string } }) => {
+                                  setOtp(e.target.value)
+                                }}
+                              />
+                              <Button variant='contained' onClick={verifyOtp} color='primary'>
+                                Verify OTP
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </Box>
                   </Box>
                 </Container>
