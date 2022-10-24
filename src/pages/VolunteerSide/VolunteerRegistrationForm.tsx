@@ -153,69 +153,192 @@ function VolunteerRegistrationForm({
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            marginTop: matches ? 0 : 7,
           }}
         >
-          <Grid container direction='row'>
+          <Grid container direction='row' justifyContent='center'>
             <Grid item>
-              <Box className={classes.text}>
+              <Box
+                className='{classes.text} info'
+                sx={{
+                  width: matches ? '340px' : '300px',
+                  marginTop: '15px',
+                  marginLeft: matches ? 0 : '15px',
+                  marginBottom: matches ? 0 : '15px',
+                  background: '#01579b',
+                  // borderLeft: '15px',
+                  borderRadius: matches ? '15px 15px 0px 0px' : '15px 15px 15px 15px',
+                  boxShadow: 10,
+                }}
+              >
                 <div className={classes.innerDiv}>
-                  {checked ? (
-                    <Typography
-                      component='h6'
-                      variant={matches ? 'h6' : 'h6'}
-                      align='center'
-                      style={{ textAlign: 'center', color: '#fff', marginTop: '20px' }}
-                    >
-                      Volunteer Registration Form
-                    </Typography>
+                  {validate ? (
+                    <div>
+                      {checked ? (
+                        <Box
+                          // sx={{ height: '400px' }}
+                          display='flex'
+                          flexDirection='column'
+                          // justifyContent='space-between'
+                        >
+                          <Typography
+                            align='center'
+                            sx={{
+                              textAlign: 'center',
+                              color: '#ffffff',
+                              marginTop: '20px',
+                              fontSize: '17px',
+                              paddingTop: matches ? 0 : '50px',
+                            }}
+                          >
+                            What kind of volunteering are you willing to provide?
+                          </Typography>
+                          <Typography
+                            align='center'
+                            sx={{
+                              fontSize: '17px',
+                              textAlign: 'center',
+                              color: '#fff',
+                              marginTop: matches ? '30px' : '220px',
+                              marginBottom: matches ? '15px' : '50px',
+                            }}
+                          >
+                            We will contact you based on the skillset needed.
+                          </Typography>
+                        </Box>
+                      ) : (
+                        <Box
+                          // sx={{ height: '400px' }}
+                          display='flex'
+                          flexDirection='column'
+                          // justifyContent='space-between'
+                        >
+                          {/*Start TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
+                          <Typography
+                            align='center'
+                            sx={{
+                              textAlign: 'center',
+                              color: '#ffffff',
+                              marginTop: '20px',
+                              fontSize: '17px',
+                              paddingTop: matches ? 0 : '50px',
+                            }}
+                          >
+                            What kind of volunteering are you willing to provide?
+                          </Typography>
+                          {/*Change TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
+                          <Typography
+                            align='center'
+                            sx={{
+                              fontSize: '17px',
+                              textAlign: 'center',
+                              color: '#fff',
+                              marginTop: matches ? '30px' : '220px',
+                              marginBottom: matches ? '15px' : '50px',
+                            }}
+                          >
+                            We will contact you based on the skillset needed.
+                          </Typography>
+                          {/*End TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
+                        </Box>
+                      )}
+                    </div>
                   ) : (
-                    <Typography
-                      component='h6'
-                      variant={matches ? 'h6' : 'h6'}
-                      align='center'
-                      style={{ textAlign: 'center', color: '#fff', marginTop: '20px' }}
-                    >
-                      தன்னார்வ பதிவு படிவம்
-                    </Typography>
-                  )}
-
-                  {checked ? (
-                    <Typography
-                      align='center'
-                      sx={{
-                        textAlign: 'center',
-                        color: '#fff',
-                        marginTop: '20px',
-                      }}
-                    >
-                      This registration form serves the purpose of getting information from the
-                      volunteers who are open to helping needy people in and around their locality
-                      with essential things that they are willing to give like Food, Shelter,
-                      General etc. Further, We would like you to tell us your occupational skills
-                      (if any) that may assist in helping the people who are facing issues during
-                      these tough times. As you will be identifying yourself as a volunteer by
-                      registering here, We might contact you if your help is needed. We confirm that
-                      your information will not be shared outside this platform.
-                    </Typography>
-                  ) : (
-                    <Typography
-                      align='center'
-                      sx={{
-                        textAlign: 'center',
-                        color: '#fff',
-                        marginTop: '20px',
-                      }}
-                    >
-                      இந்தப் பதிவுப் படிவம், உணவு, தங்குமிடம் போன்றவற்றை மற்றும் அத்தியாவசியப்
-                      பொருட்களைத் தங்கள் பகுதியில் சுற்றியுள்ள மக்களுக்கும் வழங்கி உதவத் தயாராக
-                      இருக்கும் தன்னார்வத் தொண்டர்களிடமிருந்து தங்களது தகவல்களைப் பெறுவதற்கு
-                      உதவுகிறது. மேலும், இந்த கடினமான காலங்களில் பிரச்சனைகளை எதிர்கொள்ளும்
-                      மக்களுக்கு உதவக்கூடிய உங்கள் தொழில் திறன்களை (ஏதேனும் இருந்தால்) எங்களிடம் கூற
-                      விரும்புகிறோம். இங்கே பதிவு செய்வதன் மூலம் நீங்கள் உங்களை ஒரு தன்னார்வத்
-                      தொண்டராக அடையாளம் காண்பீர்கள், உங்கள் உதவி தேவைப்பட்டால் நாங்கள் உங்களைத்
-                      தொடர்பு கொள்ளலாம். இந்த தளத்திற்கு வெளியே உங்கள் தகவல் பகிரப்படாது என்பதை
-                      உறுதிப்படுத்துகிறோம்.
-                    </Typography>
+                    <div>
+                      {checked ? (
+                        <Box
+                          // sx={{ height: '400px' }}
+                          display='flex'
+                          flexDirection='column'
+                          // justifyContent='space-between'
+                        >
+                          <Typography
+                            align='center'
+                            sx={{
+                              textAlign: 'center',
+                              color: '#ffffff',
+                              marginTop: '20px',
+                              fontSize: '17px',
+                            }}
+                          >
+                            Please register if you want to <br />
+                            volunteer in helping people
+                            <br /> who are facing issues during emergencies
+                          </Typography>
+                          <Typography
+                            align='center'
+                            sx={{
+                              fontSize: '20px',
+                              textAlign: 'center',
+                              color: '#fff',
+                              marginTop: '120px',
+                            }}
+                          >
+                            GCC will contact you
+                            <br /> if your help is needed.
+                          </Typography>
+                          <Typography
+                            align='center'
+                            sx={{
+                              fontSize: '15px',
+                              textAlign: 'center',
+                              color: '#29b6f6',
+                              marginTop: '70px',
+                            }}
+                          >
+                            your information will <b>not</b> be shared outside this platform
+                          </Typography>
+                        </Box>
+                      ) : (
+                        <Box
+                          // sx={{ height: '400px' }}
+                          display='flex'
+                          flexDirection='column'
+                          // justifyContent='space-between'
+                        >
+                          {/*Start TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
+                          <Typography
+                            align='center'
+                            sx={{
+                              textAlign: 'center',
+                              color: '#ffffff',
+                              marginTop: '20px',
+                              fontSize: '17px',
+                            }}
+                          >
+                            Please register if you want to <br />
+                            volunteer in helping people
+                            <br /> who are facing issues during emergencies
+                            {/*Change TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
+                          </Typography>
+                          <Typography
+                            align='center'
+                            sx={{
+                              fontSize: '20px',
+                              textAlign: 'center',
+                              color: '#fff',
+                              marginTop: '120px',
+                            }}
+                          >
+                            GCC will contact you
+                            <br /> if your help is needed.
+                            {/*Change TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
+                          </Typography>
+                          <Typography
+                            align='center'
+                            sx={{
+                              fontSize: '15px',
+                              textAlign: 'center',
+                              color: '#29b6f6',
+                              marginTop: '70px',
+                            }}
+                          >
+                            your information will <b>not</b> be shared outside this platform
+                          </Typography>
+                          {/* End  TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
+                        </Box>
+                      )}
+                    </div>
                   )}
                 </div>
               </Box>
@@ -226,7 +349,9 @@ function VolunteerRegistrationForm({
                   backgroundColor: '#ffffff',
                   borderRadius: 4,
                   margin: 2,
-                  padding: 2,
+                  paddingTop: 2,
+                  paddingBottom: 3,
+
                   // border: 3,
                   // borderColor: '#85B5E3',
                 }}
@@ -241,10 +366,26 @@ function VolunteerRegistrationForm({
                       alignItems: 'center',
                     }}
                   >
+                    {checked ? (
+                      <Typography
+                        variant={matches ? 'h6' : 'h5'}
+                        align='center'
+                        style={{ textAlign: 'center', color: '#0288d1', marginTop: '20px' }}
+                      >
+                        Volunteer Registration Form
+                      </Typography>
+                    ) : (
+                      <Typography
+                        variant={matches ? 'h6' : 'h5'}
+                        align='center'
+                        style={{ textAlign: 'center', color: '#0288d1', marginTop: '20px' }}
+                      >
+                        தன்னார்வ பதிவு படிவம்
+                      </Typography>
+                    )}
                     <Avatar sx={{ bgcolor: 'primary.main' }}>
                       <Assignment />
                     </Avatar>
-
                     <Typography
                       // variant='h6'
                       color='#bdbdbd'
@@ -253,7 +394,6 @@ function VolunteerRegistrationForm({
                     >
                       Fill the form to be a part of the mission
                     </Typography>
-
                     <Box
                       component='form'
                       // eslint-disable-next-line
@@ -264,34 +404,8 @@ function VolunteerRegistrationForm({
                       noValidate
                       sx={{ mt: 3 }}
                     >
-                      <TextField
-                        margin='normal'
-                        fullWidth
-                        autoFocus
-                        // style={{ paddingBottom: '20px' }}
-                        id='volunteer-name'
-                        label='Name'
-                        variant='outlined'
-                        value={volunteerName}
-                        onChange={(e) => {
-                          setVolunteerName(e.target.value)
-                          e.preventDefault()
-                        }}
-                        error={
-                          volunteerName.length !== 0 &&
-                          !/^[A-Z]?[a-z]*(\s[A-Z])?[a-z]*$/.test(volunteerName)
-                        }
-                        helperText={
-                          volunteerName.length !== 0 &&
-                          !/^[A-Z]?[a-z]*(\s[A-Z])?[a-z]*$/.test(volunteerName)
-                            ? 'Please enter a valid name'
-                            : ''
-                        }
-                        required
-                      />
-
                       {validate ? (
-                        <div>
+                        <Box width='310px'>
                           <DropDown
                             isOthers={null}
                             setIsOthers={null}
@@ -301,6 +415,7 @@ function VolunteerRegistrationForm({
                               Tags: 'Help',
                               names: ['Food', 'Shelter', 'Water', 'Medical Help', 'Transport'],
                             }}
+                            // sx={{ width: '310px' }}
                           />
                           <DropDown
                             isOthers={isOthers}
@@ -317,6 +432,7 @@ function VolunteerRegistrationForm({
                                 'Others',
                               ],
                             }}
+                            // sx={{ width: '310px' }}
                           />
                           {isOthers ? (
                             <TextField
@@ -332,28 +448,51 @@ function VolunteerRegistrationForm({
                                 }
                                 e.preventDefault()
                               }}
+                              sx={{ width: '310px' }}
                             />
                           ) : null}
                           <Box
                             textAlign='center'
                             style={{ paddingTop: '30px', paddingBottom: '20px' }}
                           >
-                            <Button
-                              type='submit'
-                              size='large'
-                              variant='contained'
-                              disabled={!(volunteerName && volunteerPhone)}
-                            >
+                            <Button type='submit' size='large' variant='contained'>
                               Submit
                             </Button>
                             <div style={{ color: 'red' }}>{error}</div>
                           </Box>
-                        </div>
+                        </Box>
                       ) : (
                         <div>
+                          <TextField
+                            margin='normal'
+                            fullWidth
+                            autoFocus
+                            // style={{ paddingBottom: '20px' }}
+                            id='volunteer-name'
+                            label='Name'
+                            variant='outlined'
+                            value={volunteerName}
+                            onChange={(e) => {
+                              setVolunteerName(e.target.value)
+                              e.preventDefault()
+                            }}
+                            error={
+                              volunteerName.length !== 0 &&
+                              !/^[A-Z]?[a-z]*(\s[A-Z])?[a-z]*$/.test(volunteerName)
+                            }
+                            helperText={
+                              volunteerName.length !== 0 &&
+                              !/^[A-Z]?[a-z]*(\s[A-Z])?[a-z]*$/.test(volunteerName)
+                                ? 'Please enter a valid name'
+                                : ''
+                            }
+                            sx={{ width: '310px' }}
+                            required
+                          />
+
                           {!otpOpener ? (
                             <div>
-                              <PhoneInput
+                              {/* <PhoneInput
                                 defaultCountry='IN'
                                 value={volunteerPhone}
                                 onChange={(e: string) => {
@@ -362,11 +501,34 @@ function VolunteerRegistrationForm({
                                   }
                                 }}
                                 placeholder='Enter Phone Number'
+                              /> */}
+                              <TextField
+                                margin='normal'
+                                fullWidth
+                                autoFocus
+                                // style={{ paddingBottom: '20px' }}
+                                id='volunteer-phone'
+                                label='Phone'
+                                variant='outlined'
+                                value={volunteerPhone}
+                                onChange={(e) => {
+                                  setVolunteerPhone(e.target.value)
+                                  e.preventDefault()
+                                }}
+                                sx={{ width: '310px' }}
+                                placeholder='Enter Phone Number'
                               />
                               <div className='otp-button'>
-                                <Button variant='contained' onClick={handleOtp} color='primary'>
+                                <Button
+                                  variant='contained'
+                                  onClick={handleOtp}
+                                  color='primary'
+                                  disabled={!(volunteerName && volunteerPhone)}
+                                  sx={{ marginBottom: '2px' }}
+                                >
                                   Get OTP
                                 </Button>
+                                <br />
                                 <div id='recaptcha-container'></div>
                               </div>
                             </div>
@@ -382,10 +544,13 @@ function VolunteerRegistrationForm({
                                 onChange={(e: { target: { value: string } }) => {
                                   setOtp(e.target.value)
                                 }}
+                                sx={{ width: '310px' }}
                               />
-                              <Button variant='contained' onClick={verifyOtp} color='primary'>
-                                Verify OTP
-                              </Button>
+                              <div className='otp-button'>
+                                <Button variant='contained' onClick={verifyOtp} color='primary'>
+                                  Verify OTP
+                                </Button>
+                              </div>
                             </div>
                           )}
                         </div>
