@@ -1,6 +1,5 @@
-import React from 'react'
 import { TextField, Button } from '@mui/material'
-import '../../styles/ComplaintPortal/cp_style.css'
+import '../../styles/Complaint.css'
 
 // const [error, setError] = useState('')
 // const handleError = (err: boolean) => {}

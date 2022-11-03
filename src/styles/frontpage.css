@@ -1,3 +1,7 @@
+* {
+  font-family: 'Roboto', sans-serif !important;
+}
+
 .container-pic {
   background-image: url('https://images.newindianexpress.com/uploads/user/imagelibrary/2020/6/30/w1200X800/floods.jpg');
   width: 504px;

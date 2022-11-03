@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import Provision from '../../interfaces/VolunteerSide/Provision'
-import DropDown from '../../components/DropDown'
+import Provision from '../../interfaces/Provision'
+import DropDown from '../../components/General/DropDown'
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 import { auth } from '../../utils/FirebaseConfig'
 import {

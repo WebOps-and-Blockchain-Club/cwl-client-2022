@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import { styled } from '@mui/material/styles'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -54,8 +54,8 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 }
 
 export default function Modal_(props: {
-  open: any
-  setOpen: any
+  open: boolean
+  setOpen: Dispatch<SetStateAction<boolean>>
   text: { heading: string; body: string }
 }) {
   const { open, setOpen, text } = props

@@ -1,36 +1,20 @@
-import * as React from 'react'
+import { useContext, ChangeEvent } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
-import Language from '../utils/lang'
+import Language from '../../utils/lang'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import Menu from '@mui/material/Menu'
 import { Grid } from '@mui/material'
 import Switch from '@mui/material/Switch'
 import Stack from '@mui/material/Stack'
-import { Link, useLocation } from 'wouter'
+import { Link } from 'wouter'
 
 const NavBar = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-  const [, setLocation] = useLocation()
-  const { checked, setChecked } = React.useContext(Language)
-
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleClose = () => {
-    setAnchorEl(null)
-    setLocation('/volunteer/register')
-  }
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const { checked, setChecked } = useContext(Language)
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked)
-    console.log(event.target.checked)
   }
-
   return (
     <Box>
       <AppBar position='static'>
@@ -51,7 +35,7 @@ const NavBar = () => {
                     sx={{ mr: 1 }}
                   >
                     <img
-                      src={require('../images/cwl_eng.png')}
+                      src={require('../../images/cwl_eng.png')}
                       alt='CWL'
                       width='100px'
                       height='50px'
@@ -66,7 +50,7 @@ const NavBar = () => {
                     sx={{ mr: 1 }}
                   >
                     <img
-                      src={require('../images/cwl_tamil.png')}
+                      src={require('../../images/cwl_tamil.png')}
                       alt='CWL'
                       width='100px'
                       height='50px'
@@ -93,10 +77,10 @@ const NavBar = () => {
                 </Grid>
                 <Grid item>
                   <Box sx={{ backgroundColor: '#00897b', marginTop: '5px', marginBottom: '5px' }}>
-                    <Link to='/map'>
+                    <Link to='/map' onClick={() => window.location.reload()}>
                       <IconButton size='large' color='inherit' aria-label='icon'>
                         <img
-                          src={require('../images/mapIcon.png')}
+                          src={require('../../images/mapIcon.png')}
                           alt='CWL'
                           width='45px'
                           height='30px'
@@ -105,7 +89,7 @@ const NavBar = () => {
                     </Link>
                   </Box>
                 </Grid>
-                <Grid item>
+                {/* <Grid item>
                   <div>
                     <IconButton
                       size='large'
@@ -172,7 +156,8 @@ const NavBar = () => {
                       )}
                     </Menu>
                   </div>
-                </Grid>
+                </Grid> */}
+                {/* This is not required as of now (Report and Compliant) */}
               </Grid>
             </Grid>
           </Grid>

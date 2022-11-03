@@ -14,8 +14,8 @@ interface ContextProps {
 }
 const Data: ContextProps = {
   coord: {
-    lat: 13.0827,
-    lng: 80.2707,
+    lat: 0,
+    lng: 0,
   },
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setCoord: () => {},

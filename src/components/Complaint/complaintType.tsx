@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react'
 import { Grid, Button, Typography } from '@mui/material'
-import '../../styles/ComplaintPortal/cp_style.css'
+import '../../styles/Complaint.css'
 
 const ComplaintType = ({
   complaints,

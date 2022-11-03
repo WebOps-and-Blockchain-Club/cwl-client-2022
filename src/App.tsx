@@ -7,10 +7,10 @@ import VolunteerLogin from './pages/VolunteerSide/VolunteerLogin'
 import Admin from './pages/Admin'
 import useCheckUser from './hooks/useCheckUser'
 import User from './interfaces/User'
-import NavBar from '../src/components/NavBar'
 import Data from './utils/Context'
+import NavBar from './components/General/NavBar'
 import Language from './utils/lang'
-import Home from './pages/Home'
+import Map from './components/HomePage/Map'
 import ComplaintPortal from './pages/ComplaintPortal/complaintPortal'
 import FrontPage from './pages/FrontPage/FrontPage'
 import './styles/frontpage.css'
@@ -23,7 +23,7 @@ const client = new ApolloClient({
 
 function App() {
   const user: User | null = useCheckUser()
-  const [coord, setCoord] = useState({ lat: 13.0827, lng: 80.2707 })
+  const [coord, setCoord] = useState({ lat: 0, lng: 0 })
   const [checked, setChecked] = useState(true)
 
   return (
@@ -34,12 +34,11 @@ function App() {
           <Router>
             <Switch>
               <Route
-                // exact
                 path='/admin/dashboard'
                 component={() => (!user ? <Redirect to='/admin/login' /> : <Admin />)}
               />
               <Route path='/' component={FrontPage} />
-              <Route path='/map' component={Home} />
+              <Route path='/map' component={Map} />
               <Route path='/complaint' component={ComplaintPortal} />
               <Route
                 // exact

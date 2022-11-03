@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Volunteer from '../interfaces/VolunteerSide/Volunteer'
+import Volunteer from '../interfaces/Volunteer'
 
 interface Response {
   data: Volunteer[] | null
