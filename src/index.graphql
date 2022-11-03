@@ -11,6 +11,7 @@ query getIssues {
 query login($loginInput: LoginInput!) {
   login(LoginInput: $loginInput) {
     success
+    token
   }
 }
 
