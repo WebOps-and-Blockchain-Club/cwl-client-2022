@@ -1,4 +1,3 @@
-import React from 'react'
 import ComplaintTable from './ComplaintTable'
 import { useQuery } from '@apollo/client'
 import { GetIssuesDocument } from '../../generated'

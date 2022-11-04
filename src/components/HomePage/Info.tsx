@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import Language from '../utils/lang'
+import Language from '../../utils/lang'
 import { Card, CardContent, Typography, Grid } from '@mui/material'
 import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles(() => ({

@@ -1,4 +1,3 @@
-import React from 'react'
 import VolunteerTable from './VolunteerTable'
 import { useQuery } from '@apollo/client'
 import { GetVolunteersDocument } from '../../generated'

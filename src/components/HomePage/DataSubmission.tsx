@@ -1,14 +1,14 @@
 import { TextField, Typography, Button, Slider, Grid, Box, Tab } from '@mui/material'
 
 import { TabContext, TabList, TabPanel } from '@mui/lab'
-import { useEffect, useState, useContext } from 'react'
-import Data from '../utils/Context'
-import Language from '../utils/lang'
+import { useEffect, useState, useContext, SyntheticEvent } from 'react'
+import Data from '../../utils/Context'
+import Language from '../../utils/lang'
 import { AddAPhoto } from '@mui/icons-material'
-import '../styles/DataSubmission.css'
+import '../../styles/DataSubmission.css'
 import { useMutation, useQuery } from '@apollo/client'
-import { GetS3UrlDocument, PostWaterDataDocument } from '../generated'
-import Modal_ from '../components/Modal'
+import { GetS3UrlDocument, PostWaterDataDocument } from '../../generated'
+import Modal_ from '../General/Modal'
 
 const DataSubmission = (): JSX.Element => {
   const { coord, setCoord } = useContext(Data)
@@ -16,7 +16,7 @@ const DataSubmission = (): JSX.Element => {
   const [depth, setDepth] = useState(0)
   const [imageURL, setImageURL] = useState('')
   const { data } = useQuery(GetS3UrlDocument)
-  const [error, setError] = checked ? useState('Enter Water level') : useState('நீர்மடட்டம் தேவை')
+  const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
   const [text, setText] = useState({
     heading: 'Location Required',
@@ -44,10 +44,10 @@ const DataSubmission = (): JSX.Element => {
       })
     }
   }, [])
-
   // eslint-disable-next-line
   const handleImageUpload = async (file: any) => {
     const s3URL = data?.getS3URL
+    console.log(file.size)
     await fetch(s3URL || '', {
       method: 'PUT',
       headers: {
@@ -55,51 +55,68 @@ const DataSubmission = (): JSX.Element => {
       },
       body: file,
     })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res)
+      .then((res: { url: string }) => {
+        console.log(res.url === s3URL)
+        setImageURL((s3URL || '').split('?')[0])
       })
+
       .catch((e) => console.log(e))
-    setImageURL((s3URL || '').split('?')[0])
   }
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue)
   }
 
   // eslint-disable-next-line
-  const handleSubmit = async (e: any) => {
-    if (coord.lat === 13.0827 && coord.lng === 80.2707) {
+  const handleSubmit = async () => {
+    if (error !== '') {
+      setText({
+        heading: 'Data Submitted',
+        body: error,
+      })
+      setOpen(true)
+    } else if (depth === 0) {
+      setText({
+        heading: 'Data Submitted',
+        body: checked ? 'Enter a valid Water level' : 'நீர்மடட்டம் தேவை',
+      })
       setOpen(true)
     } else {
-      if (navigator.geolocation) {
-        navigator.geolocation.watchPosition(function (position) {
-          setCoord({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          })
-        })
-        setOpen(false)
-      }
-
-      try {
-        await postWaterData({
-          variables: {
-            waterDataInput: {
-              location: JSON.stringify(coord),
-              image: imageURL,
-              depth,
-            },
-          },
-        })
+      if (coord.lat === 0 && coord.lng === 0) {
         setText({
-          heading: 'Data Submitted',
-          body: `Water level in the given area is updated as ${depth} cm. See the map to see your data.`,
+          heading: 'Location Required',
+          body: 'Water level data submission requires location access',
         })
         setOpen(true)
-        // window.location.reload()
-      } catch (error) {
-        console.error(error)
+      } else {
+        if (navigator.geolocation) {
+          navigator.geolocation.watchPosition(function (position) {
+            setCoord({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            })
+          })
+        }
+
+        try {
+          await postWaterData({
+            variables: {
+              waterDataInput: {
+                location: JSON.stringify(coord),
+                image: imageURL,
+                depth,
+              },
+            },
+          })
+          setText({
+            heading: 'Data Submitted',
+            body: `Water level in the given area is updated as ${depth} cm. See the map to see your data.`,
+          })
+          setOpen(true)
+          window.location.reload()
+        } catch (error) {
+          console.error(error)
+        }
       }
     }
   }
@@ -109,29 +126,16 @@ const DataSubmission = (): JSX.Element => {
       <Grid container direction='column' className='waterarea' spacing='20' item>
         <Grid item>
           <div className='title'>
-            {checked ? (
-              <Typography
-                variant='h3'
-                sx={{
-                  fontWeight: 'bold',
-                  justifyContent: 'center',
-                  fontSize: '2em',
-                }}
-              >
-                Water in My Area
-              </Typography>
-            ) : (
-              <Typography
-                variant='h4'
-                sx={{
-                  fontWeight: 'bold',
-                  justifyContent: 'center',
-                  fontSize: '1.3em',
-                }}
-              >
-                எனது பகுதியில் நீர்மட்டம்
-              </Typography>
-            )}
+            <Typography
+              variant='h3'
+              sx={{
+                fontWeight: 'bold',
+                justifyContent: 'center',
+                fontSize: '2em',
+              }}
+            >
+              {checked ? 'Water in My Area' : 'எனது பகுதியில் நீர்மட்டம்'}
+            </Typography>
           </div>
           <div className='input'>
             <TextField
@@ -139,22 +143,15 @@ const DataSubmission = (): JSX.Element => {
               placeholder='cm'
               value={depth}
               variant='outlined'
-              // eslint-disable-next-line
-              onChange={(e: { target: { value: any } }) => {
-                if (parseFloat(e.target.value) == 0) {
-                  setError('Enter Water level')
-                } else if (parseFloat(e.target.value) > 200) {
-                  setError('Water Level should be less than 200cm')
-                } else if (!isNaN(parseFloat(e.target.value))) {
-                  setDepth(parseFloat(e.target.value))
-                  if (
-                    error === 'Water Level should be less than 200cm' ||
-                    error === 'Enter Water level'
-                  ) {
-                    setError('')
-                  }
-                } else {
+              onChange={(e: { target: { value: string } }) => {
+                const Depth = parseInt(e.target.value)
+                if (isNaN(Depth) && depth >= 0 && depth <= 9) {
                   setDepth(0)
+                } else if (Depth === 0 || Depth > 200) {
+                  setError(checked ? 'Enter a valid Water level' : 'நீர்மடட்டம் தேவை')
+                } else {
+                  setDepth(Depth)
+                  setError('')
                 }
               }}
               sx={{ boxShadow: 15, borderRadius: 5, outline: 'none' }}
@@ -189,15 +186,9 @@ const DataSubmission = (): JSX.Element => {
                     valueLabelFormat={() => {
                       return (
                         <div style={{ textAlign: 'center' }}>
-                          {checked ? (
-                            <p className='pulsatingDot' style={{ color: colour }}>
-                              Water Level
-                            </p>
-                          ) : (
-                            <p className='pulsatingDot' style={{ color: colour }}>
-                              நீர் மட்டம்
-                            </p>
-                          )}
+                          <p className='pulsatingDot' style={{ color: colour }}>
+                            {checked ? 'Water Level' : 'நீர் மட்டம்'}
+                          </p>
                         </div>
                       )
                     }}
@@ -213,7 +204,12 @@ const DataSubmission = (): JSX.Element => {
                     }}
                     onChange={(e, depth) => {
                       e.preventDefault()
-                      setDepth(depth as number)
+                      if (depth === 0) {
+                        setError(checked ? 'Enter a valid Water level' : 'நீர்மடட்டம் தேவை')
+                      } else {
+                        setDepth(depth as number)
+                        setError('')
+                      }
                       if (depth > 100) {
                         setColor('#d00000')
                       } else if (depth > 55) {

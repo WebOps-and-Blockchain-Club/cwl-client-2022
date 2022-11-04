@@ -1,6 +1,5 @@
 import { TextField, Button } from '@mui/material'
-import '../../styles/ComplaintPortal/cp_style.css'
-
+import '../../styles/Complaint.css'
 const Address = ({
   area,
   locality,

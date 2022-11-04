@@ -1,7 +1,6 @@
-import React from 'react'
 import { TextField, Button } from '@mui/material'
 import { PhotoCamera } from '@mui/icons-material'
-import '../../styles/ComplaintPortal/cp_style.css'
+import '../../styles/Complaint.css'
 
 const ComplaintDetails = ({
   complaint,
@@ -82,7 +81,7 @@ const ComplaintDetails = ({
             <img src={imageURL} alt='image' width={'auto'} height={'100px'} />
           </div>
         )}
-      </div>{' '}
+      </div>
       <div className='navButtons'>
         <Button
           disabled={activeStep === 0}
