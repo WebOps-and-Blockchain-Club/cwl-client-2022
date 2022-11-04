@@ -100,6 +100,7 @@ export type Volunteer = {
 };
 
 export type VolunteerInput = {
+  password: Scalars['String'];
   phoneNumber: Scalars['String'];
   tags: Scalars['String'];
   username: Scalars['String'];

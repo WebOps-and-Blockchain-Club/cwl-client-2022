@@ -81,12 +81,6 @@ const DataSubmission = (): JSX.Element => {
         body: checked ? 'Enter a valid Water level' : 'நீர்மடட்டம் தேவை',
       })
       setOpen(true)
-    } else if (imageURL === '') {
-      setText({
-        heading: 'Image',
-        body: checked ? 'Upload an Image' : 'படத்தை பதிவேற்றுக',
-      })
-      setOpen(true)
     } else {
       if (coord.lat === 0 && coord.lng === 0) {
         setText({
