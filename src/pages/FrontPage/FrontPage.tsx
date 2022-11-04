@@ -76,7 +76,7 @@ const FrontPage = () => {
               <p className='sec-row'>CFI 2022 © அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை</p>
             )}
             {checked ? (
-              <p className='sec-row'>DESIGNED BY WEBOPS & BLOCKCHAIN CLUB | CENTER FOR INOVATION</p>
+              <p className='sec-row'>DESIGNED BY WEBOPS & BLOCKCHAIN CLUB | CENTRE FOR INNOVATION</p>
             ) : (
               <p className='sec-row'>
                 வெப் ஆபரேஷன்ஸ் & பிளாக்செயின் கிளப் மூலம் வடிவமைக்கப்பட்டது | புதுமைக்கான மையம்
