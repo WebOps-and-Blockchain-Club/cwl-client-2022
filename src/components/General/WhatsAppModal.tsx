@@ -24,7 +24,7 @@ function WhatsAppModal(props: {
     <div>
       <Modal
         open={showWhatsAppInstructionsModal}
-        onClose={(e: any) => {
+        onClose={(e: { preventDefault: () => void }) => {
           e.preventDefault()
           setShowWhatsAppInstructionsModal(false)
         }}
