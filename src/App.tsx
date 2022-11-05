@@ -14,6 +14,7 @@ import Map from './components/HomePage/Map'
 import ComplaintPortal from './pages/ComplaintPortal/complaintPortal'
 import FrontPage from './pages/FrontPage/FrontPage'
 import './styles/frontpage.css'
+import WhatsAppModal from './components/General/WhatsAppModal'
 const BACKEND_URL: string = process.env.REACT_APP_BACKEND_URL || ''
 
 const client = new ApolloClient({
@@ -24,13 +25,14 @@ const client = new ApolloClient({
 function App() {
   const user: User | null = useCheckUser()
   const [coord, setCoord] = useState({ lat: 0, lng: 0 })
-  const [checked, setChecked] = useState(true)
+  const [checked, setChecked] = useState<boolean>(true)
+  const [showWhatsAppInstructionsModal, setShowWhatsAppInstructionsModal] = useState<boolean>(false)
 
   return (
     <ApolloProvider client={client}>
       <Data.Provider value={{ coord, setCoord }}>
         <Language.Provider value={{ checked, setChecked }}>
-          <NavBar />
+          <NavBar props={{ showWhatsAppInstructionsModal, setShowWhatsAppInstructionsModal }} />
           <Router>
             <Switch>
               <Route
@@ -53,6 +55,9 @@ function App() {
               <Route path='/:rest*' component={() => <Redirect to='/admin/login' />} />
             </Switch>
           </Router>
+          <WhatsAppModal
+            props={{ showWhatsAppInstructionsModal, setShowWhatsAppInstructionsModal }}
+          />
         </Language.Provider>
       </Data.Provider>
     </ApolloProvider>

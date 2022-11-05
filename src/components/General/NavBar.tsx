@@ -1,17 +1,17 @@
-import { useContext, ChangeEvent } from 'react'
-import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
+import { useContext, ChangeEvent, useState } from 'react'
+import { AppBar, Box, Toolbar, Typography, IconButton, Grid, Switch, Stack } from '@mui/material'
 import Language from '../../utils/lang'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import { Grid } from '@mui/material'
-import Switch from '@mui/material/Switch'
-import Stack from '@mui/material/Stack'
 import { Link } from 'wouter'
+import { WhatsApp } from '@mui/icons-material'
 
-const NavBar = () => {
+const NavBar = (props: {
+  props: {
+    showWhatsAppInstructionsModal: boolean
+    setShowWhatsAppInstructionsModal: React.Dispatch<React.SetStateAction<boolean>>
+  }
+}) => {
   const { checked, setChecked } = useContext(Language)
+  const { showWhatsAppInstructionsModal, setShowWhatsAppInstructionsModal } = props.props
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked)
   }
@@ -63,6 +63,16 @@ const NavBar = () => {
               <Grid container direction='row' sx={{ alignItems: 'center' }}>
                 <Grid item>
                   <Stack direction='row' sx={{ marginRight: 1 }} alignItems='center'>
+                    <WhatsApp // eslint-disable-next-line
+                      onClick={(e: any) => {
+                        e.preventDefault()
+                        setShowWhatsAppInstructionsModal(!showWhatsAppInstructionsModal)
+                      }}
+                      style={{
+                        color: '#00ff00',
+                        fontSize: '30px',
+                      }}
+                    />
                     <Typography sx={{ fontWeight: 'bold', fontSize: 10, m: 0.1 }}>அ</Typography>
                     <Switch
                       sx={{ m: -1 }}
