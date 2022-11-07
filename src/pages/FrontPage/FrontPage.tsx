@@ -54,16 +54,31 @@ const FrontPage = () => {
                 alignItems: 'center',
               }}
             >
-              <img
-                src={require('../../images/CFI Logo (with text) - Black.png')}
-                width='60px'
-                alt='CFI-logo'
-              />
-              <img
-                src={require('../../images/WebopsandBlockchainLogo.png')}
-                width='60px'
-                alt='CFI-logo'
-              />
+              ---
+              <a href='https://www.iitm.ac.in/'>
+                <img
+                  src={require('../../images/IIT_Madras_Logo.png')}
+                  width='50px'
+                  alt='IITM-logo'
+                />
+              </a>
+              ---
+              <a href='https://cfi.iitm.ac.in/'>
+                <img
+                  src={require('../../images/CFI Logo (with text) - Black.png')}
+                  width='65px'
+                  alt='CFI-logo'
+                />
+              </a>
+              ---
+              <a href='https://cfi.iitm.ac.in/clubs/webops-and-blockchain-club'>
+                <img
+                  src={require('../../images/WebopsandBlockchainLogo.png')}
+                  width='45px'
+                  alt='W&B-logo'
+                />
+              </a>
+              ---
             </div>
           </div>
           <div className='row'>
@@ -73,9 +88,7 @@ const FrontPage = () => {
               <p className='sec-row'>CFI 2022 © அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை</p>
             )}
             {checked ? (
-              <p className='sec-row'>
-                DESIGNED BY WEBOPS & BLOCKCHAIN CLUB | CENTRE FOR INNOVATION
-              </p>
+              <p className='sec-row'>WebOps and Blockchain Club, CFI, IIT Madras</p>
             ) : (
               <p className='sec-row'>
                 வெப் ஆபரேஷன்ஸ் & பிளாக்செயின் கிளப் மூலம் வடிவமைக்கப்பட்டது | புதுமைக்கான மையம்

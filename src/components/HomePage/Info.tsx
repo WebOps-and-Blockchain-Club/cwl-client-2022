@@ -1,7 +1,8 @@
 import { useContext } from 'react'
 import Language from '../../utils/lang'
-import { Card, CardContent, Typography, Grid } from '@mui/material'
+import { Card, CardContent, Typography, Grid, Box } from '@mui/material'
 import { makeStyles } from '@material-ui/core/styles'
+import '../../styles/frontpage.css'
 const useStyles = makeStyles(() => ({
   card: {
     margin: '10px',
@@ -17,7 +18,7 @@ const Info = () => {
   const { checked } = useContext(Language)
   const classes = useStyles()
   return (
-    <Grid container>
+    <Grid container justifyContent='center'>
       <Grid item lg={6}>
         <Card className={classes.card} elevation={5}>
           <CardContent>
@@ -86,6 +87,24 @@ const Info = () => {
             </Grid>
           </CardContent>
         </Card>
+      </Grid>
+      <Grid item>
+        <Box
+          sx={{
+            border: 0.1,
+            height: '20px',
+            borderRadius: 2,
+            width: '320px',
+            background: 'red',
+          }}
+        >
+          {checked ? (
+            <span className='red'>This is not a complaint portal</span>
+          ) : (
+            <span className='red'>tamil complaint portal</span>
+          )}
+          {/* //nedeeeed translation to tamil */}
+        </Box>
       </Grid>
     </Grid>
   )
