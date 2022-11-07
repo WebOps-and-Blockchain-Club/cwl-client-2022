@@ -88,24 +88,25 @@ const Info = () => {
           </CardContent>
         </Card>
       </Grid>
-      <Grid item>
+      {/* <Grid item>
         <Box
           sx={{
             border: 0.1,
-            height: '20px',
+            height: 'auto',
             borderRadius: 2,
             width: '320px',
             background: 'red',
+            padding: '10px',
+            fontSize: '20px',
           }}
         >
-          {checked ? (
-            <span className='red'>This is not a complaint portal</span>
-          ) : (
-            <span className='red'>tamil complaint portal</span>
-          )}
-          {/* //nedeeeed translation to tamil */}
+          <span className='red'>
+            {checked
+              ? 'The data collected would be used only for analysis purpose, and no compliant is raised or addressed'
+              : 'Hi'}
+          </span>
         </Box>
-      </Grid>
+      </Grid> */}
     </Grid>
   )
 }
