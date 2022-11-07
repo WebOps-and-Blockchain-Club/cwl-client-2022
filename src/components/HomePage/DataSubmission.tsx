@@ -47,7 +47,6 @@ const DataSubmission = (): JSX.Element => {
   // eslint-disable-next-line
   const handleImageUpload = async (file: any) => {
     const s3URL = data?.getS3URL
-    console.log(file.size)
     await fetch(s3URL || '', {
       method: 'PUT',
       headers: {
@@ -56,8 +55,7 @@ const DataSubmission = (): JSX.Element => {
       body: file,
     })
       .then((res: { url: string }) => {
-        console.log(res.url === s3URL)
-        setImageURL((s3URL || '').split('?')[0])
+        setImageURL((res.url || '').split('?')[0])
       })
 
       .catch((e) => console.log(e))

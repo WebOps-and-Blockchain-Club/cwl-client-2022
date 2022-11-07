@@ -35,7 +35,8 @@ function WhatsAppModal(props: {
           <ul>
             <li>
               <Typography id='modal-modal-title' variant='h6' component='h2'>
-                Send a message &quot;join young-route&quot; to +1 (415) 523 8886
+                Send a message &quot;join young-route&quot; to
+                <a href='https://wa.me/+1(415)5238886?text=join%20young-route'>+1 (415) 523 8886</a>
               </Typography>
             </li>
             <li>

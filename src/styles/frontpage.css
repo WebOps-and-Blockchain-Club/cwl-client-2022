@@ -22,7 +22,6 @@
   background: #fff;
 }
 
-
 .question {
   color: #fff;
 }
@@ -31,8 +30,6 @@
   background: #fff;
   color: rgb(0, 115, 230);
 }
-
-
 
 .container-info {
   /* padding: 10px; */
@@ -292,4 +289,8 @@ p {
   bottom: 0;
   right: 0;
   padding: 25px;
+}
+
+.red {
+  color: white;
 }
