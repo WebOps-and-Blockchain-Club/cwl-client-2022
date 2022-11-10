@@ -112,12 +112,14 @@ export type WaterData = {
   depth: Scalars['Float'];
   image: Scalars['String'];
   location: Scalars['String'];
+  remarks?: Maybe<Scalars['String']>;
 };
 
 export type WaterDataInput = {
   depth: Scalars['Float'];
   image: Scalars['String'];
   location: Scalars['String'];
+  remarks: Scalars['String'];
 };
 
 export type GetIssuesQueryVariables = Exact<{ [key: string]: never; }>;
