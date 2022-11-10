@@ -22,6 +22,7 @@ const DataSubmission = (): JSX.Element => {
     heading: 'Location Required',
     body: 'Water level data submission requires location access',
   })
+  const [remarks, setRemarks] = useState('')
   const [postWaterData] = useMutation(PostWaterDataDocument, {
     variables: {
       waterDataInput: {
@@ -34,7 +35,6 @@ const DataSubmission = (): JSX.Element => {
   })
   const [value, setValue] = useState('1')
   const [colour, setColor] = useState('#47B5FF')
-  const [remarks, setRemarks] = useState('')
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(function (position) {
