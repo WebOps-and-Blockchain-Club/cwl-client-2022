@@ -10,6 +10,7 @@ import '../../images/mapbox-icon.png'
 import '../../styles/MapDisplay.css'
 import '../../styles/Marker.css'
 import { GetWaterDataDocument } from '../../generated'
+import { Popup } from 'react-map-gl'
 // eslint-disable-next-line  @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -24,7 +25,7 @@ export default function Map() {
   const [lat, setLat] = useState(80.2707)
   const [zoom, setZoom] = useState(9)
   const placeMarkers = () => {
-    console.log(waterData)
+    // console.log(waterData)
     waterData?.getWaterData.map(
       (e: { location: string; depth: number; image: string; date: Date }) => {
         const coord = JSON.parse(e.location)
@@ -33,10 +34,9 @@ export default function Map() {
           .setPopup(
             new mapboxgl.Popup({ offset: 25 }) // add popups
               .setHTML(
-                `<h4>Water Level: ${e.depth}cm</h4>${
-                  e.image !== ''
-                    ? `<img src='${e.image}' height='120px' style=margin:10px>`
-                    : '<div style=height:20px;width:10px></div>'
+                `<h4>Water Level: ${e.depth}cm</h4>${e.image !== ''
+                  ? `<img src='${e.image}' height='120px' style=margin:10px>`
+                  : '<div style=height:20px;width:10px></div>'
                 }<div style=font-size:13px >Time: ${GMT2IST(
                   e.date
                     .toLocaleString(undefined, {
@@ -72,7 +72,71 @@ export default function Map() {
       collapsed: true,
     })
     map.current.addControl(search, 'top-right')
-    map.current.addControl(new mapboxgl.NavigationControl())
+    map.current.addControl(new mapboxgl.NavigationControl());
+
+    // Tile set for map
+    map.current.on('load', () => {
+      map.current.addSource('chennai-wards-2011-30akus', {
+        type: 'vector',
+        // Use any Mapbox-hosted tileset using its tileset id.
+        // Learn more about where to find a tileset id:
+        // https://docs.mapbox.com/help/glossary/tileset-id/
+        url: 'mapbox://ishu114407.a94zinsr'
+      });
+      map.current.addLayer({
+        'id': 'wardline',
+        'type': 'fill',
+        'source': 'chennai-wards-2011-30akus',
+        'source-layer': 'New_Wards_from_Oct_2011',
+        // 'layout': {
+
+        //   'line-join': 'round',
+        //   'line-cap': 'round'
+        // },
+        'paint': {
+          'fill-color': '#69b6ff',
+          'fill-opacity': 0.2
+        }
+      });
+      map.current.addLayer({
+        'id': 'wardline',
+        'type': 'line',
+        'source': 'chennai-wards-2011-30akus',
+        'source-layer': 'New_Wards_from_Oct_2011',
+        'layout': {
+
+          'line-join': 'round',
+          'line-cap': 'round'
+        },
+        'paint': {
+          'line-color': '#e64e8b',
+          // 'fill-opacity': 0.2
+        }
+      });
+    });
+
+    const popup = new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false
+    });
+    map.current.on('click', 'wardline', (e: { features: any[] }) => {
+      const trailhead = e.features[0];
+      // console.log(trailhead)
+      popup
+        .setHTML(`<b>${trailhead.properties.Name}</b>${trailhead.properties.Description}`)
+        .setLngLat(trailhead.geometry.coordinates[0][0])
+        .addTo(map.current);
+
+    });
+    map.current.on('mouseleave', 'wardline', (e: { features: any[] }) => {
+      popup.remove()
+
+    });
+
+    // tile set ends
+
+
+
     // Add geolocate control to the map.
     map.current.addControl(
       new mapboxgl.GeolocateControl({
