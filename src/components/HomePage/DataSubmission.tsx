@@ -22,18 +22,19 @@ const DataSubmission = (): JSX.Element => {
     heading: 'Location Required',
     body: 'Water level data submission requires location access',
   })
+  const [remarks, setRemarks] = useState('')
   const [postWaterData] = useMutation(PostWaterDataDocument, {
     variables: {
       waterDataInput: {
         location: JSON.stringify(coord),
         image: imageURL,
         depth,
+        remarks: '',
       },
     },
   })
   const [value, setValue] = useState('1')
   const [colour, setColor] = useState('#47B5FF')
-
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(function (position) {
@@ -103,6 +104,7 @@ const DataSubmission = (): JSX.Element => {
                 location: JSON.stringify(coord),
                 image: imageURL,
                 depth,
+                remarks,
               },
             },
           })
@@ -294,6 +296,35 @@ const DataSubmission = (): JSX.Element => {
         sx={{ paddingTop: '20px' }}
         item
       >
+        <TextField
+          color='primary'
+          placeholder='Remarks'
+          value={remarks}
+          variant='outlined'
+          onChange={(e: { target: { value: string } }) => {
+            setRemarks(e.target.value)
+          }}
+          sx={{ boxShadow: 15, borderRadius: 5, outline: 'none' }}
+          inputProps={{
+            style: {
+              fontSize: 25,
+              width: '225px',
+              textAlign: 'center',
+              color: '#4fc3f7',
+              backgroundColor: '#ffffff',
+              borderRadius: 10,
+            },
+          }}
+        />
+      </Grid>
+      <Grid
+        container
+        direction='row'
+        className='button'
+        spacing='20'
+        sx={{ paddingTop: '20px' }}
+        item
+      >
         <Grid item>
           <div className='upload '>
             <Button
@@ -317,6 +348,7 @@ const DataSubmission = (): JSX.Element => {
             </Button>
           </div>
         </Grid>
+
         <Grid item>
           <div className='submit '>
             <Button
