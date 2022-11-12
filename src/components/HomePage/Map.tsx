@@ -75,55 +75,66 @@ export default function Map() {
     map.current.addControl(new mapboxgl.NavigationControl());
 
     // Tile set for map
+    // map.current.on('load', () => {
+    //   map.current.addSource('chennai-wards-2011-30akus', {
+    //     type: 'vector',
+    //     // Use any Mapbox-hosted tileset using its tileset id.
+    //     // Learn more about where to find a tileset id:
+    //     // https://docs.mapbox.com/help/glossary/tileset-id/
+    //     url: 'mapbox://ishu114407.a94zinsr'
+    //   });
+    //   map.current.addLayer({
+    //     'id': 'wardline',
+    //     'type': 'fill',
+    //     'source': 'chennai-wards-2011-30akus',
+    //     'source-layer': 'New_Wards_from_Oct_2011',
+    //     // 'layout': {
+
+    //     //   'line-join': 'round',
+    //     //   'line-cap': 'round'
+    //     // },
+    //     'paint': {
+    //       'fill-color': "#69b6ff",
+    //       'fill-opacity': 0.2
+    //     }
+    //   });
+    // });
+
     map.current.on('load', () => {
-      map.current.addSource('chennai-wards-2011-30akus', {
+      map.current.addSource('Tharun_1-0kf601', {
         type: 'vector',
         // Use any Mapbox-hosted tileset using its tileset id.
         // Learn more about where to find a tileset id:
         // https://docs.mapbox.com/help/glossary/tileset-id/
-        url: 'mapbox://ishu114407.a94zinsr'
+        url: 'mapbox://ishu114407.3yoemmtv'
       });
       map.current.addLayer({
         'id': 'wardline',
         'type': 'fill',
-        'source': 'chennai-wards-2011-30akus',
-        'source-layer': 'New_Wards_from_Oct_2011',
+        'source': 'Tharun_1-0kf601',
+        'source-layer': 'Tharun_1-0kf601',
         // 'layout': {
 
         //   'line-join': 'round',
         //   'line-cap': 'round'
         // },
         'paint': {
-          'fill-color': '#69b6ff',
-          'fill-opacity': 0.2
-        }
-      });
-      map.current.addLayer({
-        'id': 'wardline',
-        'type': 'line',
-        'source': 'chennai-wards-2011-30akus',
-        'source-layer': 'New_Wards_from_Oct_2011',
-        'layout': {
-
-          'line-join': 'round',
-          'line-cap': 'round'
-        },
-        'paint': {
-          'line-color': '#e64e8b',
-          // 'fill-opacity': 0.2
+          'fill-color': ['get', 'color'],
+          'fill-opacity': 0.5
         }
       });
     });
 
+    // 12345678i9o
     const popup = new mapboxgl.Popup({
       closeButton: false,
       closeOnClick: false
     });
     map.current.on('click', 'wardline', (e: { features: any[] }) => {
       const trailhead = e.features[0];
-      // console.log(trailhead)
+      console.log(trailhead)
       popup
-        .setHTML(`<b>${trailhead.properties.Name}</b>${trailhead.properties.Description}`)
+        .setHTML(`<b>${trailhead.properties.name}</b>${trailhead.properties.description}`)
         .setLngLat(trailhead.geometry.coordinates[0][0])
         .addTo(map.current);
 
