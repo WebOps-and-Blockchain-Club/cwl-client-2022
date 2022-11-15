@@ -10,7 +10,6 @@ import '../../images/mapbox-icon.png'
 import '../../styles/MapDisplay.css'
 import '../../styles/Marker.css'
 import { GetWaterDataDocument } from '../../generated'
-import { Popup } from 'react-map-gl'
 // eslint-disable-next-line  @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -23,9 +22,8 @@ export default function Map() {
   const map: any = useRef(null)
   const [lng, setLng] = useState(13.0827)
   const [lat, setLat] = useState(80.2707)
-  const [zoom, setZoom] = useState(9)
+  const [zoom, setZoom] = useState(11)
   const placeMarkers = () => {
-    // console.log(waterData)
     waterData?.getWaterData.map(
       (e: { location: string; depth: number; image: string; date: Date }) => {
         const coord = JSON.parse(e.location)
@@ -34,9 +32,10 @@ export default function Map() {
           .setPopup(
             new mapboxgl.Popup({ offset: 25 }) // add popups
               .setHTML(
-                `<h4>Water Level: ${e.depth}cm</h4>${e.image !== ''
-                  ? `<img src='${e.image}' height='120px' style=margin:10px>`
-                  : '<div style=height:20px;width:10px></div>'
+                `<h4>Water Level: ${e.depth}cm</h4>${
+                  e.image !== ''
+                    ? `<img src='${e.image}' height='120px' style=margin:10px>`
+                    : '<div style=height:20px;width:10px></div>'
                 }<div style=font-size:13px >Time: ${GMT2IST(
                   e.date
                     .toLocaleString(undefined, {
@@ -72,7 +71,7 @@ export default function Map() {
       collapsed: true,
     })
     map.current.addControl(search, 'top-right')
-    map.current.addControl(new mapboxgl.NavigationControl());
+    map.current.addControl(new mapboxgl.NavigationControl())
 
     // Tile set for map
     // map.current.on('load', () => {
@@ -100,53 +99,46 @@ export default function Map() {
     //   });
     // });
 
-    map.current.on('load', () => {
-      map.current.addSource('Tharun_1-0kf601', {
-        type: 'vector',
-        // Use any Mapbox-hosted tileset using its tileset id.
-        // Learn more about where to find a tileset id:
-        // https://docs.mapbox.com/help/glossary/tileset-id/
-        url: 'mapbox://ishu114407.3yoemmtv'
-      });
-      map.current.addLayer({
-        'id': 'wardline',
-        'type': 'fill',
-        'source': 'Tharun_1-0kf601',
-        'source-layer': 'Tharun_1-0kf601',
-        // 'layout': {
+    // map.current.on('load', () => {
+    //   map.current.addSource('Tharun_1-0kf601', {
+    //     type: 'vector',
+    //     // Use any Mapbox-hosted tileset using its tileset id.
+    //     // Learn more about where to find a tileset id:
+    //     // https://docs.mapbox.com/help/glossary/tileset-id/
+    //     url: 'mapbox://ishu114407.3yoemmtv',
+    //   })
+    //   map.current.addLayer({
+    //     id: 'wardline',
+    //     type: 'fill',
+    //     source: 'Tharun_1-0kf601',
+    //     'source-layer': 'Tharun_1-0kf601',
 
-        //   'line-join': 'round',
-        //   'line-cap': 'round'
-        // },
-        'paint': {
-          'fill-color': ['get', 'color'],
-          'fill-opacity': 0.5
-        }
-      });
-    });
+    //     paint: {
+    //       'fill-color': ['get', 'color'],
+    //       'fill-opacity': 0.5,
+    //     },
+    //   })
+    // })
 
-    // 12345678i9o
-    const popup = new mapboxgl.Popup({
-      closeButton: false,
-      closeOnClick: false
-    });
-    map.current.on('click', 'wardline', (e: { features: any[] }) => {
-      const trailhead = e.features[0];
-      console.log(trailhead)
-      popup
-        .setHTML(`<b>${trailhead.properties.name}</b>${trailhead.properties.description}`)
-        .setLngLat(trailhead.geometry.coordinates[0][0])
-        .addTo(map.current);
-
-    });
-    map.current.on('mouseleave', 'wardline', (e: { features: any[] }) => {
-      popup.remove()
-
-    });
+    // // 12345678i9o
+    // const popup = new mapboxgl.Popup({
+    //   closeButton: false,
+    //   closeOnClick: false,
+    // })
+    // map.current.on('click', 'wardline', (e: { features: any[] }) => {
+    //   const trailhead = e.features[0]
+    //   popup
+    //     .setHTML(
+    //       `<h4>${trailhead.properties.name}</h4><div style=height:20px;width:10px></div><div style=font-size:10px;display:flex;justify-content:center >${trailhead.properties.description}</div>`,
+    //     )
+    //     .setLngLat(trailhead.geometry.coordinates[0][0])
+    //     .addTo(map.current)
+    // })
+    // map.current.on('mouseleave', 'wardline', (e: { features: any[] }) => {
+    //   popup.remove()
+    // })
 
     // tile set ends
-
-
 
     // Add geolocate control to the map.
     map.current.addControl(
