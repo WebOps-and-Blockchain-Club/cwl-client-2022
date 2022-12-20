@@ -19,12 +19,14 @@ query getS3URL {
   getS3URL
 }
 
-query getWaterData {
-  getWaterData {
-    depth
-    location
-    image
+query getWaterData($interval: Float) {
+  getWaterData(interval: $interval) {
     date
+    depth
+    flagged
+    image
+    location
+    remarks
   }
 }
 query getVolunteers {

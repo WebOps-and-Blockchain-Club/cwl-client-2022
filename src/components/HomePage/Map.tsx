@@ -9,7 +9,7 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import '../../images/mapbox-icon.png'
 import '../../styles/MapDisplay.css'
 import '../../styles/Marker.css'
-import { GetWaterDataDocument } from '../../generated'
+import { GetWaterDataDocument, WaterData } from '../../generated'
 // eslint-disable-next-line  @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -17,7 +17,11 @@ mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worke
 // eslint-disable-next-line
 export default function Map() {
   const mapContainer = useRef<HTMLDivElement>(null)
-  const { data: waterData } = useQuery(GetWaterDataDocument)
+  const [days, setDays] = useState(1);
+  const { data: waterData } = useQuery<any>(GetWaterDataDocument, {
+    variables: { interval: days },
+  })
+
   // eslint-disable-next-line
   const map: any = useRef(null)
   const [lng, setLng] = useState(13.0827)
@@ -32,10 +36,9 @@ export default function Map() {
           .setPopup(
             new mapboxgl.Popup({ offset: 25 }) // add popups
               .setHTML(
-                `<h4>Water Level: ${e.depth}cm</h4>${
-                  e.image !== ''
-                    ? `<img src='${e.image}' height='120px' style=margin:10px>`
-                    : '<div style=height:20px;width:10px></div>'
+                `<h4>Water Level: ${e.depth}cm</h4>${e.image !== ''
+                  ? `<img src='${e.image}' height='120px' style=margin:10px>`
+                  : '<div style=height:20px;width:10px></div>'
                 }<div style=font-size:13px >Time: ${GMT2IST(
                   e.date
                     .toLocaleString(undefined, {
@@ -209,6 +212,16 @@ export default function Map() {
   placeMarkers()
   return (
     <div>
+      <div className="search-days">
+        {/* <h3>Search for number of days</h3> */}
+
+        <input type="number" onChange={(e) => {
+          setDays(e.target.valueAsNumber)
+          console.log(waterData?.getWaterData);
+          console.log(days);
+        }} placeholder="Filter by days" />
+
+      </div>
       <div
         style={{
           position: 'fixed',
