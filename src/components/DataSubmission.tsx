@@ -8,6 +8,8 @@ import {
   Tab,
   createTheme,
   ThemeProvider,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material'
 
 import { TabContext, TabList, TabPanel } from '@mui/lab'
@@ -122,6 +124,11 @@ const DataSubmission = (): JSX.Element => {
       }
     }
   }
+
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.down('sm'))
+
+
   return (
     <div className='data-page'>
       <ThemeProvider theme={themes}>
@@ -142,11 +149,11 @@ const DataSubmission = (): JSX.Element => {
                 </Typography>
               ) : (
                 <Typography
-                  variant='h4'
+                  variant={matches ? 'h5' : 'h4'}
                   sx={{
                     fontWeight: 'bold',
                     justifyContent: 'center',
-                    fontSize: '1.3em',
+                    // fontSize: '1.3em',
                     color: '#0288d1',
                   }}
                 >

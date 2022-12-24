@@ -213,7 +213,7 @@ function VolunteerRegistrationForm({
                           flexDirection='column'
                           // justifyContent='space-between'
                         >
-                          {/*Start TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
+                          {/* Start TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
                           <Typography
                             align='center'
                             sx={{
@@ -226,7 +226,7 @@ function VolunteerRegistrationForm({
                           >
                             What kind of volunteering are you willing to provide?
                           </Typography>
-                          {/*Change TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
+                          {/* Change TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
                           <Typography
                             align='center'
                             sx={{
@@ -239,7 +239,7 @@ function VolunteerRegistrationForm({
                           >
                             We will contact you based on the skillset needed.
                           </Typography>
-                          {/*End TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
+                          {/* End TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
                         </Box>
                       )}
                     </div>
@@ -296,7 +296,7 @@ function VolunteerRegistrationForm({
                           flexDirection='column'
                           // justifyContent='space-between'
                         >
-                          {/*Start TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
+                          {/* Start TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
                           <Typography
                             align='center'
                             sx={{
@@ -309,7 +309,7 @@ function VolunteerRegistrationForm({
                             Please register if you want to <br />
                             volunteer in helping people
                             <br /> who are facing issues during emergencies
-                            {/*Change TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
+                            {/* Change TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
                           </Typography>
                           <Typography
                             align='center'
@@ -322,7 +322,7 @@ function VolunteerRegistrationForm({
                           >
                             GCC will contact you
                             <br /> if your help is needed.
-                            {/*Change TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
+                            {/* Change TamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamilTamil */}
                           </Typography>
                           <Typography
                             align='center'
