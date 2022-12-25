@@ -19,7 +19,7 @@ query getS3URL {
   getS3URL
 }
 
-query getWaterData($interval: Float) {
+mutation GetWaterData($interval: Float) {
   getWaterData(interval: $interval) {
     date
     depth
@@ -27,6 +27,7 @@ query getWaterData($interval: Float) {
     image
     location
     remarks
+    id
   }
 }
 query getVolunteers {
@@ -42,6 +43,16 @@ mutation signUp($volunteerInput: VolunteerInput!) {
     tags
     phoneNumber
     username
+  }
+}
+mutation DeleteWaterData($id: String!) {
+  deleteWaterData(ID: $id) {
+    date
+    depth
+    flagged
+    image
+    location
+    remarks
   }
 }
 
@@ -67,5 +78,16 @@ mutation postWaterData($waterDataInput: WaterDataInput!) {
     location
     depth
     date
+  }
+}
+
+mutation FlagWaterData($id: String!) {
+  flagWaterData(ID: $id) {
+    date
+    depth
+    flagged
+    image
+    location
+    remarks
   }
 }

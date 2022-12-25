@@ -4,7 +4,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import GMT2IST from '../../utils/GMT2IST'
 import getColorByDepth from '../../utils/getColorByDepth'
 import MapBoxGeocoder from '@mapbox/mapbox-gl-geocoder'
-import { useQuery } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import '../../images/mapbox-icon.png'
 import '../../styles/MapDisplay.css'
@@ -17,28 +17,40 @@ mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worke
 // eslint-disable-next-line
 export default function Map() {
   const mapContainer = useRef<HTMLDivElement>(null)
-  const [days, setDays] = useState(1);
-  const { data: waterData } = useQuery<any>(GetWaterDataDocument, {
-    variables: { interval: days },
-  })
-
+  const [getWaterData] = useMutation(GetWaterDataDocument)
   // eslint-disable-next-line
   const map: any = useRef(null)
   const [lng, setLng] = useState(13.0827)
   const [lat, setLat] = useState(80.2707)
   const [zoom, setZoom] = useState(11)
-  const placeMarkers = () => {
-    waterData?.getWaterData.map(
-      (e: { location: string; depth: number; image: string; date: Date }) => {
+  const [prevWaterData, setPrevWaterData] = useState<{ data: { getWaterData: Array<WaterData> } }>({
+    data: { getWaterData: [] },
+  })
+
+  const placeMarkers = async (days = 1) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const waterData: any | { data: { getWaterData: Array<WaterData> } } = await getWaterData({
+      variables: { interval: days },
+    })
+    const markersToRemove = prevWaterData.data.getWaterData.filter(
+      (f) =>
+        !waterData.data.getWaterData.find((obj: WaterData) => {
+          return f.id === obj.id
+        }),
+    )
+    console.log(markersToRemove, 'markersToRemove')
+    waterData?.data.getWaterData.map(
+      (e: { location: string; depth: number; image: string; date: Date; id: string }) => {
         const coord = JSON.parse(e.location)
         return new mapboxgl.Marker({ color: getColorByDepth(e.depth) })
           .setLngLat([coord.lng, coord.lat])
           .setPopup(
             new mapboxgl.Popup({ offset: 25 }) // add popups
               .setHTML(
-                `<h4>Water Level: ${e.depth}cm</h4>${e.image !== ''
-                  ? `<img src='${e.image}' height='120px' style=margin:10px>`
-                  : '<div style=height:20px;width:10px></div>'
+                `<h4>Water Level: ${e.depth}cm</h4>${
+                  e.image !== ''
+                    ? `<img src='${e.image}' height='120px' style=margin:10px>`
+                    : '<div style=height:20px;width:10px></div>'
                 }<div style=font-size:13px >Time: ${GMT2IST(
                   e.date
                     .toLocaleString(undefined, {
@@ -51,6 +63,8 @@ export default function Map() {
           .addTo(map.current)
       },
     )
+
+    setPrevWaterData(waterData)
   }
   useEffect(() => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_SECRET_KEY || ' '
@@ -153,74 +167,81 @@ export default function Map() {
         showUserHeading: true,
       }),
     )
-    map.current.on('load', () => {
-      map.current.addSource('earthquakes', {
-        type: 'JSON',
-        data: waterData?.getWaterData,
-        cluster: true,
-        clusterMaxZoom: 14,
-        clusterRadius: 50,
-        clusterProperties: {
-          clusterTotal: ['+', ['get', 'depth']],
-        },
-      })
+    // map.current.on('load', () => {
+    //   map.current.addSource('earthquakes', {
+    //     type: 'JSON',
+    //     data: waterData?.getWaterData,
+    //     cluster: true,
+    //     clusterMaxZoom: 14,
+    //     clusterRadius: 50,
+    //     clusterProperties: {
+    //       clusterTotal: ['+', ['get', 'depth']],
+    //     },
+    //   })
 
-      map.current.addLayer({
-        id: 'clusters',
-        type: 'circle',
-        source: 'earthquakes',
-        filter: ['has', 'point_count'],
-        paint: {
-          'circle-color': ['step', ['get', 'point_count'], '#51bbd6', 10, '#f1f075', 20, '#f28cb1'],
-          'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
-        },
-      })
+    //   map.current.addLayer({
+    //     id: 'clusters',
+    //     type: 'circle',
+    //     source: 'earthquakes',
+    //     filter: ['has', 'point_count'],
+    //     paint: {
+    //       'circle-color': ['step', ['get', 'point_count'], '#51bbd6', 10, '#f1f075', 20, '#f28cb1'],
+    //       'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
+    //     },
+    //   })
 
-      map.current.addLayer({
-        id: 'cluster-count',
-        type: 'symbol',
-        source: 'earthquakes',
-        filter: ['has', 'point_count'],
-        layout: {
-          'text-field': [
-            'concat',
-            [
-              'round',
-              ['/', ['number', ['get', 'clusterTotal']], ['number', ['get', 'point_count']]],
-            ],
-          ],
-          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-          'text-size': 12,
-          'text-allow-overlap': true,
-        },
-      })
-      map.current.addLayer({
-        id: 'unclustered-point',
-        type: 'circle',
-        source: 'earthquakes',
-        filter: ['!', ['has', 'point_count']],
+    //   map.current.addLayer({
+    //     id: 'cluster-count',
+    //     type: 'symbol',
+    //     source: 'earthquakes',
+    //     filter: ['has', 'point_count'],
+    //     layout: {
+    //       'text-field': [
+    //         'concat',
+    //         [
+    //           'round',
+    //           ['/', ['number', ['get', 'clusterTotal']], ['number', ['get', 'point_count']]],
+    //         ],
+    //       ],
+    //       'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+    //       'text-size': 12,
+    //       'text-allow-overlap': true,
+    //     },
+    //   })
+    //   map.current.addLayer({
+    //     id: 'unclustered-point',
+    //     type: 'circle',
+    //     source: 'earthquakes',
+    //     filter: ['!', ['has', 'point_count']],
 
-        paint: {
-          'circle-color': '#11b4da',
-          'circle-radius': 10,
-          'circle-stroke-width': 1,
-          'circle-stroke-color': '#fff',
-        },
-      })
-    })
+    //     paint: {
+    //       'circle-color': '#11b4da',
+    //       'circle-radius': 10,
+    //       'circle-stroke-width': 1,
+    //       'circle-stroke-color': '#fff',
+    //     },
+    //   })
+    // })
   }, [])
-  placeMarkers()
+  useEffect(() => {
+    placeMarkers()
+  }, [])
   return (
     <div>
-      <div className="search-days">
+      <div className='search-days'>
         {/* <h3>Search for number of days</h3> */}
 
-        <input type="number" onChange={(e) => {
-          setDays(e.target.valueAsNumber)
-          console.log(waterData?.getWaterData);
-          console.log(days);
-        }} placeholder="Filter by days" />
-
+        <input
+          type='number'
+          onChange={(e) => {
+            const reg = new RegExp('^[0-9]+$')
+            if (reg.test(e.target.value)) {
+              placeMarkers(e.target.valueAsNumber)
+              console.log(e.target.valueAsNumber)
+            }
+          }}
+          placeholder='Filter by days'
+        />
       </div>
       <div
         style={{
