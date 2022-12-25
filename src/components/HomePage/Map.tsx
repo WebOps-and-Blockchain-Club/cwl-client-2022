@@ -26,44 +26,59 @@ export default function Map() {
   const [prevWaterData, setPrevWaterData] = useState<{ data: { getWaterData: Array<WaterData> } }>({
     data: { getWaterData: [] },
   })
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [markers, setMarkers] = useState<any>([])
   const placeMarkers = async (days = 1) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const waterData: any | { data: { getWaterData: Array<WaterData> } } = await getWaterData({
       variables: { interval: days },
     })
+
     const markersToRemove = prevWaterData.data.getWaterData.filter(
       (f) =>
         !waterData.data.getWaterData.find((obj: WaterData) => {
           return f.id === obj.id
         }),
     )
-    console.log(markersToRemove, 'markersToRemove')
+
+    markersToRemove.map((m: { id: string }) => {
+      if (markers.find((f: { id: string }) => f.id === m.id)) {
+        const marker = markers.find((f: { id: string }) => f.id === m.id)
+        marker.marker.remove()
+      }
+    })
+    const newMarkers = markers.filter((f: { id: string }) =>
+      markersToRemove.find((m: { id: string }) => m.id !== f.id),
+    )
     waterData?.data.getWaterData.map(
       (e: { location: string; depth: number; image: string; date: Date; id: string }) => {
         const coord = JSON.parse(e.location)
-        return new mapboxgl.Marker({ color: getColorByDepth(e.depth) })
-          .setLngLat([coord.lng, coord.lat])
-          .setPopup(
-            new mapboxgl.Popup({ offset: 25 }) // add popups
-              .setHTML(
-                `<h4>Water Level: ${e.depth}cm</h4>${
-                  e.image !== ''
-                    ? `<img src='${e.image}' height='120px' style=margin:10px>`
-                    : '<div style=height:20px;width:10px></div>'
-                }<div style=font-size:13px >Time: ${GMT2IST(
-                  e.date
-                    .toLocaleString(undefined, {
-                      timeZone: 'Asia/Kolkata',
-                    })
-                    .slice(11, 19),
-                )}</div>`,
-              ),
-          )
-          .addTo(map.current)
+        if (!newMarkers.find((f: { id?: string }) => f.id === e.id)) {
+          const marker = new mapboxgl.Marker({ color: getColorByDepth(e.depth) })
+            .setLngLat([coord.lng, coord.lat])
+            .setPopup(
+              new mapboxgl.Popup({ offset: 25 }) // add popups
+                .setHTML(
+                  `<h4>Water Level: ${e.depth}cm</h4>${
+                    e.image !== ''
+                      ? `<img src='${e.image}' height='120px' style=margin:10px>`
+                      : '<div style=height:20px;width:10px></div>'
+                  }<div style=font-size:13px >Time: ${GMT2IST(
+                    e.date
+                      .toLocaleString(undefined, {
+                        timeZone: 'Asia/Kolkata',
+                      })
+                      .slice(11, 19),
+                  )}</div>`,
+                ),
+            )
+            .addTo(map.current)
+
+          newMarkers.push({ id: e.id, marker })
+        }
       },
     )
-
+    setMarkers(newMarkers)
     setPrevWaterData(waterData)
   }
   useEffect(() => {
@@ -237,7 +252,6 @@ export default function Map() {
             const reg = new RegExp('^[0-9]+$')
             if (reg.test(e.target.value)) {
               placeMarkers(e.target.valueAsNumber)
-              console.log(e.target.valueAsNumber)
             }
           }}
           placeholder='Filter by days'
