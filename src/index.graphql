@@ -21,6 +21,7 @@ query getS3URL {
 
 mutation GetWaterData($interval: Float) {
   getWaterData(interval: $interval) {
+    id
     date
     depth
     flagged
