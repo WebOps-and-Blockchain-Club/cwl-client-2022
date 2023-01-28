@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loader
-import { Router, Switch, Route, Redirect } from 'wouter'
+// requires a loaderimport { Router, Switch, Route, Redirect } from 'wouter'
 import { InMemoryCache, ApolloProvider, ApolloClient } from '@apollo/client'
 import VolunteerRegistrationForm from './pages/VolunteerSide/VolunteerRegistrationForm'
 import VolunteerLogin from './pages/VolunteerSide/VolunteerLogin'
@@ -15,6 +14,7 @@ import ComplaintPortal from './pages/ComplaintPortal/complaintPortal'
 import FrontPage from './pages/FrontPage/FrontPage'
 import './styles/frontpage.css'
 import WhatsAppModal from './components/General/WhatsAppModal'
+import { Redirect, Route, Router, Switch } from 'wouter'
 const BACKEND_URL: string = process.env.REACT_APP_BACKEND_URL || ''
 
 const client = new ApolloClient({
