@@ -23,23 +23,26 @@ export default function Map() {
   const [lng, setLng] = useState(13.0827)
   const [lat, setLat] = useState(80.2707)
   const [zoom, setZoom] = useState(11)
+  const [interval, setInterval] = useState(1)
+  const [depth, setDepth] = useState(0)
   const [prevWaterData, setPrevWaterData] = useState<{ data: { getWaterData: Array<WaterData> } }>({
     data: { getWaterData: [] },
   })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [markers, setMarkers] = useState<any>([])
-  const placeMarkers = async (days = 1) => {
+  const placeMarkers = async (days = 1, depth = 0) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const waterData: any | { data: { getWaterData: Array<WaterData> } } = await getWaterData({
-      variables: { interval: days },
+      variables: { interval: days, depth },
     })
-
-    const markersToRemove = prevWaterData.data.getWaterData.filter(
-      (f) =>
-        !waterData.data.getWaterData.find((obj: WaterData) => {
-          return f.id === obj.id
-        }),
-    )
+    console.log('days', days, 'depth', depth)
+    console.log('waterData', waterData)
+    const markersToRemove = prevWaterData.data.getWaterData.filter((f) => {
+      // if (waterData.data.getWaterData.length === 0) return true
+      !waterData.data.getWaterData.find((obj: WaterData) => {
+        return f.id === obj.id
+      })
+    })
 
     markersToRemove.map((m: { id: string }) => {
       if (markers.find((f: { id: string }) => f.id === m.id)) {
@@ -251,10 +254,22 @@ export default function Map() {
           onChange={(e) => {
             const reg = new RegExp('^[0-9]+$')
             if (reg.test(e.target.value)) {
-              placeMarkers(e.target.valueAsNumber)
+              placeMarkers(e.target.valueAsNumber, depth)
+              setInterval(e.target.valueAsNumber)
             }
           }}
           placeholder='Filter by days'
+        />
+        <input
+          type='number'
+          onChange={(e) => {
+            const reg = new RegExp('^[0-9]+$')
+            if (reg.test(e.target.value)) {
+              placeMarkers(interval, e.target.valueAsNumber)
+              setDepth(e.target.valueAsNumber)
+            }
+          }}
+          placeholder='Filter by depth'
         />
       </div>
       <div

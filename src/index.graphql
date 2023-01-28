@@ -19,15 +19,15 @@ query getS3URL {
   getS3URL
 }
 
-mutation GetWaterData($interval: Float) {
-  getWaterData(interval: $interval) {
+mutation GetWaterData($depth: Float, $interval: Float) {
+  getWaterData(depth: $depth, interval: $interval) {
     date
     depth
     flagged
+    id
     image
     location
     remarks
-    id
   }
 }
 query getVolunteers {
