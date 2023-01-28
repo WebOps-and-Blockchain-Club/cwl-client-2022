@@ -9,11 +9,18 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import '../../images/mapbox-icon.png'
 import '../../styles/MapDisplay.css'
 import '../../styles/Marker.css'
-import { GetWaterDataDocument, WaterData } from '../../generated'
+import {
+  DeleteWaterDataDocument,
+  FlagWaterDataDocument,
+  GetWaterDataDocument,
+  WaterData,
+} from '../../generated'
+import { Flag, Delete } from '@mui/icons-material'
 // eslint-disable-next-line  @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default
+
 // eslint-disable-next-line
 export default function Map() {
   const mapContainer = useRef<HTMLDivElement>(null)
@@ -30,6 +37,40 @@ export default function Map() {
   })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [markers, setMarkers] = useState<any>([])
+  const [currentMarkerID, setCurrentMarkerID] = useState<string>('')
+
+  const [flagWaterData] = useMutation(FlagWaterDataDocument, {
+    variables: {
+      id: '',
+    },
+  })
+
+  const [deleteWaterData] = useMutation(DeleteWaterDataDocument, {
+    variables: {
+      id: '',
+    },
+  })
+
+  // const flagCurrentMarker = async (): Promise<void> => {
+  //   await flagWaterData({
+  //     variables: {
+  //       id: currentMarkerID,
+  //     },
+  //   })
+
+  //   window.location.reload()
+  // }
+
+  // const deleteCurrentMarker = async (): Promise<void> => {
+  //   await deleteWaterData({
+  //     variables: {
+  //       id: currentMarkerID,
+  //     },
+  //   })
+
+  //   window.location.reload()
+  // }
+
   const placeMarkers = async (days = 1, depth = 0) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const waterData: any | { data: { getWaterData: Array<WaterData> } } = await getWaterData({
@@ -53,11 +94,19 @@ export default function Map() {
     const newMarkers = markers.filter((f: { id: string }) =>
       markersToRemove.find((m: { id: string }) => m.id !== f.id),
     )
+
     waterData?.data.getWaterData.map(
-      (e: { location: string; depth: number; image: string; date: Date; id: string }) => {
+      (e: {
+        location: string
+        depth: number
+        image: string
+        date: Date
+        id: string
+        flagged: boolean
+      }) => {
         const coord = JSON.parse(e.location)
         if (!newMarkers.find((f: { id?: string }) => f.id === e.id)) {
-          const marker = new mapboxgl.Marker({ color: getColorByDepth(e.depth) })
+          const marker = new mapboxgl.Marker({ color: getColorByDepth(e.depth, e.flagged) })
             .setLngLat([coord.lng, coord.lat])
             .setPopup(
               new mapboxgl.Popup({ offset: 25 }) // add popups
@@ -77,6 +126,9 @@ export default function Map() {
             )
             .addTo(map.current)
 
+          marker.getElement().addEventListener('click', () => {
+            setCurrentMarkerID(e.id)
+          })
           newMarkers.push({ id: e.id, marker })
         }
       },
@@ -241,14 +293,14 @@ export default function Map() {
     //   })
     // })
   }, [])
+
   useEffect(() => {
     placeMarkers()
   }, [])
+
   return (
     <div>
       <div className='search-days'>
-        {/* <h3>Search for number of days</h3> */}
-
         <input
           type='number'
           onChange={(e) => {
@@ -272,6 +324,20 @@ export default function Map() {
           placeholder='Filter by depth'
         />
       </div>
+      {/* <div className='delete-marker'>
+        <button
+          onClick={flagCurrentMarker}
+          style={{ backgroundColor: 'transparent', border: 'none', marginRight: '5px' }}
+        >
+          <Flag style={{ color: '#9d00ff' }} />
+        </button>
+        <button
+          onClick={deleteCurrentMarker}
+          style={{ backgroundColor: 'transparent', border: 'none', marginLeft: '5px' }}
+        >
+          <Delete style={{ color: '#ff0000' }} />
+        </button>
+      </div> */}
       <div
         style={{
           position: 'fixed',

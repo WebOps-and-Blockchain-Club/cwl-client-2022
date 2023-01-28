@@ -1,4 +1,5 @@
-const getColorByDepth = (depth: number): string => {
+const getColorByDepth = (depth: number, flagged: boolean): string => {
+  if (flagged) return '#9d00ff'
   return depth > 175
     ? '#d00000'
     : depth > 100
