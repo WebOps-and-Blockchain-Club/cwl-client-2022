@@ -87,7 +87,7 @@ const NavBar = (props: {
                 </Grid>
                 <Grid item>
                   <Box sx={{ backgroundColor: '#00897b', marginTop: '5px', marginBottom: '5px' }}>
-                    <Link to='/map' onClick={() => window.location.reload()}>
+                    <Link to='/map' >
                       <IconButton size='large' color='inherit' aria-label='icon'>
                         <img
                           src={require('../../images/mapIcon.png')}
