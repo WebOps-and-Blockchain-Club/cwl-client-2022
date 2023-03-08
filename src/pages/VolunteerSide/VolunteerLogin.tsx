@@ -35,7 +35,7 @@ const paperStyles = {
 
 // eslint-disable-next-line
 function VolunteerLogin({ err }: { err: any }) {
-  const [location, setLocation] = useLocation() // eslint-disable-line
+  const [, setLocation] = useLocation() // eslint-disable-line
   const [volunteerPhone, setVolunteerPhone]: [
     string,
     React.Dispatch<React.SetStateAction<string>>,
@@ -64,6 +64,7 @@ function VolunteerLogin({ err }: { err: any }) {
       if (data?.login.success) {
         localStorage.setItem('USER', JSON.stringify({ sucess: data?.login.success }))
         cookies.set('authToken', data?.login.token)
+        setLocation('/map')
         window.location.reload()
       } else {
         throw Error('Invalid credentials')

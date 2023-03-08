@@ -3,7 +3,10 @@ import { AppBar, Box, Toolbar, Typography, IconButton, Grid, Switch, Stack } fro
 import Language from '../../utils/lang'
 import { Link } from 'wouter'
 import { WhatsApp } from '@mui/icons-material'
-
+import User from '../../interfaces/User'
+import useCheckUser from '../../hooks/useCheckUser'
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
+import LogoutIcon from '@mui/icons-material/Logout'
 const NavBar = (props: {
   props: {
     showWhatsAppInstructionsModal: boolean
@@ -15,6 +18,7 @@ const NavBar = (props: {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked)
   }
+  const user: User | null = useCheckUser()
   return (
     <Box>
       <AppBar position='static'>
@@ -87,7 +91,7 @@ const NavBar = (props: {
                 </Grid>
                 <Grid item>
                   <Box sx={{ backgroundColor: '#00897b', marginTop: '5px', marginBottom: '5px' }}>
-                    <Link to='/map' >
+                    <Link to='/map'>
                       <IconButton size='large' color='inherit' aria-label='icon'>
                         <img
                           src={require('../../images/mapIcon.png')}
@@ -99,6 +103,40 @@ const NavBar = (props: {
                     </Link>
                   </Box>
                 </Grid>
+                {user ? (
+                  <Grid item>
+                    <Box
+                      sx={{
+                        marginTop: '5px',
+                        marginBottom: '5px',
+                        marginLeft: '5px',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <Link to='/admin/dashboard'>
+                        <AdminPanelSettingsIcon sx={{ fontSize: '30px' }} />
+                      </Link>
+                    </Box>
+                  </Grid>
+                ) : null}
+                {user ? (
+                  <Grid item>
+                    <Box
+                      sx={{
+                        marginTop: '5px',
+                        marginBottom: '5px',
+                        marginLeft: '5px',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => {
+                        localStorage.removeItem('USER')
+                        window.location.reload()
+                      }}
+                    >
+                      <LogoutIcon sx={{ fontSize: '30px' }} />
+                    </Box>
+                  </Grid>
+                ) : null}
                 {/* <Grid item>
                   <div>
                     <IconButton

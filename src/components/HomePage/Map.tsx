@@ -16,6 +16,8 @@ import {
   WaterData,
 } from '../../generated'
 import { Flag, Delete } from '@mui/icons-material'
+import useCheckUser from '../../hooks/useCheckUser'
+import User from '../../interfaces/User'
 // eslint-disable-next-line  @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -25,6 +27,7 @@ mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worke
 export default function Map() {
   const mapContainer = useRef<HTMLDivElement>(null)
   const [getWaterData] = useMutation(GetWaterDataDocument)
+  const user: User | null = useCheckUser()
   // eslint-disable-next-line
   const map: any = useRef(null)
   const [lng, setLng] = useState(13.0827)
@@ -51,25 +54,25 @@ export default function Map() {
     },
   })
 
-  // const flagCurrentMarker = async (): Promise<void> => {
-  //   await flagWaterData({
-  //     variables: {
-  //       id: currentMarkerID,
-  //     },
-  //   })
+  const flagCurrentMarker = async (): Promise<void> => {
+    await flagWaterData({
+      variables: {
+        id: currentMarkerID,
+      },
+    })
 
-  //   window.location.reload()
-  // }
+    window.location.reload()
+  }
 
-  // const deleteCurrentMarker = async (): Promise<void> => {
-  //   await deleteWaterData({
-  //     variables: {
-  //       id: currentMarkerID,
-  //     },
-  //   })
+  const deleteCurrentMarker = async (): Promise<void> => {
+    await deleteWaterData({
+      variables: {
+        id: currentMarkerID,
+      },
+    })
 
-  //   window.location.reload()
-  // }
+    window.location.reload()
+  }
 
   const placeMarkers = async (days = 1, depth = 0) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -228,15 +231,6 @@ export default function Map() {
     // tile set ends
 
     // Add geolocate control to the map.
-    map.current.addControl(
-      new mapboxgl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true,
-        },
-        trackUserLocation: true,
-        showUserHeading: true,
-      }),
-    )
     // map.current.on('load', () => {
     //   map.current.addSource('earthquakes', {
     //     type: 'JSON',
@@ -292,6 +286,15 @@ export default function Map() {
     //     },
     //   })
     // })
+    map.current.addControl(
+      new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+        },
+        trackUserLocation: true,
+        showUserHeading: true,
+      }),
+    )
   }, [])
 
   useEffect(() => {
@@ -300,44 +303,49 @@ export default function Map() {
 
   return (
     <div>
-      <div className='search-days'>
-        <input
-          type='number'
-          onChange={(e) => {
-            const reg = new RegExp('^[0-9]+$')
-            if (reg.test(e.target.value)) {
-              placeMarkers(e.target.valueAsNumber, depth)
-              setInterval(e.target.valueAsNumber)
-            }
-          }}
-          placeholder='Filter by days'
-        />
-        <input
-          type='number'
-          onChange={(e) => {
-            const reg = new RegExp('^[0-9]+$')
-            if (reg.test(e.target.value)) {
-              placeMarkers(interval, e.target.valueAsNumber)
-              setDepth(e.target.valueAsNumber)
-            }
-          }}
-          placeholder='Filter by depth'
-        />
-      </div>
-      {/* <div className='delete-marker'>
-        <button
-          onClick={flagCurrentMarker}
-          style={{ backgroundColor: 'transparent', border: 'none', marginRight: '5px' }}
-        >
-          <Flag style={{ color: '#9d00ff' }} />
-        </button>
-        <button
-          onClick={deleteCurrentMarker}
-          style={{ backgroundColor: 'transparent', border: 'none', marginLeft: '5px' }}
-        >
-          <Delete style={{ color: '#ff0000' }} />
-        </button>
-      </div> */}
+      {user ? (
+        <div>
+          <div className='search-days'>
+            <input
+              type='number'
+              onChange={(e) => {
+                const reg = new RegExp('^[0-9]+$')
+                if (reg.test(e.target.value)) {
+                  placeMarkers(e.target.valueAsNumber, depth)
+                  setInterval(e.target.valueAsNumber)
+                }
+              }}
+              placeholder='Filter by days'
+            />
+            <input
+              type='number'
+              onChange={(e) => {
+                const reg = new RegExp('^[0-9]+$')
+                if (reg.test(e.target.value)) {
+                  placeMarkers(interval, e.target.valueAsNumber)
+                  setDepth(e.target.valueAsNumber)
+                }
+              }}
+              placeholder='Filter by depth'
+            />
+          </div>
+          <div className='delete-marker'>
+            <button
+              onClick={flagCurrentMarker}
+              style={{ backgroundColor: 'transparent', border: 'none', marginRight: '5px' }}
+            >
+              <Flag style={{ color: '#9d00ff' }} />
+            </button>
+            <button
+              onClick={deleteCurrentMarker}
+              style={{ backgroundColor: 'transparent', border: 'none', marginLeft: '5px' }}
+            >
+              <Delete style={{ color: '#ff0000' }} />
+            </button>
+          </div>
+        </div>
+      ) : null}
+
       <div
         style={{
           position: 'fixed',
