@@ -35,30 +35,21 @@ function WhatsAppModal(props: {
           <ul>
             <li>
               <Typography id='modal-modal-title' variant='h6' component='h2'>
-                Send a message &quot;join young-route&quot; to
-                <a href='https://wa.me/+1(415)5238886?text=join%20young-route'>+1 (415) 523 8886</a>
+                Send a message &quot;join particles-wire&quot; to
+                <a href='https://wa.me/+1(415)5238886?text=join%20particles-wire'>+1 (415) 523 8886</a>
               </Typography>
             </li>
             <li>
               <Typography id='modal-modal-title' variant='h6' component='h2'>
-                Click a picture using WhatsApp (optional)
+                Enter the level of water in your area.
               </Typography>
             </li>
             <li>
               <Typography id='modal-modal-title' variant='h6' component='h2'>
-                Add a message to the clicked picture or send a regular message like so
+                Please adhere to the guidelines provided by the chatbot.
               </Typography>
             </li>
-            <li>
-              <Typography id='modal-modal-title' variant='h6' component='h2'>
-                Water Level (in cm); Address
-              </Typography>
-            </li>
-            <li>
-              <Typography id='modal-modal-title' variant='h6' component='h2'>
-                Example: &quot;20; IIT Madras Main Gate&quot;
-              </Typography>
-            </li>
+
           </ul>
         </Box>
       </Modal>
