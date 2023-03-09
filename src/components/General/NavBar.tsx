@@ -75,6 +75,7 @@ const NavBar = (props: {
                       style={{
                         color: '#00ff00',
                         fontSize: '30px',
+                        cursor: 'pointer'
                       }}
                     />
                     <Typography sx={{ fontWeight: 'bold', fontSize: 10, m: 0.1 }}>அ</Typography>
