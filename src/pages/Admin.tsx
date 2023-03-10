@@ -1,79 +1,72 @@
-import * as React from 'react'
-import { Tabs, Tab, Typography, Box, Button } from '@mui/material'
-
-import CompliantDashboard from '../components/Volunteer/ComplaintDashboard'
-import VolunteerDashboard from '../components/Volunteer/VolunteerDashboard'
-interface TabPanelProps {
-  children?: React.ReactNode
-  index: number
-  value: number
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props
-
-  return (
-    <div
-      role='tabpanel'
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  )
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  }
-}
-
+import { useEffect, useState } from 'react'
+// import { BetaAnalyticsDataClient } from '@google-analytics/data'
+import { GetWaterDataDocument } from '../generated'
+import { useMutation } from '@apollo/client'
 const Admin = () => {
-  const [value, setValue] = React.useState(0)
+  // const [data, setData] = useState(['pathPage', 'deviceCategory', 'userGender'])
+  const [getWaterData] = useMutation(GetWaterDataDocument)
+  const [remarks, setRemarks] = useState<Array<string | undefined | null>>([])
+  const [images, setImages] = useState(0)
+  const [flagged, setFlagged] = useState(0)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [waterData, setWaterData] = useState<any>([])
+  // const analyticsDataClient = new BetaAnalyticsDataClient()
+  // async function runReport(props: string) {
+  //   const [response] = await analyticsDataClient.runReport({
+  //     property: `properties/${process.env.REACT_APP_propertyId}`,
+  //     dateRanges: [
+  //       {
+  //         startDate: '2022-01-31',
+  //         endDate: 'today',
+  //       },
+  //     ],
+  //     dimensions: [
+  //       {
+  //         name: props,
+  //       },
+  //     ],
+  //     metrics: [
+  //       {
+  //         name: 'activeUsers',
+  //       },
+  //     ],
+  //   })
+  //   response?.rows?.forEach((row: any) => {
+  //     console.log(row?.dimensionValues[0], row?.metricValues[0])
+  //     return
+  //   })
+  // }
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue)
+  const dashboardWaterData = async () => {
+    const waterData = await getWaterData({
+      variables: { interval: 1000, depth: 0 },
+    })
+
+    let remarks: Array<string | undefined | null> = []
+    let count = 0
+    let flagged = 0
+    setWaterData(waterData?.data?.getWaterData)
+    waterData?.data?.getWaterData?.forEach((water) => {
+      if (water?.remarks && water?.remarks !== '') {
+        remarks = [...remarks, water?.remarks]
+      }
+      if (water.image && water.image !== '') {
+        count++
+      }
+      if (water.flagged) {
+        flagged++
+      }
+    })
+    setRemarks(remarks)
+    setImages(count)
+    setFlagged(flagged)
+    console.log(remarks, count, flagged)
   }
+  useEffect(() => {
+    // runReport(data[0])
+    dashboardWaterData()
+  }, [])
 
-  return (
-    <Box sx={{ width: '100%' }}>
-      <Box
-        textAlign='right'
-        style={{ paddingRight: '30px', paddingBottom: '20px', paddingTop: '20px' }}
-      >
-        <Button
-          variant='contained'
-          size='large'
-          color='primary'
-          onClick={() => {
-            localStorage.removeItem('USER')
-            window.location.reload()
-          }}
-        >
-          Logout
-        </Button>
-      </Box>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label='basic tabs example' centered>
-          <Tab label='Volunteer' {...a11yProps(1)} />
-          <Tab label='Compliant' {...a11yProps(0)} />
-        </Tabs>
-      </Box>
-      <TabPanel value={value} index={0}>
-        <VolunteerDashboard />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <CompliantDashboard />
-      </TabPanel>
-    </Box>
-  )
+  return <div>Hi</div>
 }
 export default Admin
