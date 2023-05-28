@@ -164,51 +164,59 @@ export default function Map() {
     map.current.addControl(new mapboxgl.NavigationControl())
 
     // Tile set for map
-    // map.current.on('load', () => {
-    //   map.current.addSource('chennai-wards-2011-30akus', {
-    //     type: 'vector',
-    //     // Use any Mapbox-hosted tileset using its tileset id.
-    //     // Learn more about where to find a tileset id:
-    //     // https://docs.mapbox.com/help/glossary/tileset-id/
-    //     url: 'mapbox://ishu114407.a94zinsr'
-    //   });
-    //   map.current.addLayer({
-    //     'id': 'wardline',
-    //     'type': 'fill',
-    //     'source': 'chennai-wards-2011-30akus',
-    //     'source-layer': 'New_Wards_from_Oct_2011',
-    //     // 'layout': {
 
-    //     //   'line-join': 'round',
-    //     //   'line-cap': 'round'
-    //     // },
-    //     'paint': {
-    //       'fill-color': "#69b6ff",
-    //       'fill-opacity': 0.2
-    //     }
-    //   });
-    // });
+    {
+      user
+        ? map.current.on('load', () => {
+            map.current.addSource('chennai-wards-2011-30akus', {
+              type: 'vector',
+              // Use any Mapbox-hosted tileset using its tileset id.
+              // Learn more about where to find a tileset id:
+              // https://docs.mapbox.com/help/glossary/tileset-id/
+              url: 'mapbox://ishu114407.a94zinsr',
+            })
+            map.current.addLayer({
+              id: 'wardline',
+              type: 'fill',
+              source: 'chennai-wards-2011-30akus',
+              'source-layer': 'New_Wards_from_Oct_2011',
+              layout: {
+                'line-join': 'round',
+                'line-cap': 'round',
+              },
+              paint: {
+                'fill-color': '#69b6ff',
+                'fill-opacity': 0.2,
+              },
+            })
+          })
+        : null
+    }
 
-    // map.current.on('load', () => {
-    //   map.current.addSource('Tharun_1-0kf601', {
-    //     type: 'vector',
-    //     // Use any Mapbox-hosted tileset using its tileset id.
-    //     // Learn more about where to find a tileset id:
-    //     // https://docs.mapbox.com/help/glossary/tileset-id/
-    //     url: 'mapbox://ishu114407.3yoemmtv',
-    //   })
-    //   map.current.addLayer({
-    //     id: 'wardline',
-    //     type: 'fill',
-    //     source: 'Tharun_1-0kf601',
-    //     'source-layer': 'Tharun_1-0kf601',
+    {
+      user
+        ? map.current.on('load', () => {
+            map.current.addSource('Tharun_1-0kf601', {
+              type: 'vector',
+              // Use any Mapbox-hosted tileset using its tileset id.
+              // Learn more about where to find a tileset id:
+              // https://docs.mapbox.com/help/glossary/tileset-id/
+              url: 'mapbox://ishu114407.3yoemmtv',
+            })
+            map.current.addLayer({
+              id: 'wardline',
+              type: 'fill',
+              source: 'Tharun_1-0kf601',
+              'source-layer': 'Tharun_1-0kf601',
 
-    //     paint: {
-    //       'fill-color': ['get', 'color'],
-    //       'fill-opacity': 0.5,
-    //     },
-    //   })
-    // })
+              paint: {
+                'fill-color': ['get', 'color'],
+                'fill-opacity': 0.5,
+              },
+            })
+          })
+        : null
+    }
 
     // // 12345678i9o
     // const popup = new mapboxgl.Popup({

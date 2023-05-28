@@ -118,12 +118,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
       <TableRow>
         {headCells.map((headCell) => (
           <TableCell
-            
             key={headCell.id}
             align={headCell.numeric ? 'center' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
-            sx={{fontSize:'18px'}}
+            sx={{ fontSize: '18px' }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -147,7 +146,13 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 function EnhancedTableToolbar() {
   return (
     <Toolbar>
-      <Typography color='primary'sx={{fontSize:'25px',flex: '1 1 100%' }} variant='h6' id='tableTitle' component='div'>
+      <Typography
+        color='primary'
+        sx={{ fontSize: '25px', flex: '1 1 100%' }}
+        variant='h6'
+        id='tableTitle'
+        component='div'
+      >
         User Data
       </Typography>
     </Toolbar>
@@ -223,7 +228,7 @@ const Admin = () => {
   const [order, setOrder] = useState<Order>('asc')
   const [orderBy, setOrderBy] = useState<keyof Data>('date')
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(25)
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
     const isAsc = orderBy === property && order === 'asc'
@@ -267,11 +272,13 @@ const Admin = () => {
                         {moment(row.date).format('MMMM Do YYYY, h:mm:ss a')}
                       </TableCell>
                       <TableCell align='center'>{row.depth}</TableCell>
-                      <TableCell align='center'>{row.flagged ? 
-                      <Typography sx={{color:'green' }}> Yes</Typography>
-                       : 
-                       <Typography sx={{color:'red' }} > No</Typography>
-                       }</TableCell>
+                      <TableCell align='center'>
+                        {row.flagged ? (
+                          <Typography sx={{ color: 'green' }}> Yes</Typography>
+                        ) : (
+                          <Typography sx={{ color: 'red' }}> No</Typography>
+                        )}
+                      </TableCell>
                       <TableCell align='center'>
                         {row.image === '' ? 'Not Submitted' : 'Submitted'}
                       </TableCell>
@@ -283,7 +290,7 @@ const Admin = () => {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[25, 35, 45]}
           component='div'
           count={waterData.length}
           rowsPerPage={rowsPerPage}
