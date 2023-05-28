@@ -219,81 +219,81 @@ export default function Map() {
     }
 
     // // 12345678i9o
-    // const popup = new mapboxgl.Popup({
-    //   closeButton: false,
-    //   closeOnClick: false,
-    // })
-    // map.current.on('click', 'wardline', (e: { features: any[] }) => {
-    //   const trailhead = e.features[0]
-    //   popup
-    //     .setHTML(
-    //       `<h4>${trailhead.properties.name}</h4><div style=height:20px;width:10px></div><div style=font-size:10px;display:flex;justify-content:center >${trailhead.properties.description}</div>`,
-    //     )
-    //     .setLngLat(trailhead.geometry.coordinates[0][0])
-    //     .addTo(map.current)
-    // })
-    // map.current.on('mouseleave', 'wardline', (e: { features: any[] }) => {
-    //   popup.remove()
-    // })
+    const popup = new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false,
+    })
+    map.current.on('click', 'wardline', (e: { features: any[] }) => {
+      const trailhead = e.features[0]
+      popup
+        .setHTML(
+          `<h4>${trailhead.properties.name}</h4><div style=height:20px;width:10px></div><div style=font-size:10px;display:flex;justify-content:center >${trailhead.properties.description}</div>`,
+        )
+        .setLngLat(trailhead.geometry.coordinates[0][0])
+        .addTo(map.current)
+    })
+    map.current.on('mouseleave', 'wardline', (e: { features: any[] }) => {
+      popup.remove()
+    })
 
     // tile set ends
 
     // Add geolocate control to the map.
-    // map.current.on('load', () => {
-    //   map.current.addSource('earthquakes', {
-    //     type: 'JSON',
-    //     data: waterData?.getWaterData,
-    //     cluster: true,
-    //     clusterMaxZoom: 14,
-    //     clusterRadius: 50,
-    //     clusterProperties: {
-    //       clusterTotal: ['+', ['get', 'depth']],
-    //     },
-    //   })
+    map.current.on('load', () => {
+      //   map.current.addSource('earthquakes', {
+      //     type: 'JSON',
+      //     data: waterData?.getWaterData,
+      //     cluster: true,
+      //     clusterMaxZoom: 14,
+      //     clusterRadius: 50,
+      //     clusterProperties: {
+      //       clusterTotal: ['+', ['get', 'depth']],
+      //     },
+      //   })
 
-    //   map.current.addLayer({
-    //     id: 'clusters',
-    //     type: 'circle',
-    //     source: 'earthquakes',
-    //     filter: ['has', 'point_count'],
-    //     paint: {
-    //       'circle-color': ['step', ['get', 'point_count'], '#51bbd6', 10, '#f1f075', 20, '#f28cb1'],
-    //       'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
-    //     },
-    //   })
+      map.current.addLayer({
+        id: 'clusters',
+        type: 'circle',
+        source: 'earthquakes',
+        filter: ['has', 'point_count'],
+        paint: {
+          'circle-color': ['step', ['get', 'point_count'], '#51bbd6', 10, '#f1f075', 20, '#f28cb1'],
+          'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
+        },
+      })
 
-    //   map.current.addLayer({
-    //     id: 'cluster-count',
-    //     type: 'symbol',
-    //     source: 'earthquakes',
-    //     filter: ['has', 'point_count'],
-    //     layout: {
-    //       'text-field': [
-    //         'concat',
-    //         [
-    //           'round',
-    //           ['/', ['number', ['get', 'clusterTotal']], ['number', ['get', 'point_count']]],
-    //         ],
-    //       ],
-    //       'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-    //       'text-size': 12,
-    //       'text-allow-overlap': true,
-    //     },
-    //   })
-    //   map.current.addLayer({
-    //     id: 'unclustered-point',
-    //     type: 'circle',
-    //     source: 'earthquakes',
-    //     filter: ['!', ['has', 'point_count']],
+      map.current.addLayer({
+        id: 'cluster-count',
+        type: 'symbol',
+        source: 'earthquakes',
+        filter: ['has', 'point_count'],
+        layout: {
+          'text-field': [
+            'concat',
+            [
+              'round',
+              ['/', ['number', ['get', 'clusterTotal']], ['number', ['get', 'point_count']]],
+            ],
+          ],
+          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+          'text-size': 12,
+          'text-allow-overlap': true,
+        },
+      })
+      map.current.addLayer({
+        id: 'unclustered-point',
+        type: 'circle',
+        source: 'earthquakes',
+        filter: ['!', ['has', 'point_count']],
 
-    //     paint: {
-    //       'circle-color': '#11b4da',
-    //       'circle-radius': 10,
-    //       'circle-stroke-width': 1,
-    //       'circle-stroke-color': '#fff',
-    //     },
-    //   })
-    // })
+        paint: {
+          'circle-color': '#11b4da',
+          'circle-radius': 10,
+          'circle-stroke-width': 1,
+          'circle-stroke-color': '#fff',
+        },
+      })
+    })
     map.current.addControl(
       new mapboxgl.GeolocateControl({
         positionOptions: {
