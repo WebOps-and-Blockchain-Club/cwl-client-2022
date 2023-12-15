@@ -149,6 +149,7 @@ const DataSubmission = (): JSX.Element => {
                   setDepth(0)
                 } else if (Depth === 0 || Depth > 200) {
                   setError(checked ? 'Enter a valid Water level' : 'நீர்மடட்டம் தேவை')
+                  setDepth(0)
                 } else {
                   setDepth(Depth)
                   setError('')
@@ -203,19 +204,20 @@ const DataSubmission = (): JSX.Element => {
                       color: colour,
                     }}
                     onChange={(e, depth) => {
-                      e.preventDefault()
+                      e.preventDefault();
                       if (depth === 0) {
-                        setError(checked ? 'Enter a valid Water level' : 'நீர்மடட்டம் தேவை')
+                        setError(checked ? 'Enter a valid Water level' : 'நீர்மடட்டம் தேவை');
                       } else {
-                        setDepth(depth as number)
-                        setError('')
-                      }
-                      if (depth > 100) {
-                        setColor('#d00000')
-                      } else if (depth > 55) {
-                        setColor('#e85d04')
-                      } else if (depth > 20) {
-                        setColor('#47B5FF')
+                        const depthValue = depth as number; 
+                        setDepth(depthValue);
+                        setError('');
+                        if (depthValue > 100) {
+                          setColor('#d00000');
+                        } else if (depthValue > 55 && depthValue <= 100) {
+                          setColor('#e85d04');
+                        } else if (depthValue > 20 && depthValue <= 55) {
+                          setColor('#47B5FF');
+                        }
                       }
                     }}
                   />
